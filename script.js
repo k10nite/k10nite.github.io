@@ -334,9 +334,6 @@ const expCarousel = {
     init() {
         if (!this.track || this.slides.length === 0) return;
 
-        // Set first slide as active
-        this.slides[0].classList.add('active');
-
         // Dot navigation
         this.dots.forEach((dot, index) => {
             dot.addEventListener('click', () => this.goToSlide(index));
@@ -346,8 +343,11 @@ const expCarousel = {
         this.startAutoplay();
 
         // Pause on hover
-        this.track.addEventListener('mouseenter', () => this.stopAutoplay());
-        this.track.addEventListener('mouseleave', () => this.startAutoplay());
+        const carousel = document.querySelector('.exp-carousel');
+        if (carousel) {
+            carousel.addEventListener('mouseenter', () => this.stopAutoplay());
+            carousel.addEventListener('mouseleave', () => this.startAutoplay());
+        }
 
         // Touch/swipe support
         let touchStartX = 0;
@@ -366,19 +366,15 @@ const expCarousel = {
     },
 
     goToSlide(index) {
-        // Remove active from current
-        this.slides[this.currentSlide].classList.remove('active');
+        // Update dots
         this.dots[this.currentSlide].classList.remove('active');
+        this.dots[index].classList.add('active');
 
         // Update current slide
         this.currentSlide = index;
 
-        // Move track
+        // Move track horizontally
         this.track.style.transform = `translateX(-${index * 100}%)`;
-
-        // Add active to new slide
-        this.slides[this.currentSlide].classList.add('active');
-        this.dots[this.currentSlide].classList.add('active');
     },
 
     nextSlide() {
