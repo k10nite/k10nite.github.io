@@ -171,47 +171,45 @@ if (typeof particlesJS !== 'undefined') {
 // ===== GSAP ANIMATIONS =====
 gsap.registerPlugin(ScrollTrigger);
 
-// Hero animations on load
+// Hero sliding text animation on load
 window.addEventListener('load', () => {
-    const heroTimeline = gsap.timeline();
+    const heroTimeline = gsap.timeline({ delay: 0.3 });
 
+    // Slide in each line from bottom
     heroTimeline
-        .to('.hero__title .reveal-text', {
-            opacity: 1,
+        .to('.hero__line-inner', {
             y: 0,
-            duration: 0.8,
-            stagger: 0.2,
-            ease: 'power3.out'
+            opacity: 1,
+            duration: 1,
+            stagger: 0.15,
+            ease: 'power4.out'
         })
         .to('.hero__subtitle', {
             opacity: 1,
             y: 0,
-            duration: 0.6,
+            duration: 0.8,
             ease: 'power3.out'
-        }, '-=0.4')
+        }, '-=0.5')
         .to('.hero__buttons', {
             opacity: 1,
             y: 0,
-            duration: 0.6,
+            duration: 0.8,
             ease: 'power3.out'
-        }, '-=0.3')
+        }, '-=0.5')
         .to('.hero__social', {
             opacity: 1,
             y: 0,
-            duration: 0.6,
+            duration: 0.8,
             ease: 'power3.out'
-        }, '-=0.3')
-        .to('.hero__blob-wrapper', {
-            opacity: 1,
-            scale: 1,
-            duration: 1,
-            ease: 'elastic.out(1, 0.5)'
-        }, '-=0.8');
+        }, '-=0.5')
+        .to('.hero__code', {
+            opacity: 0.15,
+            duration: 1.5,
+            ease: 'power2.out'
+        }, '-=1');
 
-    // Set initial states for hero elements
-    gsap.set('.hero__buttons', { opacity: 0, y: 20 });
-    gsap.set('.hero__social', { opacity: 0, y: 20 });
-    gsap.set('.hero__blob-wrapper', { opacity: 0, scale: 0.8 });
+    // Initial state for floating code (start invisible)
+    gsap.set('.hero__code', { opacity: 0 });
 });
 
 // Scroll-triggered animations for sections
@@ -262,15 +260,26 @@ document.querySelectorAll('.reveal-up').forEach((el, index) => {
     });
 });
 
-// Parallax effect for hero blob
-gsap.to('.hero__blob-wrapper', {
+// Parallax effect for floating code
+gsap.to('.hero__code--left', {
     scrollTrigger: {
         trigger: '.hero',
         start: 'top top',
         end: 'bottom top',
         scrub: 1
     },
-    y: 100,
+    y: -50,
+    ease: 'none'
+});
+
+gsap.to('.hero__code--right', {
+    scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1
+    },
+    y: 50,
     ease: 'none'
 });
 

@@ -32,16 +32,41 @@
     </nav>
 
     <header class="hero" id="home">
-        <div class="hero__content">
-            <div class="hero__data">
+        <!-- Floating Code Background -->
+        <div class="hero__code hero__code--left">
+            <pre><code>const workflow = async () => {
+  await scrape(sources);
+  await process(data);
+  return insights;
+};</code></pre>
+            <pre><code>// n8n automation
+trigger: webhook
+nodes: [transform, ai, deliver]</code></pre>
+            <pre><code>SELECT * FROM insights
+WHERE confidence > 0.95
+ORDER BY created_at DESC;</code></pre>
+        </div>
+        <div class="hero__code hero__code--right">
+            <pre><code>def train_model(data):
+    pipeline.fit(X, y)
+    return pipeline.predict</code></pre>
+            <pre><code>// RAG Pipeline
+embed → search → generate</code></pre>
+            <pre><code>docker compose up -d
+nginx reverse proxy
+ssl: letsencrypt</code></pre>
+        </div>
+
+        <div class="hero__content hero__content--centered">
+            <div class="hero__text-wrapper">
                 <h1 class="hero__title">
-                    <span class="reveal-text">Hi,</span><br>
-                    <span class="reveal-text">I'm <span class="hero__name">Neil</span></span><br>
-                    <span class="reveal-text">Automation & AI Engineer</span>
+                    <span class="hero__line"><span class="hero__line-inner">Your ideas.</span></span>
+                    <span class="hero__line"><span class="hero__line-inner">My automation.</span></span>
+                    <span class="hero__line hero__line--accent"><span class="hero__line-inner">Real impact.</span></span>
                 </h1>
-                <p class="hero__subtitle reveal-text">Building intelligent systems and automating workflows</p>
+                <p class="hero__subtitle">Building intelligent systems that transform workflows into results.</p>
                 <div class="hero__buttons">
-                    <a href="#contact" class="btn btn--primary magnetic">Contact Me</a>
+                    <a href="#contact" class="btn btn--primary magnetic">Let's Talk</a>
                     <a href="#projects" class="btn btn--outline magnetic">View Work</a>
                 </div>
                 <div class="hero__social">
@@ -54,11 +79,6 @@
                     <a href="mailto:neilcayton03@gmail.com" class="hero__social-link magnetic">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"/></svg>
                     </a>
-                </div>
-            </div>
-            <div class="hero__img">
-                <div class="hero__blob-wrapper">
-                    <img src="assets/img/profile.png" alt="Neil Cayton" class="hero__profile-img">
                 </div>
             </div>
         </div>

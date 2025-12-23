@@ -159,7 +159,56 @@ nav {
     min-height: 100vh;
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 6rem 5% 4rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Floating Code Background */
+.hero__code {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hero__code--left {
+    left: 2%;
+    align-items: flex-start;
+}
+
+.hero__code--right {
+    right: 2%;
+    align-items: flex-end;
+}
+
+.hero__code pre {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    line-height: 1.6;
+    background: transparent;
+    margin: 0;
+    animation: float 6s ease-in-out infinite;
+}
+
+.hero__code pre:nth-child(2) {
+    animation-delay: -2s;
+}
+
+.hero__code pre:nth-child(3) {
+    animation-delay: -4s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 .hero__content {
@@ -169,23 +218,43 @@ nav {
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;
+    position: relative;
+    z-index: 1;
 }
 
-.hero__data {
+.hero__content--centered {
+    text-align: center;
     display: flex;
-    flex-direction: column;
     justify-content: center;
 }
 
+.hero__text-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .hero__title {
-    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-size: clamp(2.5rem, 8vw, 5rem);
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 1.5rem;
     letter-spacing: -0.04em;
 }
 
-.hero__name {
+/* Line-by-line animation setup */
+.hero__line {
+    display: block;
+    overflow: hidden;
+}
+
+.hero__line-inner {
+    display: block;
+    transform: translateY(100%);
+    opacity: 0;
+}
+
+.hero__line--accent .hero__line-inner {
     background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -197,7 +266,9 @@ nav {
     color: var(--text-muted);
     margin-bottom: 2.5rem;
     font-weight: 400;
-    max-width: 400px;
+    max-width: 550px;
+    opacity: 0;
+    transform: translateY(20px);
 }
 
 .hero__buttons {
@@ -205,6 +276,9 @@ nav {
     gap: 1rem;
     flex-wrap: wrap;
     margin-bottom: 2rem;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(20px);
 }
 
 .btn {
@@ -268,6 +342,9 @@ nav {
 .hero__social {
     display: flex;
     gap: 1rem;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(20px);
 }
 
 .hero__social-link {
@@ -296,69 +373,16 @@ nav {
     height: 20px;
 }
 
-.hero__img {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.hero__blob-wrapper {
-    position: relative;
-    width: 320px;
-    height: 320px;
-    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
-    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-    animation: blob-morph 8s ease-in-out infinite;
-    box-shadow: 0 0 80px var(--accent-glow),
-                0 0 120px rgba(192, 132, 252, 0.2);
-}
-
-.hero__profile-img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 95%;
-    height: 95%;
-    object-fit: cover;
-    object-position: center top;
-    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-    animation: blob-morph 8s ease-in-out infinite;
-}
-
-@keyframes blob-morph {
-    0%, 100% {
-        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-    }
-    50% {
-        border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+/* Hide floating code on smaller screens */
+@media screen and (max-width: 1200px) {
+    .hero__code {
+        opacity: 0.08;
     }
 }
 
-@media screen and (min-width: 768px) {
-    .hero__content {
-        grid-template-columns: 1fr 1fr;
-        align-items: center;
-    }
-
-    .hero__img {
-        order: 1;
-    }
-
-    .hero__data {
-        order: 0;
-    }
-
-    .hero__blob-wrapper {
-        width: 380px;
-        height: 380px;
-    }
-}
-
-@media screen and (min-width: 992px) {
-    .hero__blob-wrapper {
-        width: 420px;
-        height: 420px;
+@media screen and (max-width: 900px) {
+    .hero__code {
+        display: none;
     }
 }
 
