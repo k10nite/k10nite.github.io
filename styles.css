@@ -177,12 +177,17 @@ nav {
 
 .hero__blob {
     width: 320px;
-    fill: var(--accent);
     filter: drop-shadow(0 0 40px rgba(99, 102, 241, 0.3));
 }
 
+.hero__blob-bg {
+    fill: var(--accent);
+    opacity: 0.15;
+}
+
 .hero__blob-img {
-    width: 360px;
+    width: 100%;
+    height: 100%;
 }
 
 @media screen and (min-width: 768px) {
