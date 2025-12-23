@@ -476,8 +476,16 @@ nav {
     border-radius: 20px;
     padding: 2rem;
     margin-bottom: 1.5rem;
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
+    /* Initial state for scroll animation */
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+.experience-card.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .experience-card::before {

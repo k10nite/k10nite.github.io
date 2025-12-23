@@ -358,14 +358,20 @@ const observerOptions = {
 };
 
 const cardObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
+    entries.forEach((entry) => {
         if (entry.isIntersecting) {
+            // Get all siblings of same type to calculate stagger
+            const parent = entry.target.parentElement;
+            const siblings = Array.from(parent.querySelectorAll(entry.target.tagName + '.' + entry.target.classList[0]));
+            const index = siblings.indexOf(entry.target);
+
             entry.target.style.transitionDelay = `${index * 0.1}s`;
             entry.target.classList.add('visible');
         }
     });
 }, observerOptions);
 
-document.querySelectorAll('.project-card, .skill-category').forEach(card => {
+// Observe all cards including experience cards
+document.querySelectorAll('.project-card, .skill-category, .experience-card').forEach(card => {
     cardObserver.observe(card);
 });
