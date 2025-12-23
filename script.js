@@ -322,99 +322,75 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ===== EXPERIENCE CAROUSEL (Stackbyte-style) =====
+// ===== EXPERIENCE CAROUSEL (Scroll-triggered, Stackbyte-style) =====
 const expCarousel = {
     track: document.querySelector('.exp-carousel__track'),
     slides: document.querySelectorAll('.exp-slide'),
     dots: document.querySelectorAll('.exp-carousel__dot'),
-    currentSlide: 0,
-    autoplayInterval: null,
-    autoplayDelay: 5000, // 5 seconds
+    section: document.querySelector('.experience-section'),
 
     init() {
-        if (!this.track || this.slides.length === 0) return;
+        if (!this.track || this.slides.length === 0 || !this.section) return;
 
-        // Dot navigation
+        const slideCount = this.slides.length;
+
+        // Dot click navigation
         this.dots.forEach((dot, index) => {
             dot.addEventListener('click', () => this.goToSlide(index));
         });
 
-        // Start autoplay
-        this.startAutoplay();
-
-        // Pause on hover
-        const carousel = document.querySelector('.exp-carousel');
-        if (carousel) {
-            carousel.addEventListener('mouseenter', () => this.stopAutoplay());
-            carousel.addEventListener('mouseleave', () => this.startAutoplay());
-        }
-
-        // Touch/swipe support
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        this.track.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-            this.stopAutoplay();
-        }, { passive: true });
-
-        this.track.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            this.handleSwipe(touchStartX, touchEndX);
-            this.startAutoplay();
-        }, { passive: true });
+        // GSAP ScrollTrigger - pin section and animate through slides
+        gsap.to(this.track, {
+            x: () => -(this.track.scrollWidth - window.innerWidth + (window.innerWidth - this.track.children[0].offsetWidth)),
+            ease: 'none',
+            scrollTrigger: {
+                trigger: this.section,
+                start: 'top top',
+                end: () => `+=${this.track.scrollWidth}`,
+                pin: true,
+                scrub: 1,
+                snap: {
+                    snapTo: 1 / (slideCount - 1),
+                    duration: 0.3,
+                    ease: 'power2.inOut'
+                },
+                onUpdate: (self) => {
+                    // Update dots based on scroll progress
+                    const progress = self.progress;
+                    const currentIndex = Math.round(progress * (slideCount - 1));
+                    this.updateDots(currentIndex);
+                }
+            }
+        });
     },
 
     goToSlide(index) {
-        // Update dots
-        this.dots[this.currentSlide].classList.remove('active');
-        this.dots[index].classList.add('active');
+        const slideCount = this.slides.length;
+        const progress = index / (slideCount - 1);
 
-        // Update current slide
-        this.currentSlide = index;
-
-        // Move track horizontally
-        this.track.style.transform = `translateX(-${index * 100}%)`;
-    },
-
-    nextSlide() {
-        const next = (this.currentSlide + 1) % this.slides.length;
-        this.goToSlide(next);
-    },
-
-    prevSlide() {
-        const prev = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
-        this.goToSlide(prev);
-    },
-
-    handleSwipe(startX, endX) {
-        const threshold = 50;
-        const diff = startX - endX;
-
-        if (Math.abs(diff) > threshold) {
-            if (diff > 0) {
-                this.nextSlide();
-            } else {
-                this.prevSlide();
-            }
+        // Get the ScrollTrigger instance and scroll to position
+        const st = ScrollTrigger.getAll().find(t => t.trigger === this.section);
+        if (st) {
+            const scrollPos = st.start + (st.end - st.start) * progress;
+            gsap.to(window, {
+                scrollTo: scrollPos,
+                duration: 0.6,
+                ease: 'power2.inOut'
+            });
         }
     },
 
-    startAutoplay() {
-        this.stopAutoplay();
-        this.autoplayInterval = setInterval(() => this.nextSlide(), this.autoplayDelay);
-    },
-
-    stopAutoplay() {
-        if (this.autoplayInterval) {
-            clearInterval(this.autoplayInterval);
-            this.autoplayInterval = null;
-        }
+    updateDots(index) {
+        this.dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
     }
 };
 
-// Initialize carousel
-expCarousel.init();
+// Initialize carousel after GSAP is ready
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    expCarousel.init();
+}
 
 // ===== CARD GLOW FOLLOW EFFECT =====
 const glowCards = document.querySelectorAll('.project-card, .skill-category');
