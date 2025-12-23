@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neil Cayton | Automation & AI Engineer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">neil.dev</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <h1>Neil Cayton</h1>
+        <p class="tagline">Automation Specialist & AI Engineer</p>
+        <p class="location">Baguio City, Philippines</p>
+    </header>
+
+    <section id="about" class="section">
+        <h2>About</h2>
+        <p>I build automation systems and AI-powered applications. Currently working as an Automation Specialist at PerfectTed, where I deploy self-hosted n8n workflows, build intelligent scrapers, and integrate LLMs into production pipelines.</p>
+
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>Automation</h3>
+                <p>n8n (self-hosted), Zapier, Docker, reverse proxy, SSL</p>
+            </div>
+            <div class="skill-category">
+                <h3>AI/ML</h3>
+                <p>XGBoost, Random Forest, GPT-4 API, RAG pipelines, FAISS, RASA NLU, SHAP</p>
+            </div>
+            <div class="skill-category">
+                <h3>Geospatial</h3>
+                <p>Google Earth Engine, Sentinel-2, Landsat-8, Rasterio, GDAL</p>
+            </div>
+            <div class="skill-category">
+                <h3>Backend</h3>
+                <p>Python, FastAPI, PostgreSQL, MongoDB, Airtable</p>
+            </div>
+            <div class="skill-category">
+                <h3>Frontend</h3>
+                <p>React, TypeScript, Tailwind CSS, Framer Motion</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="section">
+        <h2>Experience</h2>
+
+        <div class="experience-card">
+            <div class="exp-header">
+                <h3>Machine Learning Researcher</h3>
+                <span class="exp-date">Aug 2025 – Present</span>
+            </div>
+            <p class="exp-company">Department of Science and Technology — Undergraduate Thesis</p>
+            <ul class="exp-list">
+                <li>Built Munsell Chart data extraction tool to digitize soil color samples from textbook</li>
+                <li>Processed color chips into hex/RGB values mapped to Munsell notation (Hue/Value/Chroma)</li>
+                <li>Created structured dataset used to train team's soil classification model deployed on Hugging Face</li>
+            </ul>
+        </div>
+
+        <div class="experience-card">
+            <div class="exp-header">
+                <h3>Marketing Officer</h3>
+                <span class="exp-date">Aug 2025 – Present</span>
+            </div>
+            <p class="exp-company">SLU AWS Learning Club</p>
+            <ul class="exp-list">
+                <li>Manage public pages and content using Canva for club visibility</li>
+                <li>Build engagement pipelines for community outreach and event promotion</li>
+            </ul>
+        </div>
+
+        <div class="experience-card">
+            <div class="exp-header">
+                <h3>Operational Specialist</h3>
+                <span class="exp-date">May 2025 – Present</span>
+            </div>
+            <p class="exp-company">PerfectTed — Remote (UK)</p>
+            <ul class="exp-list">
+                <li>Deployed self-hosted n8n on Docker with reverse proxy and SSL termination</li>
+                <li>Built Reddit/Twitter scrapers handling anti-bot detection via authenticated sessions</li>
+                <li>Integrated GPT-4 API into workflows for automated content rewriting and data normalization</li>
+                <li>Developed automated email outreach pipeline with sequencing and response tracking</li>
+                <li>Created modular PO document parsers extracting line items, SKUs, pricing from varied formats</li>
+                <li>Designed relational Airtable schemas with linked records, rollups, and automation triggers</li>
+            </ul>
+        </div>
+
+        <div class="experience-card">
+            <div class="exp-header">
+                <h3>Business Application Developer</h3>
+                <span class="exp-date">Jun 2025 – Jul 2025</span>
+            </div>
+            <p class="exp-company">NOAH Business Applications — Internship (320 hours)</p>
+            <ul class="exp-list">
+                <li>Executed BRTS (Business Rules Testing System) preparation, testing, and QC for enterprise ERP modules (ROPA, PPE, AP, Car Plan, EIS, GL)</li>
+                <li>Built Excel extension to automate screenshot linking, reducing manual effort by 50%</li>
+                <li>Collaborated on ~2,000 lines of business rule configurations for PNB banking systems</li>
+                <li>Logged and tracked defects in module-specific issue logs for developer handoff</li>
+                <li>Validated compliance features for BIR tax forms and BSP regulatory requirements</li>
+            </ul>
+        </div>
+
+        <div class="experience-card">
+            <div class="exp-header">
+                <h3>Full-Stack Developer & AI Engineer</h3>
+                <span class="exp-date">Aug 2025 – Dec 2025</span>
+            </div>
+            <p class="exp-company">Gift of Grace Food Manufacturing Corporation — Capstone Project</p>
+            <ul class="exp-list">
+                <li>Built AI-powered e-commerce platform replacing legacy Google Sites presence</li>
+                <li>Engineered "Grace" chatbot with RASA NLU (50+ intents) and RAG pipeline using FAISS</li>
+                <li>Implemented multi-provider LLM fallback system (Gemini, GPT-4o-mini, DeepSeek)</li>
+                <li>Developed FastAPI backend for chatbot, admin auth, and content management</li>
+                <li>Built admin dashboard for non-technical staff to manage products and update chatbot knowledge base</li>
+                <li>Deployed across Vercel, Hugging Face Spaces, and Cloudflare CDN</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <h2>Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>YouTube Pipeline</h3>
+                <p>Auto-transcription → metadata extraction → Airtable delivery workflow</p>
+                <div class="tech-tags">
+                    <span>n8n</span>
+                    <span>Airtable</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <h3>Social Scrapers</h3>
+                <p>Reddit/Twitter scrapers with anti-detection, auth sessions, and rate throttling</p>
+                <div class="tech-tags">
+                    <span>n8n</span>
+                    <span>Anti-bot</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <h3>Order Extraction</h3>
+                <p>Multi-format PO parsing with GPT-4 normalization for varied customer formats</p>
+                <div class="tech-tags">
+                    <span>GPT-4</span>
+                    <span>n8n</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <h3>Email Outreach</h3>
+                <p>Automated sequences with tracking, conditional logic, and response handling</p>
+                <div class="tech-tags">
+                    <span>n8n</span>
+                    <span>Automation</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <h3>Grace AI Chatbot</h3>
+                <p>RAG-powered customer service bot with RASA NLU and multi-LLM fallback</p>
+                <div class="tech-tags">
+                    <span>RASA</span>
+                    <span>FAISS</span>
+                    <span>FastAPI</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <h3>Hiring Automation</h3>
+                <p>Applicant intake, tracking, and notification pipelines</p>
+                <div class="tech-tags">
+                    <span>n8n</span>
+                    <span>Airtable</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2>Contact</h2>
+        <p>Open to opportunities in automation, AI engineering, and full-stack development.</p>
+        <div class="contact-links">
+            <a href="mailto:neilcayton03@gmail.com">neilcayton03@gmail.com</a>
+            <a href="https://github.com/k10nite" target="_blank">GitHub</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Neil Cayton</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
