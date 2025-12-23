@@ -328,17 +328,35 @@ document.querySelectorAll('.experience-card').forEach(card => {
     });
 });
 
-// ===== SKILL CATEGORY GLOW EFFECT =====
-document.querySelectorAll('.skill-category').forEach(skill => {
-    skill.addEventListener('mousemove', (e) => {
-        const rect = skill.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+// ===== CARD GLOW FOLLOW EFFECT =====
+const glowCards = document.querySelectorAll('.project-card, .experience-card, .skill-category');
 
-        skill.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(99, 102, 241, 0.15), var(--card-bg))`;
-    });
+glowCards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
 
-    skill.addEventListener('mouseleave', () => {
-        skill.style.background = 'var(--card-bg)';
+        card.style.setProperty('--mouse-x', `${x}%`);
+        card.style.setProperty('--mouse-y', `${y}%`);
     });
+});
+
+// ===== STAGGERED CARD ENTRANCE =====
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+            entry.target.style.transitionDelay = `${index * 0.1}s`;
+            entry.target.classList.add('visible');
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.project-card, .skill-category').forEach(card => {
+    cardObserver.observe(card);
 });
