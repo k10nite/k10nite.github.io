@@ -323,73 +323,67 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ===== EXPERIENCE CAROUSEL (Scroll-triggered, Stackbyte-style) =====
-const expCarousel = {
-    track: document.querySelector('.exp-carousel__track'),
-    slides: document.querySelectorAll('.exp-slide'),
-    dots: document.querySelectorAll('.exp-carousel__dot'),
-    section: document.querySelector('.experience-section'),
+function initExpCarousel() {
+    const track = document.querySelector('.exp-carousel__track');
+    const slides = document.querySelectorAll('.exp-slide');
+    const dots = document.querySelectorAll('.exp-carousel__dot');
+    const section = document.querySelector('.experience-section');
 
-    init() {
-        if (!this.track || this.slides.length === 0 || !this.section) return;
+    if (!track || slides.length === 0 || !section) return;
 
-        const slideCount = this.slides.length;
+    const slideCount = slides.length;
 
-        // Dot click navigation
-        this.dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => this.goToSlide(index));
-        });
+    // Calculate total scroll distance (all slides minus one screen width)
+    const getScrollDistance = () => {
+        return track.scrollWidth - window.innerWidth;
+    };
 
-        // GSAP ScrollTrigger - pin section and animate through slides
-        gsap.to(this.track, {
-            x: () => -(this.track.scrollWidth - window.innerWidth + (window.innerWidth - this.track.children[0].offsetWidth)),
-            ease: 'none',
-            scrollTrigger: {
-                trigger: this.section,
-                start: 'top top',
-                end: () => `+=${this.track.scrollWidth}`,
-                pin: true,
-                scrub: 1,
-                snap: {
-                    snapTo: 1 / (slideCount - 1),
-                    duration: 0.3,
+    // Create horizontal scroll animation
+    const tl = gsap.to(track, {
+        x: () => -getScrollDistance(),
+        ease: 'none',
+        scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: () => `+=${getScrollDistance()}`,
+            pin: true,
+            scrub: 0.5,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+                // Update active dot based on progress
+                const currentIndex = Math.min(
+                    Math.round(self.progress * (slideCount - 1)),
+                    slideCount - 1
+                );
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentIndex);
+                });
+            }
+        }
+    });
+
+    // Dot click navigation
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            const st = ScrollTrigger.getAll().find(t => t.trigger === section);
+            if (st) {
+                const targetProgress = index / (slideCount - 1);
+                const targetScroll = st.start + (st.end - st.start) * targetProgress;
+                gsap.to(window, {
+                    scrollTo: targetScroll,
+                    duration: 0.8,
                     ease: 'power2.inOut'
-                },
-                onUpdate: (self) => {
-                    // Update dots based on scroll progress
-                    const progress = self.progress;
-                    const currentIndex = Math.round(progress * (slideCount - 1));
-                    this.updateDots(currentIndex);
-                }
+                });
             }
         });
-    },
+    });
+}
 
-    goToSlide(index) {
-        const slideCount = this.slides.length;
-        const progress = index / (slideCount - 1);
-
-        // Get the ScrollTrigger instance and scroll to position
-        const st = ScrollTrigger.getAll().find(t => t.trigger === this.section);
-        if (st) {
-            const scrollPos = st.start + (st.end - st.start) * progress;
-            gsap.to(window, {
-                scrollTo: scrollPos,
-                duration: 0.6,
-                ease: 'power2.inOut'
-            });
-        }
-    },
-
-    updateDots(index) {
-        this.dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-        });
-    }
-};
-
-// Initialize carousel after GSAP is ready
+// Initialize after DOM and GSAP are ready
 if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-    expCarousel.init();
+    // Wait for page load to ensure correct measurements
+    window.addEventListener('load', initExpCarousel);
 }
 
 // ===== CARD GLOW FOLLOW EFFECT =====
