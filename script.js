@@ -322,42 +322,36 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ===== EXPERIENCE CAROUSEL (Auto-advance with dot navigation) =====
+// ===== EXPERIENCE CAROUSEL (Scroll-triggered with dot navigation) =====
 const expCarousel = {
     track: null,
     slides: null,
     dots: null,
+    section: null,
     currentSlide: 0,
-    autoplayInterval: null,
-    autoplayDelay: 4000,
+    totalSlides: 0,
 
     init() {
         this.track = document.querySelector('.exp-carousel__track');
         this.slides = document.querySelectorAll('.exp-slide');
         this.dots = document.querySelectorAll('.exp-carousel__dot');
+        this.section = document.querySelector('.experience-section');
 
         if (!this.track || this.slides.length === 0) return;
+
+        this.totalSlides = this.slides.length;
 
         // Dot click navigation
         this.dots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
                 this.goToSlide(index);
-                this.resetAutoplay();
             });
         });
 
-        // Pause on hover
-        const carousel = document.querySelector('.exp-carousel');
-        if (carousel) {
-            carousel.addEventListener('mouseenter', () => this.stopAutoplay());
-            carousel.addEventListener('mouseleave', () => this.startAutoplay());
-        }
-
-        // Touch/swipe support
+        // Touch/swipe support for mobile
         let touchStartX = 0;
         this.track.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
-            this.stopAutoplay();
         }, { passive: true });
 
         this.track.addEventListener('touchend', (e) => {
@@ -367,11 +361,35 @@ const expCarousel = {
                 if (diff > 0) this.nextSlide();
                 else this.prevSlide();
             }
-            this.startAutoplay();
         }, { passive: true });
 
-        // Start autoplay
-        this.startAutoplay();
+        // Scroll-triggered carousel with GSAP
+        this.initScrollTrigger();
+    },
+
+    initScrollTrigger() {
+        const self = this;
+
+        // Pin the section and scrub through slides based on scroll
+        ScrollTrigger.create({
+            trigger: this.section,
+            start: 'top top',
+            end: () => `+=${this.totalSlides * 100}%`,
+            pin: true,
+            scrub: 1,
+            onUpdate: (scrollTrigger) => {
+                // Calculate which slide to show based on scroll progress
+                const progress = scrollTrigger.progress;
+                const slideIndex = Math.min(
+                    Math.floor(progress * this.totalSlides),
+                    this.totalSlides - 1
+                );
+
+                if (slideIndex !== this.currentSlide) {
+                    this.goToSlide(slideIndex);
+                }
+            }
+        });
     },
 
     goToSlide(index) {
@@ -383,30 +401,13 @@ const expCarousel = {
     },
 
     nextSlide() {
-        const next = (this.currentSlide + 1) % this.slides.length;
+        const next = Math.min(this.currentSlide + 1, this.totalSlides - 1);
         this.goToSlide(next);
     },
 
     prevSlide() {
-        const prev = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+        const prev = Math.max(this.currentSlide - 1, 0);
         this.goToSlide(prev);
-    },
-
-    startAutoplay() {
-        this.stopAutoplay();
-        this.autoplayInterval = setInterval(() => this.nextSlide(), this.autoplayDelay);
-    },
-
-    stopAutoplay() {
-        if (this.autoplayInterval) {
-            clearInterval(this.autoplayInterval);
-            this.autoplayInterval = null;
-        }
-    },
-
-    resetAutoplay() {
-        this.stopAutoplay();
-        this.startAutoplay();
     }
 };
 
