@@ -117,93 +117,153 @@ ssl: letsencrypt</code></pre>
         </div>
     </section>
 
-    <section id="experience" class="section">
+    <section id="experience" class="section experience-section">
         <h2 class="section-title reveal-text">Experience</h2>
 
-        <div class="experience-grid">
-            <div class="experience-card">
-                <div class="exp-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4c0 1.1-.5 2.1-1.2 2.8L12 12l-2.8-3.2A4 4 0 0 1 12 2Z"/><path d="m19 9-1.9 5.5a2 2 0 0 1-1.9 1.3h-6.4a2 2 0 0 1-1.9-1.3L5 9"/><path d="M12 12v9"/><path d="M7.5 18h9"/></svg>
+        <div class="exp-carousel">
+            <div class="exp-carousel__track">
+                <!-- Slide 1: Operational Specialist -->
+                <div class="exp-slide" data-color="cyan">
+                    <div class="exp-slide__content">
+                        <span class="exp-slide__badge exp-slide__badge--cyan">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/></svg>
+                            Automation & AI
+                        </span>
+                        <h3 class="exp-slide__title">OPERATIONAL<br>SPECIALIST</h3>
+                        <p class="exp-slide__desc">Building intelligent automation systems at PerfectTed, deploying self-hosted workflows, and integrating AI into production pipelines for a UK-based company.</p>
+                        <ul class="exp-slide__tech">
+                            <li>n8n / Docker</li>
+                            <li>GPT-4 API</li>
+                            <li>PostgreSQL / Supabase</li>
+                            <li>Web Scraping</li>
+                        </ul>
+                        <span class="exp-slide__date">May 2025 – Present</span>
+                    </div>
+                    <div class="exp-slide__visual">
+                        <svg class="exp-slide__icon" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="60" cy="60" r="50" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                            <circle cx="60" cy="60" r="35" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+                            <path d="M60 25V60L85 75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="60" cy="60" r="8" fill="currentColor" opacity="0.5"/>
+                        </svg>
+                    </div>
                 </div>
-                <div class="exp-header">
-                    <h3>Machine Learning Researcher</h3>
-                    <span class="exp-date">Aug 2025 – Present</span>
+
+                <!-- Slide 2: Full-Stack Developer -->
+                <div class="exp-slide" data-color="purple">
+                    <div class="exp-slide__content">
+                        <span class="exp-slide__badge exp-slide__badge--purple">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            Full-Stack & AI
+                        </span>
+                        <h3 class="exp-slide__title">AI<br>ENGINEER</h3>
+                        <p class="exp-slide__desc">Built an AI-powered e-commerce platform with "Grace" chatbot using RASA NLU, RAG pipelines, and multi-provider LLM fallback for Gift of Grace Food Manufacturing.</p>
+                        <ul class="exp-slide__tech">
+                            <li>RASA NLU / FAISS</li>
+                            <li>FastAPI</li>
+                            <li>React / Vercel</li>
+                            <li>LLM Integration</li>
+                        </ul>
+                        <span class="exp-slide__date">Aug – Dec 2025</span>
+                    </div>
+                    <div class="exp-slide__visual">
+                        <svg class="exp-slide__icon" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="30" y="30" width="60" height="60" rx="12" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                            <circle cx="50" cy="55" r="6" fill="currentColor" opacity="0.5"/>
+                            <circle cx="70" cy="55" r="6" fill="currentColor" opacity="0.5"/>
+                            <path d="M45 75 Q60 85 75 75" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        </svg>
+                    </div>
                 </div>
-                <p class="exp-company">Department of Science and Technology — Undergraduate Thesis</p>
-                <ul class="exp-list">
-                    <li>Built Munsell Chart data extraction tool to digitize soil color samples from textbook</li>
-                    <li>Processed color chips into hex/RGB values mapped to Munsell notation (Hue/Value/Chroma)</li>
-                    <li>Created structured dataset used to train team's soil classification model deployed on Hugging Face</li>
-                </ul>
+
+                <!-- Slide 3: ML Researcher -->
+                <div class="exp-slide" data-color="green">
+                    <div class="exp-slide__content">
+                        <span class="exp-slide__badge exp-slide__badge--green">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 0 1 4 4c0 1.1-.5 2.1-1.2 2.8L12 12l-2.8-3.2A4 4 0 0 1 12 2Z"/><path d="m19 9-1.9 5.5a2 2 0 0 1-1.9 1.3h-6.4a2 2 0 0 1-1.9-1.3L5 9"/></svg>
+                            Research
+                        </span>
+                        <h3 class="exp-slide__title">ML<br>RESEARCHER</h3>
+                        <p class="exp-slide__desc">DOST-funded thesis project building Munsell Chart extraction tools and structured datasets for soil classification models deployed on Hugging Face.</p>
+                        <ul class="exp-slide__tech">
+                            <li>Computer Vision</li>
+                            <li>Data Processing</li>
+                            <li>Hugging Face</li>
+                            <li>Python</li>
+                        </ul>
+                        <span class="exp-slide__date">Aug 2025 – Present</span>
+                    </div>
+                    <div class="exp-slide__visual">
+                        <svg class="exp-slide__icon" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="60" cy="40" r="20" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                            <circle cx="40" cy="80" r="15" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                            <circle cx="80" cy="80" r="15" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                            <line x1="60" y1="60" x2="48" y2="68" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+                            <line x1="60" y1="60" x2="72" y2="68" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Slide 4: Business App Developer -->
+                <div class="exp-slide" data-color="orange">
+                    <div class="exp-slide__content">
+                        <span class="exp-slide__badge exp-slide__badge--orange">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h.01"/><path d="M17 7h.01"/></svg>
+                            Enterprise
+                        </span>
+                        <h3 class="exp-slide__title">BUSINESS<br>APP DEV</h3>
+                        <p class="exp-slide__desc">320-hour internship at NOAH executing BRTS testing for enterprise ERP modules, building automation tools, and validating BIR/BSP compliance features.</p>
+                        <ul class="exp-slide__tech">
+                            <li>ERP Systems</li>
+                            <li>QA Testing</li>
+                            <li>Excel Automation</li>
+                            <li>Compliance</li>
+                        </ul>
+                        <span class="exp-slide__date">Jun – Jul 2025</span>
+                    </div>
+                    <div class="exp-slide__visual">
+                        <svg class="exp-slide__icon" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="25" y="35" width="70" height="50" rx="4" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                            <line x1="25" y1="50" x2="95" y2="50" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+                            <rect x="35" y="58" width="20" height="8" fill="currentColor" opacity="0.3"/>
+                            <rect x="35" y="70" width="35" height="8" fill="currentColor" opacity="0.2"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Slide 5: Marketing -->
+                <div class="exp-slide" data-color="pink">
+                    <div class="exp-slide__content">
+                        <span class="exp-slide__badge exp-slide__badge--pink">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 11 18-5v12L3 14v-3z"/></svg>
+                            Community
+                        </span>
+                        <h3 class="exp-slide__title">MARKETING<br>OFFICER</h3>
+                        <p class="exp-slide__desc">Managing public presence and content strategy for SLU AWS Learning Club, building engagement pipelines for community outreach and event promotion.</p>
+                        <ul class="exp-slide__tech">
+                            <li>Content Strategy</li>
+                            <li>Canva</li>
+                            <li>Community Building</li>
+                            <li>AWS</li>
+                        </ul>
+                        <span class="exp-slide__date">Aug 2025 – Present</span>
+                    </div>
+                    <div class="exp-slide__visual">
+                        <svg class="exp-slide__icon" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M30 50 L90 30 L90 90 L30 70 Z" stroke="currentColor" stroke-width="1" opacity="0.3" fill="none"/>
+                            <circle cx="30" cy="60" r="15" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+                        </svg>
+                    </div>
+                </div>
             </div>
 
-            <div class="experience-card">
-                <div class="exp-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
-                </div>
-                <div class="exp-header">
-                    <h3>Marketing Officer</h3>
-                    <span class="exp-date">Aug 2025 – Present</span>
-                </div>
-                <p class="exp-company">SLU AWS Learning Club</p>
-                <ul class="exp-list">
-                    <li>Manage public pages and content using Canva for club visibility</li>
-                    <li>Build engagement pipelines for community outreach and event promotion</li>
-                </ul>
-            </div>
-
-            <div class="experience-card">
-                <div class="exp-icon exp-icon--accent">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
-                </div>
-                <div class="exp-header">
-                    <h3>Operational Specialist</h3>
-                    <span class="exp-date">May 2025 – Present</span>
-                </div>
-                <p class="exp-company">PerfectTed — Remote (UK)</p>
-                <ul class="exp-list">
-                    <li>Deployed self-hosted n8n on Docker with reverse proxy and SSL termination</li>
-                    <li>Built Reddit/Twitter scrapers handling anti-bot detection via authenticated sessions</li>
-                    <li>Integrated GPT-4 API into workflows for automated content rewriting and data normalization</li>
-                    <li>Developed automated email outreach pipeline with sequencing and response tracking</li>
-                    <li>Designed PostgreSQL schemas in Supabase with relational tables, views, and automation triggers</li>
-                </ul>
-            </div>
-
-            <div class="experience-card">
-                <div class="exp-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h.01"/><path d="M17 7h.01"/><path d="M7 17h.01"/><path d="M17 17h.01"/></svg>
-                </div>
-                <div class="exp-header">
-                    <h3>Business Application Developer</h3>
-                    <span class="exp-date">Jun 2025 – Jul 2025</span>
-                </div>
-                <p class="exp-company">NOAH Business Applications — Internship (320 hours)</p>
-                <ul class="exp-list">
-                    <li>Executed BRTS (Business Rules Testing System) preparation, testing, and QC for enterprise ERP modules (ROPA, PPE, AP, Car Plan, EIS, GL)</li>
-                    <li>Built Excel extension to automate screenshot linking, reducing manual effort by 50%</li>
-                    <li>Logged and tracked defects in module-specific issue logs for developer handoff</li>
-                    <li>Validated compliance features for BIR tax forms and BSP regulatory requirements</li>
-                </ul>
-            </div>
-
-            <div class="experience-card">
-                <div class="exp-icon exp-icon--purple">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                </div>
-                <div class="exp-header">
-                    <h3>Full-Stack Developer & AI Engineer</h3>
-                    <span class="exp-date">Aug 2025 – Dec 2025</span>
-                </div>
-                <p class="exp-company">Gift of Grace Food Manufacturing Corporation — Capstone Project</p>
-                <ul class="exp-list">
-                    <li>Built AI-powered e-commerce platform replacing legacy Google Sites presence</li>
-                    <li>Engineered "Grace" chatbot with RASA NLU (50+ intents) and RAG pipeline using FAISS</li>
-                    <li>Implemented multi-provider LLM fallback system (Gemini, GPT-4o-mini, DeepSeek)</li>
-                    <li>Developed FastAPI backend for chatbot, admin auth, and content management</li>
-                    <li>Built admin dashboard for non-technical staff to manage products and update chatbot knowledge base</li>
-                    <li>Deployed across Vercel, Hugging Face Spaces, and Cloudflare CDN</li>
-                </ul>
+            <!-- Navigation dots -->
+            <div class="exp-carousel__nav">
+                <button class="exp-carousel__dot active" data-slide="0"></button>
+                <button class="exp-carousel__dot" data-slide="1"></button>
+                <button class="exp-carousel__dot" data-slide="2"></button>
+                <button class="exp-carousel__dot" data-slide="3"></button>
+                <button class="exp-carousel__dot" data-slide="4"></button>
             </div>
         </div>
     </section>

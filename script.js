@@ -322,33 +322,106 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ===== SUBTLE TILT EFFECT ON EXPERIENCE CARDS =====
-document.querySelectorAll('.experience-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        if (!card.classList.contains('visible')) return;
+// ===== EXPERIENCE CAROUSEL (Stackbyte-style) =====
+const expCarousel = {
+    track: document.querySelector('.exp-carousel__track'),
+    slides: document.querySelectorAll('.exp-slide'),
+    dots: document.querySelectorAll('.exp-carousel__dot'),
+    currentSlide: 0,
+    autoplayInterval: null,
+    autoplayDelay: 5000, // 5 seconds
 
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+    init() {
+        if (!this.track || this.slides.length === 0) return;
 
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
+        // Set first slide as active
+        this.slides[0].classList.add('active');
 
-        // Subtle tilt effect
-        const rotateX = (y - centerY) / 40;
-        const rotateY = (centerX - x) / 40;
+        // Dot navigation
+        this.dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => this.goToSlide(index));
+        });
 
-        card.style.transform = `translateY(-8px) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    });
+        // Start autoplay
+        this.startAutoplay();
 
-    card.addEventListener('mouseleave', () => {
-        if (!card.classList.contains('visible')) return;
-        card.style.transform = 'translateY(0) perspective(1000px) rotateX(0) rotateY(0)';
-    });
-});
+        // Pause on hover
+        this.track.addEventListener('mouseenter', () => this.stopAutoplay());
+        this.track.addEventListener('mouseleave', () => this.startAutoplay());
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        this.track.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            this.stopAutoplay();
+        }, { passive: true });
+
+        this.track.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            this.handleSwipe(touchStartX, touchEndX);
+            this.startAutoplay();
+        }, { passive: true });
+    },
+
+    goToSlide(index) {
+        // Remove active from current
+        this.slides[this.currentSlide].classList.remove('active');
+        this.dots[this.currentSlide].classList.remove('active');
+
+        // Update current slide
+        this.currentSlide = index;
+
+        // Move track
+        this.track.style.transform = `translateX(-${index * 100}%)`;
+
+        // Add active to new slide
+        this.slides[this.currentSlide].classList.add('active');
+        this.dots[this.currentSlide].classList.add('active');
+    },
+
+    nextSlide() {
+        const next = (this.currentSlide + 1) % this.slides.length;
+        this.goToSlide(next);
+    },
+
+    prevSlide() {
+        const prev = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+        this.goToSlide(prev);
+    },
+
+    handleSwipe(startX, endX) {
+        const threshold = 50;
+        const diff = startX - endX;
+
+        if (Math.abs(diff) > threshold) {
+            if (diff > 0) {
+                this.nextSlide();
+            } else {
+                this.prevSlide();
+            }
+        }
+    },
+
+    startAutoplay() {
+        this.stopAutoplay();
+        this.autoplayInterval = setInterval(() => this.nextSlide(), this.autoplayDelay);
+    },
+
+    stopAutoplay() {
+        if (this.autoplayInterval) {
+            clearInterval(this.autoplayInterval);
+            this.autoplayInterval = null;
+        }
+    }
+};
+
+// Initialize carousel
+expCarousel.init();
 
 // ===== CARD GLOW FOLLOW EFFECT =====
-const glowCards = document.querySelectorAll('.project-card, .experience-card, .skill-category');
+const glowCards = document.querySelectorAll('.project-card, .skill-category');
 
 glowCards.forEach(card => {
     card.addEventListener('mousemove', (e) => {
@@ -372,26 +445,7 @@ const observerOptions = {
     rootMargin: '0px 0px -80px 0px'
 };
 
-// Experience cards with enhanced stagger animation
-const experienceObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            const cards = document.querySelectorAll('.experience-card');
-            const index = Array.from(cards).indexOf(entry.target);
-
-            // Stackbyte-style stagger: 150ms between each card
-            setTimeout(() => {
-                entry.target.style.transitionDuration = '0.6s';
-                entry.target.style.transitionTimingFunction = 'cubic-bezier(0.4, 0, 0.2, 1)';
-                entry.target.classList.add('visible');
-            }, index * 150);
-
-            observer.unobserve(entry.target);
-        }
-    });
-}, observerOptions);
-
-// Other cards (projects, skills)
+// Cards (projects, skills) with stagger animation
 const cardObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -410,12 +464,7 @@ const cardObserver = new IntersectionObserver((entries, observer) => {
     });
 }, observerOptions);
 
-// Observe experience cards separately for better control
-document.querySelectorAll('.experience-card').forEach(card => {
-    experienceObserver.observe(card);
-});
-
-// Observe other cards
+// Observe cards
 document.querySelectorAll('.project-card, .skill-category').forEach(card => {
     cardObserver.observe(card);
 });
