@@ -322,9 +322,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ===== TILT EFFECT ON EXPERIENCE CARDS =====
+// ===== SUBTLE TILT EFFECT ON EXPERIENCE CARDS =====
 document.querySelectorAll('.experience-card').forEach(card => {
     card.addEventListener('mousemove', (e) => {
+        if (!card.classList.contains('visible')) return;
+
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
@@ -332,14 +334,16 @@ document.querySelectorAll('.experience-card').forEach(card => {
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
 
-        const rotateX = (y - centerY) / 20;
-        const rotateY = (centerX - x) / 20;
+        // Subtle tilt effect
+        const rotateX = (y - centerY) / 40;
+        const rotateY = (centerX - x) / 40;
 
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        card.style.transform = `translateY(-8px) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
     });
 
     card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+        if (!card.classList.contains('visible')) return;
+        card.style.transform = 'translateY(0) perspective(1000px) rotateX(0) rotateY(0)';
     });
 });
 
@@ -355,29 +359,63 @@ glowCards.forEach(card => {
         card.style.setProperty('--mouse-x', `${x}%`);
         card.style.setProperty('--mouse-y', `${y}%`);
     });
+
+    card.addEventListener('mouseleave', () => {
+        card.style.setProperty('--mouse-x', '50%');
+        card.style.setProperty('--mouse-y', '50%');
+    });
 });
 
-// ===== STAGGERED CARD ENTRANCE =====
+// ===== STAGGERED CARD ENTRANCE (Stackbyte-style) =====
 const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+    threshold: 0.15,
+    rootMargin: '0px 0px -80px 0px'
 };
 
-const cardObserver = new IntersectionObserver((entries) => {
+// Experience cards with enhanced stagger animation
+const experienceObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
-            // Get all siblings of same type to calculate stagger
-            const parent = entry.target.parentElement;
-            const siblings = Array.from(parent.querySelectorAll(entry.target.tagName + '.' + entry.target.classList[0]));
-            const index = siblings.indexOf(entry.target);
+            const cards = document.querySelectorAll('.experience-card');
+            const index = Array.from(cards).indexOf(entry.target);
 
-            entry.target.style.transitionDelay = `${index * 0.1}s`;
-            entry.target.classList.add('visible');
+            // Stackbyte-style stagger: 150ms between each card
+            setTimeout(() => {
+                entry.target.style.transitionDuration = '0.6s';
+                entry.target.style.transitionTimingFunction = 'cubic-bezier(0.4, 0, 0.2, 1)';
+                entry.target.classList.add('visible');
+            }, index * 150);
+
+            observer.unobserve(entry.target);
         }
     });
 }, observerOptions);
 
-// Observe all cards including experience cards
-document.querySelectorAll('.project-card, .skill-category, .experience-card').forEach(card => {
+// Other cards (projects, skills)
+const cardObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            const parent = entry.target.parentElement;
+            const siblings = Array.from(parent.querySelectorAll('.' + entry.target.classList[0]));
+            const index = siblings.indexOf(entry.target);
+
+            setTimeout(() => {
+                entry.target.style.transitionDuration = '0.5s';
+                entry.target.style.transitionTimingFunction = 'cubic-bezier(0.4, 0, 0.2, 1)';
+                entry.target.classList.add('visible');
+            }, index * 100);
+
+            observer.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
+// Observe experience cards separately for better control
+document.querySelectorAll('.experience-card').forEach(card => {
+    experienceObserver.observe(card);
+});
+
+// Observe other cards
+document.querySelectorAll('.project-card, .skill-category').forEach(card => {
     cardObserver.observe(card);
 });
