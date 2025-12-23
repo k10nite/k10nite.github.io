@@ -322,69 +322,96 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ===== EXPERIENCE CAROUSEL (Scroll-triggered, Stackbyte-style) =====
-function initExpCarousel() {
-    const track = document.querySelector('.exp-carousel__track');
-    const slides = document.querySelectorAll('.exp-slide');
-    const dots = document.querySelectorAll('.exp-carousel__dot');
-    const section = document.querySelector('.experience-section');
+// ===== EXPERIENCE CAROUSEL (Auto-advance with dot navigation) =====
+const expCarousel = {
+    track: null,
+    slides: null,
+    dots: null,
+    currentSlide: 0,
+    autoplayInterval: null,
+    autoplayDelay: 4000,
 
-    if (!track || slides.length === 0 || !section) return;
+    init() {
+        this.track = document.querySelector('.exp-carousel__track');
+        this.slides = document.querySelectorAll('.exp-slide');
+        this.dots = document.querySelectorAll('.exp-carousel__dot');
 
-    const slideCount = slides.length;
+        if (!this.track || this.slides.length === 0) return;
 
-    // Calculate total scroll distance (all slides minus one screen width)
-    const getScrollDistance = () => {
-        return track.scrollWidth - window.innerWidth;
-    };
-
-    // Create horizontal scroll animation
-    const tl = gsap.to(track, {
-        x: () => -getScrollDistance(),
-        ease: 'none',
-        scrollTrigger: {
-            trigger: section,
-            start: 'top top',
-            end: () => `+=${getScrollDistance()}`,
-            pin: true,
-            scrub: 0.5,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-            onUpdate: (self) => {
-                // Update active dot based on progress
-                const currentIndex = Math.min(
-                    Math.round(self.progress * (slideCount - 1)),
-                    slideCount - 1
-                );
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === currentIndex);
-                });
-            }
-        }
-    });
-
-    // Dot click navigation
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            const st = ScrollTrigger.getAll().find(t => t.trigger === section);
-            if (st) {
-                const targetProgress = index / (slideCount - 1);
-                const targetScroll = st.start + (st.end - st.start) * targetProgress;
-                gsap.to(window, {
-                    scrollTo: targetScroll,
-                    duration: 0.8,
-                    ease: 'power2.inOut'
-                });
-            }
+        // Dot click navigation
+        this.dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                this.goToSlide(index);
+                this.resetAutoplay();
+            });
         });
-    });
-}
 
-// Initialize after DOM and GSAP are ready
-if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-    // Wait for page load to ensure correct measurements
-    window.addEventListener('load', initExpCarousel);
-}
+        // Pause on hover
+        const carousel = document.querySelector('.exp-carousel');
+        if (carousel) {
+            carousel.addEventListener('mouseenter', () => this.stopAutoplay());
+            carousel.addEventListener('mouseleave', () => this.startAutoplay());
+        }
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        this.track.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            this.stopAutoplay();
+        }, { passive: true });
+
+        this.track.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) this.nextSlide();
+                else this.prevSlide();
+            }
+            this.startAutoplay();
+        }, { passive: true });
+
+        // Start autoplay
+        this.startAutoplay();
+    },
+
+    goToSlide(index) {
+        this.currentSlide = index;
+        this.track.style.transform = `translateX(-${index * 100}%)`;
+        this.dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
+    },
+
+    nextSlide() {
+        const next = (this.currentSlide + 1) % this.slides.length;
+        this.goToSlide(next);
+    },
+
+    prevSlide() {
+        const prev = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+        this.goToSlide(prev);
+    },
+
+    startAutoplay() {
+        this.stopAutoplay();
+        this.autoplayInterval = setInterval(() => this.nextSlide(), this.autoplayDelay);
+    },
+
+    stopAutoplay() {
+        if (this.autoplayInterval) {
+            clearInterval(this.autoplayInterval);
+            this.autoplayInterval = null;
+        }
+    },
+
+    resetAutoplay() {
+        this.stopAutoplay();
+        this.startAutoplay();
+    }
+};
+
+// Initialize carousel
+expCarousel.init();
 
 // ===== CARD GLOW FOLLOW EFFECT =====
 const glowCards = document.querySelectorAll('.project-card, .skill-category');
