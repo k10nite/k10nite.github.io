@@ -271,6 +271,47 @@ nav {
     transform: translateY(20px);
 }
 
+/* Profile blob above text */
+.hero__profile {
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.hero__blob-wrapper {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    animation: blob-morph 8s ease-in-out infinite;
+    box-shadow: 0 0 60px var(--accent-glow),
+                0 0 100px rgba(192, 132, 252, 0.2);
+}
+
+.hero__profile-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 92%;
+    height: 92%;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    animation: blob-morph 8s ease-in-out infinite;
+}
+
+@keyframes blob-morph {
+    0%, 100% {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+    50% {
+        border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    }
+}
+
 .hero__buttons {
     display: flex;
     gap: 1rem;

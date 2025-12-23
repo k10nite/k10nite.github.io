@@ -175,15 +175,21 @@ gsap.registerPlugin(ScrollTrigger);
 window.addEventListener('load', () => {
     const heroTimeline = gsap.timeline({ delay: 0.3 });
 
-    // Slide in each line from bottom
+    // Animate profile first, then slide in text
     heroTimeline
+        .to('.hero__profile', {
+            opacity: 1,
+            scale: 1,
+            duration: 0.8,
+            ease: 'back.out(1.7)'
+        })
         .to('.hero__line-inner', {
             y: 0,
             opacity: 1,
             duration: 1,
             stagger: 0.15,
             ease: 'power4.out'
-        })
+        }, '-=0.3')
         .to('.hero__subtitle', {
             opacity: 1,
             y: 0,
