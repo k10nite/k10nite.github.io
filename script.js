@@ -1,464 +1,307 @@
-// ===== CUSTOM CURSOR =====
-const cursor = document.querySelector('.cursor');
-const cursorFollower = document.querySelector('.cursor-follower');
+(() => {
+  'use strict';
 
-let mouseX = 0, mouseY = 0;
-let followerX = 0, followerY = 0;
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const desktop = matchMedia('(min-width: 901px)');
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+  document.documentElement.classList.add('js');
 
-    // Instant cursor position
-    cursor.style.left = mouseX + 'px';
-    cursor.style.top = mouseY + 'px';
-});
+  /* ---------- Nav: blur + hairline once content scrolls underneath ---------- */
+  const nav = $('#nav');
+  const onNav = () => nav.classList.toggle('is-stuck', nav.getBoundingClientRect().top <= 0 && scrollY > 8);
 
-// Smooth follower animation
-function animateFollower() {
-    followerX += (mouseX - followerX) * 0.15;
-    followerY += (mouseY - followerY) * 0.15;
-
-    cursorFollower.style.left = followerX + 'px';
-    cursorFollower.style.top = followerY + 'px';
-
-    requestAnimationFrame(animateFollower);
-}
-animateFollower();
-
-// Cursor hover effects
-const interactiveElements = document.querySelectorAll('a, button, .btn, .project-card, .skill-category, .experience-card, .magnetic, .magnetic-card');
-
-interactiveElements.forEach(el => {
-    el.addEventListener('mouseenter', () => {
-        cursorFollower.classList.add('hover');
+  /* ---------- Hero: floating cards follow the pointer ---------- */
+  const stage = $('#heroStage');
+  if (stage && !reduced && matchMedia('(hover: hover)').matches) {
+    const floats = $$('.float', stage);
+    const hero = $('.hero');
+    hero.addEventListener('pointermove', (e) => {
+      const r = hero.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      floats.forEach((f) => {
+        const d = Number(f.dataset.depth) || 10;
+        f.style.transform = `translate(${(x * d).toFixed(1)}px, ${(y * d).toFixed(1)}px)`;
+      });
     });
-    el.addEventListener('mouseleave', () => {
-        cursorFollower.classList.remove('hover');
+    hero.addEventListener('pointerleave', () => floats.forEach((f) => (f.style.transform = '')));
+  }
+
+  /* Hero hold card: the desk decides, not the system */
+  const holdCard = $('#holdCard');
+  if (holdCard) {
+    holdCard.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-hold]');
+      if (!btn) return;
+      const approve = btn.dataset.hold === 'approve';
+      $('#holdText').textContent = approve
+        ? 'Approved by the desk. The order goes to the ERP.'
+        : 'Kept stopped. The duplicate never reaches the ERP.';
+      $('.float__meta', holdCard).textContent = approve ? 'Approved by a person' : 'Stopped by a person';
+      $('.float__actions', holdCard).innerHTML = '<button class="btn-mini" type="button" data-hold-reset>Undo</button>';
+      $('[data-hold-reset]', holdCard).addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        $('#holdText').textContent = 'Held: this looks like the same order we received on Tuesday.';
+        $('.float__meta', holdCard).textContent = 'Waiting on you';
+        $('.float__actions', holdCard).innerHTML =
+          '<button class="btn-mini btn-mini--fill" type="button" data-hold="keep">Keep it stopped</button>' +
+          '<button class="btn-mini" type="button" data-hold="approve">Approve</button>';
+      });
     });
-});
+  }
 
-// Click effect
-document.addEventListener('mousedown', () => {
-    cursorFollower.classList.add('click');
-});
-document.addEventListener('mouseup', () => {
-    cursorFollower.classList.remove('click');
-});
-
-// ===== MAGNETIC BUTTONS =====
-const magneticElements = document.querySelectorAll('.magnetic');
-
-magneticElements.forEach(el => {
-    el.addEventListener('mousemove', (e) => {
-        const rect = el.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-
-        el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+  /* ---------- Count-up stats ---------- */
+  const fmt = new Intl.NumberFormat('en-GB');
+  const countUp = (el) => {
+    const target = Number(el.dataset.count);
+    if (reduced) return;
+    const t0 = performance.now();
+    const dur = 1400;
+    const tick = (t) => {
+      const p = clamp((t - t0) / dur);
+      el.textContent = fmt.format(Math.round(target * (1 - Math.pow(1 - p, 4))));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+  const countIO = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (en.isIntersecting) { countUp(en.target); countIO.unobserve(en.target); }
     });
+  }, { threshold: 0.6 });
+  $$('[data-count]').forEach((el) => countIO.observe(el));
 
-    el.addEventListener('mouseleave', () => {
-        el.style.transform = 'translate(0, 0)';
-    });
-});
-
-// Magnetic cards (lighter effect)
-const magneticCards = document.querySelectorAll('.magnetic-card');
-
-magneticCards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-
-        card.style.transform = `perspective(1000px) rotateY(${x * 0.02}deg) rotateX(${-y * 0.02}deg) translateY(-5px)`;
-    });
-
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateY(0) rotateX(0) translateY(0)';
-    });
-});
-
-// ===== PARTICLES.JS =====
-if (typeof particlesJS !== 'undefined') {
-    particlesJS('particles-js', {
-        particles: {
-            number: {
-                value: 80,
-                density: {
-                    enable: true,
-                    value_area: 800
-                }
-            },
-            color: {
-                value: '#6366f1'
-            },
-            shape: {
-                type: 'circle'
-            },
-            opacity: {
-                value: 0.3,
-                random: true,
-                anim: {
-                    enable: true,
-                    speed: 1,
-                    opacity_min: 0.1,
-                    sync: false
-                }
-            },
-            size: {
-                value: 3,
-                random: true,
-                anim: {
-                    enable: true,
-                    speed: 2,
-                    size_min: 0.5,
-                    sync: false
-                }
-            },
-            line_linked: {
-                enable: true,
-                distance: 150,
-                color: '#6366f1',
-                opacity: 0.2,
-                width: 1
-            },
-            move: {
-                enable: true,
-                speed: 1,
-                direction: 'none',
-                random: true,
-                straight: false,
-                out_mode: 'out',
-                bounce: false,
-                attract: {
-                    enable: true,
-                    rotateX: 600,
-                    rotateY: 1200
-                }
-            }
-        },
-        interactivity: {
-            detect_on: 'canvas',
-            events: {
-                onhover: {
-                    enable: true,
-                    mode: 'grab'
-                },
-                onclick: {
-                    enable: true,
-                    mode: 'push'
-                },
-                resize: true
-            },
-            modes: {
-                grab: {
-                    distance: 140,
-                    line_linked: {
-                        opacity: 0.5
-                    }
-                },
-                push: {
-                    particles_nb: 4
-                }
-            }
-        },
-        retina_detect: true
-    });
-}
-
-// ===== GSAP ANIMATIONS =====
-gsap.registerPlugin(ScrollTrigger);
-
-// Hero sliding text animation on load
-window.addEventListener('load', () => {
-    const heroTimeline = gsap.timeline({ delay: 0.3 });
-
-    // Animate profile first, then slide in text
-    heroTimeline
-        .to('.hero__profile', {
-            opacity: 1,
-            scale: 1,
-            duration: 0.8,
-            ease: 'back.out(1.7)'
-        })
-        .to('.hero__line-inner', {
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            stagger: 0.15,
-            ease: 'power4.out'
-        }, '-=0.3')
-        .to('.hero__subtitle', {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out'
-        }, '-=0.5')
-        .to('.hero__buttons', {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out'
-        }, '-=0.5')
-        .to('.hero__social', {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out'
-        }, '-=0.5')
-        .to('.hero__code', {
-            opacity: 0.15,
-            duration: 1.5,
-            ease: 'power2.out'
-        }, '-=1');
-
-    // Initial state for floating code (start invisible)
-    gsap.set('.hero__code', { opacity: 0 });
-});
-
-// Scroll-triggered animations for sections
-document.querySelectorAll('.section-title').forEach(title => {
-    gsap.to(title, {
-        scrollTrigger: {
-            trigger: title,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse'
-        },
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: 'power3.out'
-    });
-});
-
-// Reveal text animations
-document.querySelectorAll('.reveal-text').forEach(text => {
-    if (!text.closest('.hero__title')) {
-        gsap.to(text, {
-            scrollTrigger: {
-                trigger: text,
-                start: 'top 85%',
-                toggleActions: 'play none none reverse'
-            },
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out'
-        });
+  /* ---------- Scroll receipt ---------- */
+  const steps = $('#steps');
+  const receipt = $('#receipt');
+  const stepEls = $$('.step', steps);
+  const blocks = $$('.receipt__block', receipt);
+  const onReceipt = () => {
+    if (!desktop.matches || reduced) {
+      receipt.style.setProperty('--p', 1);
+      blocks.forEach((b) => b.classList.remove('is-future'));
+      stepEls.forEach((s) => s.classList.add('is-active'));
+      return;
     }
-});
+    const mid = innerHeight * 0.55;
+    let active = -1;
+    stepEls.forEach((s, i) => { if (s.getBoundingClientRect().top < mid) active = i; });
+    stepEls.forEach((s, i) => s.classList.toggle('is-active', i === active));
+    blocks.forEach((b, i) => b.classList.toggle('is-future', i > active));
 
-// Reveal up animations (cards, grid items)
-document.querySelectorAll('.reveal-up').forEach((el, index) => {
-    gsap.to(el, {
-        scrollTrigger: {
-            trigger: el,
-            start: 'top 90%',
-            toggleActions: 'play none none reverse'
-        },
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        delay: index * 0.1 % 0.5, // Stagger effect within viewport
-        ease: 'power3.out'
-    });
-});
-
-// Parallax effect for floating code
-gsap.to('.hero__code--left', {
-    scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1
-    },
-    y: -50,
-    ease: 'none'
-});
-
-gsap.to('.hero__code--right', {
-    scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1
-    },
-    y: 50,
-    ease: 'none'
-});
-
-// Nav background on scroll
-ScrollTrigger.create({
-    trigger: '.hero',
-    start: 'top top',
-    end: 'bottom top',
-    onUpdate: (self) => {
-        const nav = document.querySelector('nav');
-        if (self.progress > 0.1) {
-            nav.style.background = 'rgba(10, 10, 10, 0.95)';
-        } else {
-            nav.style.background = 'rgba(10, 10, 10, 0.9)';
-        }
+    // Paper feeds out far enough to show everything up to the active block,
+    // then eases toward the next one as that step approaches.
+    const h = receipt.offsetHeight;
+    const bottomOf = (i) => (i < 0 ? blocks[0].offsetTop : blocks[i].offsetTop + blocks[i].offsetHeight);
+    let shown = bottomOf(active);
+    const next = stepEls[active + 1];
+    if (next) {
+      const r = next.getBoundingClientRect();
+      const t = clamp(1 - (r.top - mid) / (innerHeight * 0.35));
+      shown += (bottomOf(active + 1) - shown) * t * 0.6;
+    } else {
+      shown = h;
     }
-});
+    receipt.style.setProperty('--p', clamp(shown / h).toFixed(4));
+  };
 
-// ===== SMOOTH SCROLL =====
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
+  /* ---------- Scroll loop ---------- */
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { onNav(); onReceipt(); ticking = false; });
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+  onNav(); onReceipt();
+
+  /* ---------- Simulator ---------- */
+  const CASES = {
+    pdf: {
+      from: 'Wholesale customer · orders inbox',
+      subject: 'Purchase order PO-20418',
+      snippet: 'Please find our order attached. PO-20418.pdf (2 pages)',
+      notes: ['Tracked as a job', 'New order', 'Fixed reader for this layout, 14 lines', 'Matches the document, no duplicate', 'Sales order created'],
+      stop: null,
+      tone: 'created', badge: 'Created in the ERP',
+      title: 'Clean order, no one had to touch it.',
+      body: 'This customer\'s format already passed a replay on real past orders, so auto-send is on for them.'
+    },
+    sheet: {
+      from: 'New stockist · orders inbox',
+      subject: 'Order for next week',
+      snippet: 'Hi, our order is in the attached sheet. order_wk47.xlsx',
+      notes: ['Tracked as a job', 'New order', 'No template fits, Claude reads it', 'Matches the document, no duplicate', 'Held for approval'],
+      stop: 4,
+      tone: 'held', badge: 'Waiting on you',
+      title: 'Read correctly, but a person approves it.',
+      body: 'Auto-send is switched on one customer at a time. Until this format has passed a replay, the desk sees the document, what was read, and approves.'
+    },
+    dup: {
+      from: 'Wholesale customer · orders inbox',
+      subject: 'RE: Purchase order PO-20418 (resending)',
+      snippet: 'Resending in case the first one didn\'t arrive. PO-20418.pdf',
+      notes: ['Tracked as a job', 'New order', 'Fixed reader for this layout, 14 lines', 'Same order as one already received', ''],
+      stop: 3,
+      tone: 'held', badge: 'Duplicate stopped',
+      title: 'Stopped at the gate before the ERP.',
+      body: 'One of 1,303 duplicates caught in 9 weeks. It is held with the reason in plain English, and the system never clears its own holds.'
+    },
+    reply: {
+      from: 'Existing customer · orders inbox',
+      subject: 'RE: Your order confirmation',
+      snippet: 'Thanks. Could we move delivery to Thursday instead?',
+      notes: ['Tracked as a job', 'Customer reply, not a new order', '', '', ''],
+      stop: 1,
+      tone: 'routed', badge: 'Routed to a person',
+      title: 'A reply goes to someone who can answer it.',
+      body: 'Replies are separated from new orders and handed to the desk. They are never auto-closed.'
+    },
+    news: {
+      from: 'Supplier marketing · orders inbox',
+      subject: 'Our autumn range is here',
+      snippet: 'New season, new flavours. View in browser.',
+      notes: ['Tracked as a job', 'Newsletter, not an order', '', '', ''],
+      stop: 1,
+      tone: 'routed', badge: 'Logged, no action',
+      title: 'Sorted out of the way.',
+      body: 'Newsletters, invoices and portal notices are logged and kept off the order desk\'s plate.'
+    }
+  };
+
+  const nodes = $$('.node', $('#track'));
+  const outcome = $('#outcome');
+  let runId = 0;
+  let current = 'pdf';
+
+  const runCase = (key) => {
+    current = key;
+    const c = CASES[key];
+    const id = ++runId;
+    $('#mailFrom').textContent = c.from;
+    $('#mailSubject').textContent = c.subject;
+    $('#mailSnippet').textContent = c.snippet;
+    nodes.forEach((n) => { n.className = 'node'; $('.node__note', n).textContent = ''; });
+    outcome.classList.remove('is-in');
+
+    const last = c.stop === null ? nodes.length - 1 : c.stop;
+    const stepMs = reduced ? 0 : 520;
+
+    const finish = () => {
+      nodes.forEach((n, i) => { if (i > last) n.classList.add('is-skip'); });
+      const badge = $('#outcomeBadge');
+      badge.textContent = c.badge;
+      badge.dataset.tone = c.tone;
+      $('#outcomeTitle').textContent = c.title;
+      $('#outcomeBody').textContent = c.body;
+      outcome.classList.add('is-in');
+    };
+
+    const advance = (i) => {
+      if (id !== runId) return;
+      const n = nodes[i];
+      $('.node__note', n).textContent = c.notes[i];
+      if (i === last && c.stop !== null) {
+        n.classList.add('is-stop');
+        setTimeout(() => id === runId && finish(), stepMs * 0.6);
+        return;
+      }
+      n.classList.add('is-done');
+      if (i === last) { setTimeout(() => id === runId && finish(), stepMs * 0.6); return; }
+      setTimeout(() => advance(i + 1), stepMs);
+    };
+    advance(0);
+  };
+
+  const wireTabs = (root, onPick) => {
+    const tabs = $$('[role="tab"]', root);
+    const pick = (t, focus) => {
+      tabs.forEach((x) => { x.setAttribute('aria-selected', String(x === t)); x.tabIndex = x === t ? 0 : -1; });
+      if (focus) t.focus();
+      onPick(t);
+    };
+    tabs.forEach((t, i) => {
+      t.tabIndex = t.getAttribute('aria-selected') === 'true' ? 0 : -1;
+      t.addEventListener('click', () => pick(t));
+      t.addEventListener('keydown', (e) => {
+        const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!d) return;
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            gsap.to(window, {
-                duration: 1,
-                scrollTo: {
-                    y: target,
-                    offsetY: 80
-                },
-                ease: 'power3.inOut'
-            });
-        }
+        pick(tabs[(i + d + tabs.length) % tabs.length], true);
+      });
     });
-});
+  };
 
-// ===== EXPERIENCE CAROUSEL (Scroll-triggered with dot navigation) =====
-const expCarousel = {
-    track: null,
-    slides: null,
-    dots: null,
-    section: null,
-    currentSlide: 0,
-    totalSlides: 0,
+  wireTabs($('#simTabs'), (t) => runCase(t.dataset.case));
+  $('#simReplay').addEventListener('click', () => runCase(current));
 
-    init() {
-        this.track = document.querySelector('.exp-carousel__track');
-        this.slides = document.querySelectorAll('.exp-slide');
-        this.dots = document.querySelectorAll('.exp-carousel__dot');
-        this.section = document.querySelector('.experience-section');
+  // First run starts when the simulator scrolls into view.
+  const simIO = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) { runCase(current); simIO.disconnect(); }
+  }, { threshold: 0.35 });
+  simIO.observe($('.sim__body'));
 
-        if (!this.track || this.slides.length === 0) return;
+  /* ---------- Email journey switch ---------- */
+  const survey = $('#surveyDone');
+  survey.addEventListener('change', () => {
+    $$('.jstep[data-kind="chaser"]').forEach((j) => j.classList.toggle('is-stopped', survey.checked));
+    $('#journeyState').textContent = survey.checked
+      ? 'Survey done: both chasers are cancelled. Nobody gets chased after they act.'
+      : 'Survey not done yet: chasers are scheduled.';
+  });
 
-        this.totalSlides = this.slides.length;
+  /* ---------- Skills ---------- */
+  const SKILLS = {
+    automation: ['n8n (self-hosted)', 'Zapier', 'Docker', 'Reverse proxy', 'SSL', 'Microsoft Graph', 'Slack alerts'],
+    ai: ['Claude API', 'GPT-4 API', 'RAG pipelines', 'FAISS', 'RASA NLU', 'XGBoost', 'Random Forest', 'SHAP'],
+    backend: ['Python', 'Node.js', 'FastAPI', 'PostgreSQL', 'Supabase', 'MongoDB'],
+    frontend: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+    geo: ['Google Earth Engine', 'Sentinel-2', 'Landsat-8', 'Rasterio', 'GDAL']
+  };
+  const panel = $('#skillPanel');
+  const showSkills = (key) => {
+    panel.replaceChildren(...SKILLS[key].map((s, i) => {
+      const el = document.createElement('span');
+      el.textContent = s;
+      el.style.animationDelay = `${i * 35}ms`;
+      return el;
+    }));
+  };
+  wireTabs($('#skillTabs'), (t) => showSkills(t.dataset.skill));
+  showSkills('automation');
 
-        // Dot click navigation
-        this.dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                this.goToSlide(index);
-            });
-        });
+  /* ---------- Project filter ---------- */
+  const pills = $$('.pill', $('#filters'));
+  const cards = $$('.card--proj');
+  pills.forEach((p) => p.addEventListener('click', () => {
+    pills.forEach((x) => x.setAttribute('aria-pressed', String(x === p)));
+    const f = p.dataset.filter;
+    cards.forEach((c) => c.classList.toggle('is-out', f !== 'all' && !c.dataset.tags.split(' ').includes(f)));
+  }));
 
-        // Touch/swipe support for mobile
-        let touchStartX = 0;
-        this.track.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-
-        this.track.addEventListener('touchend', (e) => {
-            const touchEndX = e.changedTouches[0].screenX;
-            const diff = touchStartX - touchEndX;
-            if (Math.abs(diff) > 50) {
-                if (diff > 0) this.nextSlide();
-                else this.prevSlide();
-            }
-        }, { passive: true });
-
-        // Scroll-triggered carousel with GSAP
-        this.initScrollTrigger();
-    },
-
-    initScrollTrigger() {
-        const self = this;
-
-        // Pin the section and scrub through slides based on scroll
-        ScrollTrigger.create({
-            trigger: this.section,
-            start: 'top top',
-            end: () => `+=${this.totalSlides * 100}%`,
-            pin: true,
-            scrub: 1,
-            onUpdate: (scrollTrigger) => {
-                // Calculate which slide to show based on scroll progress
-                const progress = scrollTrigger.progress;
-                const slideIndex = Math.min(
-                    Math.floor(progress * this.totalSlides),
-                    this.totalSlides - 1
-                );
-
-                if (slideIndex !== this.currentSlide) {
-                    this.goToSlide(slideIndex);
-                }
-            }
-        });
-    },
-
-    goToSlide(index) {
-        this.currentSlide = index;
-        this.track.style.transform = `translateX(-${index * 100}%)`;
-        this.dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-        });
-    },
-
-    nextSlide() {
-        const next = Math.min(this.currentSlide + 1, this.totalSlides - 1);
-        this.goToSlide(next);
-    },
-
-    prevSlide() {
-        const prev = Math.max(this.currentSlide - 1, 0);
-        this.goToSlide(prev);
+  /* ---------- Copy email ---------- */
+  const copy = $('#copyEmail');
+  copy.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(copy.dataset.email);
+      copy.textContent = 'Copied';
+    } catch {
+      copy.textContent = copy.dataset.email;
     }
-};
+    setTimeout(() => (copy.textContent = 'Copy address'), 2200);
+  });
 
-// Initialize carousel
-expCarousel.init();
-
-// ===== CARD GLOW FOLLOW EFFECT =====
-const glowCards = document.querySelectorAll('.project-card, .skill-category');
-
-glowCards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-
-        card.style.setProperty('--mouse-x', `${x}%`);
-        card.style.setProperty('--mouse-y', `${y}%`);
+  /* ---------- Reveal on scroll ---------- */
+  const revealEls = $$('.card, .xp__row, .display, .heading, .lede, .sim, .skills');
+  revealEls.forEach((el) => el.setAttribute('data-reveal', ''));
+  const revIO = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (en.isIntersecting) { en.target.classList.add('is-in'); revIO.unobserve(en.target); }
     });
-
-    card.addEventListener('mouseleave', () => {
-        card.style.setProperty('--mouse-x', '50%');
-        card.style.setProperty('--mouse-y', '50%');
-    });
-});
-
-// ===== STAGGERED CARD ENTRANCE (Stackbyte-style) =====
-const observerOptions = {
-    threshold: 0.15,
-    rootMargin: '0px 0px -80px 0px'
-};
-
-// Cards (projects, skills) with stagger animation
-const cardObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            const parent = entry.target.parentElement;
-            const siblings = Array.from(parent.querySelectorAll('.' + entry.target.classList[0]));
-            const index = siblings.indexOf(entry.target);
-
-            setTimeout(() => {
-                entry.target.style.transitionDuration = '0.5s';
-                entry.target.style.transitionTimingFunction = 'cubic-bezier(0.4, 0, 0.2, 1)';
-                entry.target.classList.add('visible');
-            }, index * 100);
-
-            observer.unobserve(entry.target);
-        }
-    });
-}, observerOptions);
-
-// Observe cards
-document.querySelectorAll('.project-card, .skill-category').forEach(card => {
-    cardObserver.observe(card);
-});
+  }, { rootMargin: '0px 0px -8% 0px' });
+  revealEls.forEach((el) => revIO.observe(el));
+})();

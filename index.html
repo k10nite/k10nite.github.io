@@ -1,374 +1,539 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neil Cayton | Automation & AI Engineer</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neil Cayton | Automation & AI Engineer</title>
+  <meta name="description" content="Neil Cayton builds automation and AI systems that run in production. Case study: a shared orders inbox to the ERP, with people only on the exceptions.">
+  <meta property="og:title" content="Neil Cayton | Automation & AI Engineer">
+  <meta property="og:description" content="Automation and AI systems that run in production. 10,563 emails sorted and 1,303 duplicate orders stopped in 9 weeks.">
+  <meta property="og:image" content="https://k10nite.github.io/assets/img/portrait.jpg">
+  <meta name="theme-color" content="#421d24">
 
-    <!-- Fonts: Inter + JetBrains Mono -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Custom Cursor -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
+  <a class="skip" href="#main">Skip to content</a>
 
-    <!-- Particles Background -->
-    <div id="particles-js"></div>
+  <!-- Announcement -->
+  <div class="announce">
+    <span class="announce__dot" aria-hidden="true"></span>
+    <span>New case study: 10,563 order emails sorted in 9 weeks</span>
+    <a class="announce__link" href="#case-study">Read it</a>
+  </div>
 
-    <nav>
-        <div class="logo">neil.dev</div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
+  <!-- Header -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a class="nav__logo" href="#top" aria-label="Neil Cayton, home">Neil Cayton</a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#case-study">Case study</a>
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+      </nav>
+      <div class="nav__actions">
+        <a class="btn-ghost nav__gh" href="https://github.com/k10nite" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn-lilac" href="#contact">Get in touch</a>
+      </div>
+    </div>
+  </header>
 
-    <header class="hero" id="home">
-        <!-- Floating Code Background -->
-        <div class="hero__code hero__code--left">
-            <pre><code>const workflow = async () => {
-  await scrape(sources);
-  await process(data);
-  return insights;
-};</code></pre>
-            <pre><code>// n8n automation
-trigger: webhook
-nodes: [transform, ai, deliver]</code></pre>
-            <pre><code>SELECT * FROM insights
-WHERE confidence > 0.95
-ORDER BY created_at DESC;</code></pre>
-        </div>
-        <div class="hero__code hero__code--right">
-            <pre><code>def train_model(data):
-    pipeline.fit(X, y)
-    return pipeline.predict</code></pre>
-            <pre><code>// RAG Pipeline
-embed → search → generate</code></pre>
-            <pre><code>docker compose up -d
-nginx reverse proxy
-ssl: letsencrypt</code></pre>
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <div class="hero__inner">
+        <div class="hero__copy">
+          <p class="eyebrow">Automation &amp; AI engineer</p>
+          <h1>Your ideas.<br>My automation.<br>Real impact.</h1>
+          <p class="hero__sub">I'm Neil. I build systems that read the inbox, check their own work and leave people only the decisions that need a person.</p>
+          <div class="hero__cta">
+            <a class="btn-wine" href="#case-study">See the case study <span aria-hidden="true">→</span></a>
+            <a class="btn-plain" href="#contact">Let's talk</a>
+          </div>
         </div>
 
-        <div class="hero__content hero__content--centered">
-            <div class="hero__text-wrapper">
-                <div class="hero__profile">
-                    <div class="hero__blob-wrapper">
-                        <img src="assets/img/profile.png" alt="Neil Cayton" class="hero__profile-img">
-                    </div>
-                </div>
-                <h1 class="hero__title">
-                    <span class="hero__line"><span class="hero__line-inner">Your ideas.</span></span>
-                    <span class="hero__line"><span class="hero__line-inner">My automation.</span></span>
-                    <span class="hero__line hero__line--accent"><span class="hero__line-inner">Real impact.</span></span>
-                </h1>
-                <p class="hero__subtitle">Building intelligent systems that transform workflows into results.</p>
-                <div class="hero__buttons">
-                    <a href="#contact" class="btn btn--primary magnetic">Let's Talk</a>
-                    <a href="#projects" class="btn btn--outline magnetic">View Work</a>
-                </div>
-                <div class="hero__social">
-                    <a href="https://github.com/k10nite" target="_blank" class="hero__social-link magnetic">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    </a>
-                    <a href="https://linkedin.com/in/neil-cayton" target="_blank" class="hero__social-link magnetic">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                    </a>
-                    <a href="mailto:neilcayton03@gmail.com" class="hero__social-link magnetic">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"/></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
+        <div class="hero__stage" id="heroStage">
+          <picture>
+            <img class="hero__photo" src="assets/img/portrait.jpg"
+                 srcset="assets/img/portrait-632.jpg 632w, assets/img/portrait.jpg 1264w"
+                 sizes="(max-width: 900px) 90vw, 560px"
+                 width="1264" height="1568" alt="Portrait of Neil Cayton" fetchpriority="high">
+          </picture>
 
-    <section id="about" class="section">
-        <h2 class="section-title reveal-text">About</h2>
-        <p class="reveal-text">I build automation systems and AI-powered applications. Currently working as an Automation Specialist at PerfectTed, where I deploy self-hosted n8n workflows, build intelligent scrapers, and integrate LLMs into production pipelines.</p>
+          <div class="float float--a" data-depth="18">
+            <div class="float__row">
+              <span class="chip-ico" aria-hidden="true">
+                <svg viewBox="0 0 20 20"><rect x="2.5" y="4.5" width="15" height="11" rx="2"/><path d="M3 6l7 5 7-5"/></svg>
+              </span>
+              <span class="float__meta">Orders inbox · just now</span>
+            </div>
+            <p class="float__title">Purchase order attached</p>
+            <p class="float__body">PO-20418.pdf · 14 lines</p>
+            <span class="tag">Sorted: new order</span>
+          </div>
 
-        <div class="skills-grid">
-            <div class="skill-category reveal-up">
-                <h3>Automation</h3>
-                <p>n8n (self-hosted), Zapier, Docker, reverse proxy, SSL</p>
+          <div class="float float--b" data-depth="-14">
+            <p class="float__meta">Check against the document</p>
+            <ul class="ticks">
+              <li>Customer</li>
+              <li>Products</li>
+              <li>Quantities</li>
+              <li>Delivery date</li>
+              <li>Not a duplicate</li>
+            </ul>
+            <p class="float__title float__title--sm">Created in the ERP</p>
+          </div>
+
+          <div class="float float--c" data-depth="26" id="holdCard">
+            <p class="float__meta">Waiting on you</p>
+            <p class="float__body" id="holdText">Held: this looks like the same order we received on Tuesday.</p>
+            <div class="float__actions">
+              <button class="btn-mini btn-mini--fill" type="button" data-hold="keep">Keep it stopped</button>
+              <button class="btn-mini" type="button" data-hold="approve">Approve</button>
             </div>
-            <div class="skill-category reveal-up">
-                <h3>AI/ML</h3>
-                <p>XGBoost, Random Forest, GPT-4 API, RAG pipelines, FAISS, RASA NLU, SHAP</p>
-            </div>
-            <div class="skill-category reveal-up">
-                <h3>Geospatial</h3>
-                <p>Google Earth Engine, Sentinel-2, Landsat-8, Rasterio, GDAL</p>
-            </div>
-            <div class="skill-category reveal-up">
-                <h3>Backend</h3>
-                <p>Python, FastAPI, PostgreSQL, Supabase, MongoDB</p>
-            </div>
-            <div class="skill-category reveal-up">
-                <h3>Frontend</h3>
-                <p>React, TypeScript, Tailwind CSS, Framer Motion</p>
-            </div>
+          </div>
         </div>
+      </div>
     </section>
 
-    <section id="experience" class="section experience-section">
-        <h2 class="section-title reveal-text">Experience</h2>
-
-        <div class="exp-carousel">
-            <div class="exp-carousel__track">
-                <!-- Slide 1: Operational Specialist -->
-                <div class="exp-slide">
-                    <div class="exp-slide__card exp-slide__card--cyan">
-                        <div class="exp-slide__left">
-                            <span class="exp-slide__badge">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/></svg>
-                                Automation & AI
-                            </span>
-                            <h3 class="exp-slide__title">OPERATIONAL<br>SPECIALIST</h3>
-                            <p class="exp-slide__desc">Building intelligent automation systems at PerfectTed, deploying self-hosted workflows, and integrating AI into production pipelines for a UK-based company.</p>
-                            <ul class="exp-slide__tech">
-                                <li>n8n / Docker</li>
-                                <li>GPT-4 API</li>
-                                <li>PostgreSQL / Supabase</li>
-                                <li>Web Scraping</li>
-                            </ul>
-                            <span class="exp-slide__date">May 2025 – Present</span>
-                        </div>
-                        <div class="exp-slide__right">
-                            <div class="exp-slide__icon-wrapper">
-                                <svg class="exp-slide__icon" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="60" cy="60" r="45" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
-                                    <circle cx="60" cy="60" r="30" stroke="currentColor" stroke-width="1" opacity="0.3"/>
-                                    <path d="M60 30V60L80 75" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-                                    <circle cx="60" cy="60" r="6" fill="currentColor"/>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 2: Full-Stack Developer -->
-                <div class="exp-slide">
-                    <div class="exp-slide__card exp-slide__card--purple">
-                        <div class="exp-slide__left">
-                            <span class="exp-slide__badge">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                                Full-Stack & AI
-                            </span>
-                            <h3 class="exp-slide__title">AI<br>ENGINEER</h3>
-                            <p class="exp-slide__desc">Built an AI-powered e-commerce platform with "Grace" chatbot using RASA NLU, RAG pipelines, and multi-provider LLM fallback for Gift of Grace Food Manufacturing.</p>
-                            <ul class="exp-slide__tech">
-                                <li>RASA NLU / FAISS</li>
-                                <li>FastAPI</li>
-                                <li>React / Vercel</li>
-                                <li>LLM Integration</li>
-                            </ul>
-                            <span class="exp-slide__date">Aug – Dec 2025</span>
-                        </div>
-                        <div class="exp-slide__right">
-                            <div class="exp-slide__icon-wrapper">
-                                <svg class="exp-slide__icon" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="25" y="25" width="70" height="70" rx="16" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
-                                    <circle cx="48" cy="55" r="8" fill="currentColor" opacity="0.6"/>
-                                    <circle cx="72" cy="55" r="8" fill="currentColor" opacity="0.6"/>
-                                    <path d="M42 78 Q60 90 78 78" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 3: ML Researcher -->
-                <div class="exp-slide">
-                    <div class="exp-slide__card exp-slide__card--green">
-                        <div class="exp-slide__left">
-                            <span class="exp-slide__badge">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 0 1 4 4c0 1.1-.5 2.1-1.2 2.8L12 12l-2.8-3.2A4 4 0 0 1 12 2Z"/><path d="m19 9-1.9 5.5a2 2 0 0 1-1.9 1.3h-6.4a2 2 0 0 1-1.9-1.3L5 9"/></svg>
-                                Research
-                            </span>
-                            <h3 class="exp-slide__title">ML<br>RESEARCHER</h3>
-                            <p class="exp-slide__desc">DOST-funded thesis project building Munsell Chart extraction tools and structured datasets for soil classification models deployed on Hugging Face.</p>
-                            <ul class="exp-slide__tech">
-                                <li>Computer Vision</li>
-                                <li>Data Processing</li>
-                                <li>Hugging Face</li>
-                                <li>Python</li>
-                            </ul>
-                            <span class="exp-slide__date">Aug 2025 – Present</span>
-                        </div>
-                        <div class="exp-slide__right">
-                            <div class="exp-slide__icon-wrapper">
-                                <svg class="exp-slide__icon" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="60" cy="38" r="22" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
-                                    <circle cx="38" cy="82" r="18" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
-                                    <circle cx="82" cy="82" r="18" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
-                                    <line x1="60" y1="60" x2="45" y2="70" stroke="currentColor" stroke-width="2" opacity="0.6"/>
-                                    <line x1="60" y1="60" x2="75" y2="70" stroke="currentColor" stroke-width="2" opacity="0.6"/>
-                                    <circle cx="60" cy="38" r="6" fill="currentColor" opacity="0.5"/>
-                                    <circle cx="38" cy="82" r="5" fill="currentColor" opacity="0.5"/>
-                                    <circle cx="82" cy="82" r="5" fill="currentColor" opacity="0.5"/>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 4: Business App Developer -->
-                <div class="exp-slide">
-                    <div class="exp-slide__card exp-slide__card--orange">
-                        <div class="exp-slide__left">
-                            <span class="exp-slide__badge">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h.01"/><path d="M17 7h.01"/></svg>
-                                Enterprise
-                            </span>
-                            <h3 class="exp-slide__title">BUSINESS<br>APP DEV</h3>
-                            <p class="exp-slide__desc">320-hour internship at NOAH executing BRTS testing for enterprise ERP modules, building automation tools, and validating BIR/BSP compliance features.</p>
-                            <ul class="exp-slide__tech">
-                                <li>ERP Systems</li>
-                                <li>QA Testing</li>
-                                <li>Excel Automation</li>
-                                <li>Compliance</li>
-                            </ul>
-                            <span class="exp-slide__date">Jun – Jul 2025</span>
-                        </div>
-                        <div class="exp-slide__right">
-                            <div class="exp-slide__icon-wrapper">
-                                <svg class="exp-slide__icon" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="20" y="30" width="80" height="60" rx="6" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
-                                    <line x1="20" y1="48" x2="100" y2="48" stroke="currentColor" stroke-width="1" opacity="0.3"/>
-                                    <rect x="30" y="58" width="25" height="10" rx="2" fill="currentColor" opacity="0.4"/>
-                                    <rect x="30" y="74" width="45" height="8" rx="2" fill="currentColor" opacity="0.25"/>
-                                    <circle cx="90" cy="40" r="4" fill="currentColor" opacity="0.5"/>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 5: Marketing -->
-                <div class="exp-slide">
-                    <div class="exp-slide__card exp-slide__card--pink">
-                        <div class="exp-slide__left">
-                            <span class="exp-slide__badge">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 11 18-5v12L3 14v-3z"/></svg>
-                                Community
-                            </span>
-                            <h3 class="exp-slide__title">MARKETING<br>OFFICER</h3>
-                            <p class="exp-slide__desc">Managing public presence and content strategy for SLU AWS Learning Club, building engagement pipelines for community outreach and event promotion.</p>
-                            <ul class="exp-slide__tech">
-                                <li>Content Strategy</li>
-                                <li>Canva</li>
-                                <li>Community Building</li>
-                                <li>AWS</li>
-                            </ul>
-                            <span class="exp-slide__date">Aug 2025 – Present</span>
-                        </div>
-                        <div class="exp-slide__right">
-                            <div class="exp-slide__icon-wrapper">
-                                <svg class="exp-slide__icon" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M25 55 L95 30 L95 90 L25 65 Z" stroke="currentColor" stroke-width="1.5" opacity="0.4" fill="none"/>
-                                    <circle cx="25" cy="60" r="18" stroke="currentColor" stroke-width="1.5" opacity="0.3"/>
-                                    <circle cx="25" cy="60" r="8" fill="currentColor" opacity="0.4"/>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Navigation dots -->
-            <div class="exp-carousel__nav">
-                <button class="exp-carousel__dot active" data-slide="0"></button>
-                <button class="exp-carousel__dot" data-slide="1"></button>
-                <button class="exp-carousel__dot" data-slide="2"></button>
-                <button class="exp-carousel__dot" data-slide="3"></button>
-                <button class="exp-carousel__dot" data-slide="4"></button>
-            </div>
-        </div>
+    <!-- Proof strip -->
+    <section class="proof" aria-label="Results from the live job log">
+      <div class="proof__grid">
+        <div class="proof__cell"><span class="proof__num" data-count="10563">10,563</span><span class="proof__label">emails sorted and logged in 9 weeks</span></div>
+        <div class="proof__cell"><span class="proof__num" data-count="1303">1,303</span><span class="proof__label">duplicate orders stopped before the ERP</span></div>
+        <div class="proof__cell"><span class="proof__num" data-count="174">174</span><span class="proof__label">customer accounts the system reads</span></div>
+        <div class="proof__cell"><span class="proof__num" data-count="629">629</span><span class="proof__label">commits shipped since 1 September</span></div>
+      </div>
     </section>
 
-    <section id="projects" class="section">
-        <h2 class="section-title reveal-text">Projects</h2>
-        <div class="projects-grid">
-            <div class="project-card reveal-up magnetic-card">
-                <h3>YouTube Pipeline</h3>
-                <p>Auto-transcription → metadata extraction → Airtable delivery workflow</p>
-                <div class="tech-tags">
-                    <span>n8n</span>
-                    <span>Airtable</span>
-                </div>
-            </div>
-            <div class="project-card reveal-up magnetic-card">
-                <h3>Social Scrapers</h3>
-                <p>Reddit/Twitter scrapers with anti-detection, auth sessions, and rate throttling</p>
-                <div class="tech-tags">
-                    <span>n8n</span>
-                    <span>Anti-bot</span>
-                </div>
-            </div>
-            <div class="project-card reveal-up magnetic-card">
-                <h3>Order Extraction</h3>
-                <p>Multi-format PO parsing with GPT-4 normalization for varied customer formats</p>
-                <div class="tech-tags">
-                    <span>GPT-4</span>
-                    <span>n8n</span>
-                </div>
-            </div>
-            <div class="project-card reveal-up magnetic-card">
-                <h3>Email Outreach</h3>
-                <p>Automated sequences with tracking, conditional logic, and response handling</p>
-                <div class="tech-tags">
-                    <span>n8n</span>
-                    <span>Automation</span>
-                </div>
-            </div>
-            <div class="project-card reveal-up magnetic-card">
-                <h3>Grace AI Chatbot</h3>
-                <p>RAG-powered customer service bot with RASA NLU and multi-LLM fallback</p>
-                <div class="tech-tags">
-                    <span>RASA</span>
-                    <span>FAISS</span>
-                    <span>FastAPI</span>
-                </div>
-            </div>
-            <div class="project-card reveal-up magnetic-card">
-                <h3>Hiring Automation</h3>
-                <p>Applicant intake, tracking, and notification pipelines</p>
-                <div class="tech-tags">
-                    <span>n8n</span>
-                    <span>Airtable</span>
-                </div>
-            </div>
+    <!-- Case study intro -->
+    <section class="section" id="case-study">
+      <div class="wrap">
+        <p class="eyebrow">Case study · Order intake automation · 2026</p>
+        <h2 class="display">From a shared orders inbox to the ERP, with people only on the exceptions</h2>
+        <div class="lede">
+          <p>A UK food and drink brand received wholesale and retail orders by email in dozens of formats: PDFs, spreadsheets, EDI files, portal notices and plain-text replies. A small desk keyed each one into the ERP by hand.</p>
+          <p>I designed, built and run the system that now sorts, reads and checks every email in that inbox.</p>
         </div>
+      </div>
     </section>
 
-    <section id="contact" class="section">
-        <h2 class="section-title reveal-text">Contact</h2>
-        <p class="reveal-text">Open to opportunities in automation, AI engineering, and full-stack development.</p>
-        <div class="contact-links">
-            <a href="mailto:neilcayton03@gmail.com" class="magnetic">neilcayton03@gmail.com</a>
-            <a href="https://github.com/k10nite" target="_blank" class="magnetic">GitHub</a>
+    <!-- Scroll receipt -->
+    <section class="section section--tight" id="how" aria-labelledby="howTitle">
+      <div class="wrap">
+        <h2 class="heading" id="howTitle">How one email becomes one order</h2>
+        <p class="sub">Follow one email through the five stages as the run prints its receipt.</p>
+
+        <div class="run" id="run">
+          <div class="run__left">
+            <div class="printer">
+              <div class="printer__slot" aria-hidden="true"></div>
+              <div class="printer__window">
+                <div class="receipt" id="receipt">
+                  <div class="receipt__head">
+                    <span>Run receipt</span><span>Job 08417</span>
+                  </div>
+                  <div class="receipt__block" data-step="0">
+                    <p class="receipt__stage">01 Watch</p>
+                    <p class="receipt__line"><span>Email received</span><span>09:14:02</span></p>
+                    <p class="receipt__line"><span>Tracked as a job</span><span>✓</span></p>
+                  </div>
+                  <div class="receipt__block" data-step="1">
+                    <p class="receipt__stage">02 Sort</p>
+                    <p class="receipt__line"><span>Type</span><span>New order</span></p>
+                    <p class="receipt__line"><span>Attachment</span><span>PDF, 2 pages</span></p>
+                  </div>
+                  <div class="receipt__block" data-step="2">
+                    <p class="receipt__stage">03 Read</p>
+                    <p class="receipt__line"><span>Reader</span><span>Fixed layout</span></p>
+                    <p class="receipt__line"><span>Lines read</span><span>14</span></p>
+                  </div>
+                  <div class="receipt__block" data-step="3">
+                    <p class="receipt__stage">04 Check</p>
+                    <p class="receipt__line"><span>Customer</span><span>✓</span></p>
+                    <p class="receipt__line"><span>Products, quantities</span><span>✓</span></p>
+                    <p class="receipt__line"><span>Dates</span><span>✓</span></p>
+                    <p class="receipt__line"><span>Duplicate</span><span>None</span></p>
+                  </div>
+                  <div class="receipt__block" data-step="4">
+                    <p class="receipt__stage">05 Act</p>
+                    <p class="receipt__line"><span>Sales order</span><span>Created</span></p>
+                    <p class="receipt__total"><span>People needed</span><span>0</span></p>
+                  </div>
+                  <div class="receipt__foot">Illustrative run · no client data</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ol class="steps" id="steps">
+            <li class="step" data-step="0">
+              <span class="step__n">01</span>
+              <h3>Watch</h3>
+              <p>Subscribes to the Outlook inbox through Microsoft Graph. Every email becomes a tracked job, so nothing is lost or handled twice.</p>
+            </li>
+            <li class="step" data-step="1">
+              <span class="step__n">02</span>
+              <h3>Sort</h3>
+              <p>Separates new orders from customer replies, portal notices, invoices and newsletters. Replies go to a person, never auto-closed.</p>
+            </li>
+            <li class="step" data-step="2">
+              <span class="step__n">03</span>
+              <h3>Read</h3>
+              <p>Fixed readers for each customer's layout; Claude reads the formats that don't fit a template.</p>
+            </li>
+            <li class="step" data-step="3">
+              <span class="step__n">04</span>
+              <h3>Check</h3>
+              <p>A gate compares the order with the original document: customer, products, quantities, dates and duplicates.</p>
+            </li>
+            <li class="step" data-step="4">
+              <span class="step__n">05</span>
+              <h3>Act</h3>
+              <p>Creates the sales order in the ERP, or holds it on a dashboard with the reason in plain English.</p>
+            </li>
+          </ol>
         </div>
+      </div>
     </section>
 
-    <footer>
-        <p>&copy; 2025 Neil Cayton</p>
-    </footer>
+    <!-- Simulator -->
+    <section class="section" id="try" aria-labelledby="tryTitle">
+      <div class="wrap">
+        <h2 class="heading" id="tryTitle">Send it an email</h2>
+        <p class="sub">Pick what lands in the inbox and watch where it stops. Examples are illustrative; no client data is shown.</p>
 
-    <!-- GSAP & Plugins -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+        <div class="sim">
+          <div class="tabs" role="tablist" aria-label="Sample emails" id="simTabs">
+            <button role="tab" class="tab" aria-selected="true" data-case="pdf">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 2.5h7l3.5 3.5v11.5h-10.5z"/><path d="M12 2.5v3.5h3.5"/></svg>
+              PDF order
+            </button>
+            <button role="tab" class="tab" aria-selected="false" data-case="sheet">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M3 8h14M3 12.5h14M8 3v14"/></svg>
+              Odd spreadsheet
+            </button>
+            <button role="tab" class="tab" aria-selected="false" data-case="dup">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="6.5" y="6.5" width="10" height="10" rx="2"/><path d="M13.5 6.5v-1a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h1"/></svg>
+              Sent twice
+            </button>
+            <button role="tab" class="tab" aria-selected="false" data-case="reply">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8 5L3.5 9.5 8 14"/><path d="M3.5 9.5h8a5 5 0 0 1 5 5v1"/></svg>
+              Customer reply
+            </button>
+            <button role="tab" class="tab" aria-selected="false" data-case="news">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="4" width="15" height="12" rx="2"/><path d="M6 8h8M6 11.5h5"/></svg>
+              Newsletter
+            </button>
+          </div>
 
-    <!-- Particles.js -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+          <div class="sim__body" role="tabpanel" aria-live="polite">
+            <div class="mail">
+              <p class="mail__from" id="mailFrom"></p>
+              <p class="mail__subject" id="mailSubject"></p>
+              <p class="mail__snippet" id="mailSnippet"></p>
+            </div>
 
-    <script src="script.js"></script>
+            <ol class="track" id="track">
+              <li class="node" data-i="0"><span class="node__dot"></span><span class="node__name">Watch</span><span class="node__note"></span></li>
+              <li class="node" data-i="1"><span class="node__dot"></span><span class="node__name">Sort</span><span class="node__note"></span></li>
+              <li class="node" data-i="2"><span class="node__dot"></span><span class="node__name">Read</span><span class="node__note"></span></li>
+              <li class="node" data-i="3"><span class="node__dot"></span><span class="node__name">Check</span><span class="node__note"></span></li>
+              <li class="node" data-i="4"><span class="node__dot"></span><span class="node__name">Act</span><span class="node__note"></span></li>
+            </ol>
+
+            <div class="outcome" id="outcome">
+              <span class="outcome__badge" id="outcomeBadge"></span>
+              <p class="outcome__title" id="outcomeTitle"></p>
+              <p class="outcome__body" id="outcomeBody"></p>
+            </div>
+            <button class="btn-plain sim__replay" type="button" id="simReplay">Run it again</button>
+          </div>
+        </div>
+
+        <div class="pair">
+          <article class="card">
+            <h3>Clean orders</h3>
+            <p>Created in the ERP automatically. Auto-send is switched on one customer at a time, once their format has passed a replay on real past orders.</p>
+          </article>
+          <article class="card">
+            <h3>Exceptions</h3>
+            <p>Held on a "Waiting on you" dashboard with the document, what was read and why it stopped. The desk approves; the system never clears its own holds.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Principles -->
+    <section class="section section--tight" aria-labelledby="whyTitle">
+      <div class="wrap">
+        <h2 class="heading" id="whyTitle">What made it work</h2>
+        <div class="grid4">
+          <article class="card">
+            <h3>Criteria before code</h3>
+            <p>For every change I wrote what "correct" means first, then replayed it on the real email history before switching it on.</p>
+          </article>
+          <article class="card">
+            <h3>The desk's past work as the answer key</h3>
+            <p>Each reader was checked against how people had actually keyed that customer's orders, so mistakes showed up as numbers, not opinions.</p>
+          </article>
+          <article class="card">
+            <h3>Safety over speed</h3>
+            <p>Duplicate protection, a dispatch gate and a daily audit of the gate's decisions came before broader automation.</p>
+          </article>
+          <article class="card">
+            <h3>Monitoring built in</h3>
+            <p>Failures are logged and posted to Slack; a daily check reports holds, replies and anything drifting.</p>
+          </article>
+        </div>
+        <div class="tools">
+          <span>Microsoft Graph / Outlook</span><span>Claude API</span><span>n8n</span><span>Node.js</span><span>PostgreSQL / Supabase</span><span>Notion</span><span>Typeform</span><span>Slack</span><span>Railway</span><span>Unleashed ERP</span>
+        </div>
+        <p class="fine">Client name and all customer, product and pricing data withheld. Figures from the live job log, 1 Sep – 5 Nov 2026.
+          <a class="link" href="assets/order-intake-case-study.pdf" target="_blank" rel="noopener">Download the two-page case study (PDF)</a></p>
+      </div>
+    </section>
+
+    <!-- Dark band: email journeys -->
+    <section class="band" id="journeys" aria-labelledby="bandTitle">
+      <div class="band__inner">
+        <div class="band__art">
+          <ol class="journey" id="journey">
+            <li class="jstep" data-kind="always">
+              <span class="jstep__when">Instantly</span>
+              <span class="jstep__what">Application received</span>
+              <span class="jstep__note">Branded confirmation with a link to the culture survey</span>
+            </li>
+            <li class="jstep" data-kind="chaser">
+              <span class="jstep__when">After 48 hours</span>
+              <span class="jstep__what">First chaser</span>
+              <span class="jstep__note">Sent only if the survey isn't done</span>
+            </li>
+            <li class="jstep" data-kind="chaser">
+              <span class="jstep__when">Later</span>
+              <span class="jstep__what">Second chaser</span>
+              <span class="jstep__note">At most 2 chasers, never twice in 7 days, stops at 7 days old</span>
+            </li>
+            <li class="jstep" data-kind="always">
+              <span class="jstep__when">On stage change</span>
+              <span class="jstep__what">Status update</span>
+              <span class="jstep__note">Sent when the hiring team moves the candidate</span>
+            </li>
+            <li class="jstep" data-kind="always">
+              <span class="jstep__when">9:30 daily</span>
+              <span class="jstep__what">Team summary</span>
+              <span class="jstep__note">A digest of the pipeline for the hiring team</span>
+            </li>
+          </ol>
+        </div>
+        <div class="band__copy">
+          <p class="eyebrow eyebrow--light">Also built for the same client</p>
+          <h2 class="display display--light" id="bandTitle">Email journeys that stop when people act</h2>
+          <p>Triggered applicant sequences behind the hiring pipeline: branded HTML templates, fields pulled from the CRM, sent from the company's own Outlook domain, and every send recorded so follow-ups never collide.</p>
+          <label class="switch">
+            <input type="checkbox" id="surveyDone">
+            <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+            <span>The applicant completes the survey</span>
+          </label>
+          <p class="band__state" id="journeyState" aria-live="polite">Survey not done yet: chasers are scheduled.</p>
+          <a class="btn-outline-light" href="assets/order-intake-case-study.pdf" target="_blank" rel="noopener">Read page two of the case study</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="section" id="about" aria-labelledby="aboutTitle">
+      <div class="wrap about">
+        <div class="about__copy">
+          <p class="eyebrow">About</p>
+          <h2 class="display" id="aboutTitle">I build automation and AI that people can trust with real work</h2>
+          <p>I currently build and run automation at PerfectTed: self-hosted n8n workflows, scrapers, and LLMs wired into production pipelines. Before that I shipped an AI e-commerce platform, and I research soil classification with computer vision on a DOST-funded thesis.</p>
+          <p>I like the unglamorous parts: writing down what correct means, replaying changes on real history, and making failures loud.</p>
+          <p><a class="link" href="https://linkedin.com/in/neil-cayton" target="_blank" rel="noopener">LinkedIn</a> · <a class="link" href="https://github.com/k10nite" target="_blank" rel="noopener">GitHub</a></p>
+        </div>
+
+        <div class="skills">
+          <div class="tabs tabs--skills" role="tablist" aria-label="Skills" id="skillTabs">
+            <button role="tab" class="tab" aria-selected="true" data-skill="automation">Automation</button>
+            <button role="tab" class="tab" aria-selected="false" data-skill="ai">AI / ML</button>
+            <button role="tab" class="tab" aria-selected="false" data-skill="backend">Backend</button>
+            <button role="tab" class="tab" aria-selected="false" data-skill="frontend">Frontend</button>
+            <button role="tab" class="tab" aria-selected="false" data-skill="geo">Geospatial</button>
+          </div>
+          <div class="skills__panel" id="skillPanel" role="tabpanel" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section class="section section--tight" id="experience" aria-labelledby="expTitle">
+      <div class="wrap">
+        <p class="eyebrow">Experience</p>
+        <h2 class="display" id="expTitle">Where I've done the work</h2>
+
+        <div class="xp">
+          <details class="xp__row" open>
+            <summary>
+              <span class="xp__role">Operational Specialist</span>
+              <span class="xp__org">PerfectTed · Automation &amp; AI</span>
+              <span class="xp__date">May 2025 – Present</span>
+              <span class="xp__chev" aria-hidden="true"></span>
+            </summary>
+            <div class="xp__body">
+              <p>Building intelligent automation systems, deploying self-hosted workflows, and integrating AI into production pipelines for a UK-based company.</p>
+              <div class="tools"><span>n8n / Docker</span><span>GPT-4 API</span><span>PostgreSQL / Supabase</span><span>Web scraping</span></div>
+            </div>
+          </details>
+          <details class="xp__row">
+            <summary>
+              <span class="xp__role">AI Engineer</span>
+              <span class="xp__org">Gift of Grace Food Manufacturing · Full-stack &amp; AI</span>
+              <span class="xp__date">Aug – Dec 2025</span>
+              <span class="xp__chev" aria-hidden="true"></span>
+            </summary>
+            <div class="xp__body">
+              <p>Built an AI-powered e-commerce platform with the "Grace" chatbot using RASA NLU, RAG pipelines, and multi-provider LLM fallback.</p>
+              <div class="tools"><span>RASA NLU / FAISS</span><span>FastAPI</span><span>React / Vercel</span><span>LLM integration</span></div>
+            </div>
+          </details>
+          <details class="xp__row">
+            <summary>
+              <span class="xp__role">ML Researcher</span>
+              <span class="xp__org">DOST-funded thesis · Research</span>
+              <span class="xp__date">Aug 2025 – Present</span>
+              <span class="xp__chev" aria-hidden="true"></span>
+            </summary>
+            <div class="xp__body">
+              <p>Building Munsell Chart extraction tools and structured datasets for soil classification models deployed on Hugging Face.</p>
+              <div class="tools"><span>Computer vision</span><span>Data processing</span><span>Hugging Face</span><span>Python</span></div>
+            </div>
+          </details>
+          <details class="xp__row">
+            <summary>
+              <span class="xp__role">Business App Developer</span>
+              <span class="xp__org">NOAH · Enterprise</span>
+              <span class="xp__date">Jun – Jul 2025</span>
+              <span class="xp__chev" aria-hidden="true"></span>
+            </summary>
+            <div class="xp__body">
+              <p>320-hour internship executing BRTS testing for enterprise ERP modules, building automation tools, and validating BIR/BSP compliance features.</p>
+              <div class="tools"><span>ERP systems</span><span>QA testing</span><span>Excel automation</span><span>Compliance</span></div>
+            </div>
+          </details>
+          <details class="xp__row">
+            <summary>
+              <span class="xp__role">Marketing Officer</span>
+              <span class="xp__org">SLU AWS Learning Club · Community</span>
+              <span class="xp__date">Aug 2025 – Present</span>
+              <span class="xp__chev" aria-hidden="true"></span>
+            </summary>
+            <div class="xp__body">
+              <p>Managing public presence and content strategy, building engagement pipelines for community outreach and event promotion.</p>
+              <div class="tools"><span>Content strategy</span><span>Canva</span><span>Community building</span><span>AWS</span></div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="section" id="projects" aria-labelledby="projTitle">
+      <div class="wrap">
+        <p class="eyebrow">Projects</p>
+        <h2 class="display" id="projTitle">Other things I've built</h2>
+
+        <div class="filters" id="filters" role="group" aria-label="Filter projects">
+          <button class="pill" type="button" aria-pressed="true" data-filter="all">All</button>
+          <button class="pill" type="button" aria-pressed="false" data-filter="n8n">n8n workflows</button>
+          <button class="pill" type="button" aria-pressed="false" data-filter="ai">AI</button>
+          <button class="pill" type="button" aria-pressed="false" data-filter="email">Email</button>
+        </div>
+
+        <div class="grid3" id="projectGrid">
+          <article class="card card--proj" data-tags="ai email">
+            <h3>Order intake automation</h3>
+            <p>Multi-format order reading from a shared inbox into the ERP, with a gate that checks every order against its document.</p>
+            <div class="tools"><span>Claude API</span><span>Node.js</span><span>Supabase</span></div>
+            <a class="link" href="#case-study">Read the case study</a>
+          </article>
+          <article class="card card--proj" data-tags="n8n">
+            <h3>YouTube pipeline</h3>
+            <p>Auto-transcription, metadata extraction and delivery into Airtable as one workflow.</p>
+            <div class="tools"><span>n8n</span><span>Airtable</span></div>
+          </article>
+          <article class="card card--proj" data-tags="n8n">
+            <h3>Social scrapers</h3>
+            <p>Reddit and Twitter scrapers with anti-detection, authenticated sessions and rate throttling.</p>
+            <div class="tools"><span>n8n</span><span>Anti-bot</span></div>
+          </article>
+          <article class="card card--proj" data-tags="n8n email">
+            <h3>Email outreach</h3>
+            <p>Automated sequences with tracking, conditional logic and response handling.</p>
+            <div class="tools"><span>n8n</span><span>Automation</span></div>
+          </article>
+          <article class="card card--proj" data-tags="ai">
+            <h3>Grace AI chatbot</h3>
+            <p>RAG-powered customer service bot with RASA NLU and multi-LLM fallback.</p>
+            <div class="tools"><span>RASA</span><span>FAISS</span><span>FastAPI</span></div>
+          </article>
+          <article class="card card--proj" data-tags="n8n email">
+            <h3>Hiring automation</h3>
+            <p>Applicant intake, tracking and notification pipelines.</p>
+            <div class="tools"><span>n8n</span><span>Airtable</span></div>
+            <a class="link" href="#journeys">See the email journey</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="glow" id="contact" aria-labelledby="contactTitle">
+      <div class="glow__inner">
+        <div>
+          <h2 class="display" id="contactTitle">Have a workflow that eats your team's week?</h2>
+          <p>Open to automation, AI engineering and full-stack work.</p>
+        </div>
+        <div class="glow__actions">
+          <a class="btn-white" href="mailto:neilcayton03@gmail.com">Email Neil</a>
+          <button class="btn-plain" type="button" id="copyEmail" data-email="neilcayton03@gmail.com">Copy address</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <p class="footer__name">Neil Cayton</p>
+        <p>Automation &amp; AI engineer</p>
+      </div>
+      <div class="footer__col">
+        <h2>Work</h2>
+        <a href="#case-study">Case study</a>
+        <a href="#try">Try the pipeline</a>
+        <a href="#journeys">Email journeys</a>
+        <a href="#projects">Projects</a>
+      </div>
+      <div class="footer__col">
+        <h2>About</h2>
+        <a href="#about">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="assets/order-intake-case-study.pdf" target="_blank" rel="noopener">Case study PDF</a>
+      </div>
+      <div class="footer__col">
+        <h2>Contact</h2>
+        <a href="mailto:neilcayton03@gmail.com">Email</a>
+        <a href="https://github.com/k10nite" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://linkedin.com/in/neil-cayton" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+    <p class="footer__legal">© 2026 Neil Cayton</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
