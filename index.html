@@ -74,13 +74,19 @@
       <div class="wrap">
         <p class="eyebrow">What I work with</p>
         <h2 class="display" id="toolsTitle">Not one tool. The whole stack.</h2>
-        <div class="stack">
+        <p class="sub ring-hint">Drag, use the arrows, or pick a group.</p>
+        <div class="ring-tabs" id="ringTabs" role="group" aria-label="Stack groups"></div>
+        <div class="stack" id="stack">
           <div class="stack__group"><h3>Languages</h3><ul><li>Python</li><li>TypeScript</li></ul></div>
           <div class="stack__group"><h3>Front end</h3><ul><li>React</li><li>Tailwind CSS</li><li>Framer Motion</li><li>Vercel</li></ul></div>
           <div class="stack__group"><h3>Back end and data</h3><ul><li>FastAPI</li><li>PostgreSQL</li><li>Supabase</li><li>MongoDB</li><li>Notion</li></ul></div>
           <div class="stack__group"><h3>Machine learning</h3><ul><li>OpenCV</li><li>Hugging Face</li><li>RASA NLU</li><li>FAISS</li><li>XGBoost</li><li>Random Forest</li><li>SHAP</li><li>Google Earth Engine</li></ul></div>
           <div class="stack__group"><h3>Deployment and integration</h3><ul><li>Railway</li><li>Docker</li><li>Microsoft 365 / Outlook</li><li>ERP APIs</li></ul></div>
           <div class="stack__group"><h3>AI tooling and automation</h3><ul><li>Claude Code</li><li>MCP</li><li>n8n</li><li>Make.com</li><li>Apify</li><li>Apollo</li></ul></div>
+        </div>
+        <div class="ring-nav" id="ringNav">
+          <button class="ring-btn" type="button" data-dir="-1" aria-label="Previous group">←</button>
+          <button class="ring-btn" type="button" data-dir="1" aria-label="Next group">→</button>
         </div>
       </div>
     </section>

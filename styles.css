@@ -481,3 +481,38 @@ h1 { text-wrap: balance; }
   .stack { grid-template-columns: 1fr 1fr; gap: 32px 24px; margin-top: 32px; }
   .stack__group li { font-size: 18px; }
 }
+
+/* ---------- 3D: stack ring, tilt reveals, portrait ---------- */
+.ring-hint, .ring-tabs, .ring-nav { display: none; }
+.js .ring-hint { display: block; }
+.js .ring-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; }
+.js .ring-nav { display: flex; justify-content: center; gap: 12px; margin-top: 24px; }
+.ring-btn { width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--ink); background: var(--paper); font-size: 19px; transition: background .2s ease; }
+.ring-btn:hover { background: var(--lilac); }
+
+.stack--ring { display: block; position: relative; height: 320px; margin-top: 40px; perspective: 1400px; touch-action: pan-y; cursor: grab; user-select: none; }
+.stack--ring:active { cursor: grabbing; }
+.stack--ring .stack__spin { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .9s cubic-bezier(.2, .8, .2, 1); }
+.stack--ring .stack__spin.is-drag { transition: none; }
+.stack--ring .stack__group { position: absolute; left: 50%; top: 0; width: 380px; margin-left: -190px; height: 290px; background: var(--paper); border: 1px solid var(--mist); border-radius: var(--r-card); padding: 28px; backface-visibility: hidden; transition: opacity .5s ease, border-color .5s ease; }
+.stack--ring .stack__group h3 { font-size: 26px; color: var(--ink); letter-spacing: -.014em; margin-bottom: 20px; }
+.stack--ring .stack__group ul { display: flex; flex-wrap: wrap; gap: 8px; }
+.stack--ring .stack__group li { font-size: 16px; letter-spacing: 0; line-height: 1.5; padding: 6px 14px; border-radius: 999px; background: var(--parchment); }
+.stack--ring .stack__group.is-front { border-color: var(--ink); }
+.stack--ring .stack__group.is-side { opacity: .55; cursor: pointer; }
+.stack--ring .stack__group.is-back { opacity: 0; pointer-events: none; }
+#tools { overflow: hidden; }
+
+.hero__photo { transition: transform .35s var(--ease); transform-origin: 50% 80%; will-change: transform; }
+.js [data-reveal] { transform: perspective(1000px) rotateX(10deg) translateY(28px); transform-origin: 50% 0; transition: opacity .7s ease, transform .9s var(--ease); }
+.js [data-reveal].is-in { transform: none; }
+
+@media (max-width: 900px) {
+  .stack--ring { height: 400px; perspective: 1000px; }
+  .stack--ring .stack__group { width: 270px; margin-left: -135px; height: 360px; padding: 20px; }
+  .stack--ring .stack__group h3 { font-size: 22px; }
+  .stack--ring .stack__group li { font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] { transform: none; }
+}

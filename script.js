@@ -216,6 +216,100 @@
       : 'Now: the team works through the MCP tool.';
   });
 
+  /* ---------- Stack: 3D ring ---------- */
+  const stack = $('#stack');
+  const groups = $$('.stack__group', stack);
+  if (stack && groups.length) {
+    const n = groups.length;
+    const step = 360 / n;
+    const tabsEl = $('#ringTabs');
+    let active = 0;   // may go beyond 0..n-1 so the ring always turns the short way
+    let dragX = null;
+    let dragDeg = 0;
+
+    stack.classList.add('stack--ring');
+    const spin = document.createElement('div');
+    spin.className = 'stack__spin';
+    groups.forEach((g) => spin.append(g));
+    stack.append(spin);
+
+    const tabs = groups.map((g, i) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'pill'; b.textContent = $('h3', g).textContent;
+      b.addEventListener('click', () => go(i));
+      tabsEl.append(b);
+      g.addEventListener('click', () => { if (Math.abs(dragDeg) < 3) go(i); });
+      return b;
+    });
+
+    const layout = () => {
+      const w = groups[0].offsetWidth;
+      const r = Math.round(w / 2 / Math.tan(Math.PI / n)) + (desktop.matches ? 56 : 20);
+      stack.style.setProperty('--r', `${r}px`);
+      groups.forEach((g, i) => (g.style.transform = `rotateY(${i * step}deg) translateZ(${r}px)`));
+      render();
+    };
+    const render = () => {
+      spin.style.transform = `translateZ(calc(var(--r) * -1)) rotateY(${-active * step + dragDeg}deg)`;
+      const cur = ((active % n) + n) % n;
+      groups.forEach((g, i) => {
+        const d = Math.min((i - cur + n) % n, (cur - i + n) % n);
+        g.classList.toggle('is-front', d === 0);
+        g.classList.toggle('is-side', d === 1);
+        g.classList.toggle('is-back', d > 1);
+        g.setAttribute('aria-hidden', String(d !== 0));
+      });
+      tabs.forEach((t, i) => t.setAttribute('aria-pressed', String(i === cur)));
+    };
+    function go(i) {
+      const cur = ((active % n) + n) % n;
+      let d = i - cur;
+      if (d > n / 2) d -= n;
+      if (d < -n / 2) d += n;
+      active += d;
+      render();
+    }
+    $('#ringNav').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-dir]');
+      if (b) { active += Number(b.dataset.dir); render(); }
+    });
+    stack.tabIndex = 0;
+    stack.setAttribute('aria-roledescription', 'carousel');
+    stack.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { active += 1; render(); }
+      if (e.key === 'ArrowLeft') { active -= 1; render(); }
+    });
+    stack.addEventListener('pointerdown', (e) => { dragX = e.clientX; dragDeg = 0; spin.classList.add('is-drag'); });
+    addEventListener('pointermove', (e) => {
+      if (dragX === null) return;
+      dragDeg = (e.clientX - dragX) * 0.25;
+      render();
+    });
+    addEventListener('pointerup', () => {
+      if (dragX === null) return;
+      dragX = null;
+      spin.classList.remove('is-drag');
+      active -= Math.round(dragDeg / step);
+      setTimeout(() => (dragDeg = 0), 0);
+      const d = dragDeg; dragDeg = 0; render(); dragDeg = d;
+    });
+    addEventListener('resize', layout);
+    layout();
+  }
+
+  /* ---------- Hero portrait tilt ---------- */
+  const photo = $('.hero__photo');
+  if (photo && !reduced && matchMedia('(hover: hover)').matches) {
+    const hero = $('.hero');
+    hero.addEventListener('pointermove', (e) => {
+      const r = hero.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      photo.style.transform = `perspective(1200px) rotateY(${(x * 7).toFixed(2)}deg) rotateX(${(-y * 4).toFixed(2)}deg)`;
+    });
+    hero.addEventListener('pointerleave', () => (photo.style.transform = ''));
+  }
+
   /* ---------- Grace chat walk-through ---------- */
   const QS = [
     [['RASA NLU', 'Recognises the intent: order tracking'], ['Order lookup', 'Fetches the live order status'], ['Reply', 'Grace tells the customer where the order is']],
@@ -261,7 +355,7 @@
   });
 
   /* ---------- Reveal on scroll ---------- */
-  const revealEls = $$('.card, .xp__row, .display, .piece, .sim, .stack__group, .chat, .munsell, .repo');
+  const revealEls = $$('.card, .xp__row, .display, .piece, .sim, .chat, .munsell, .repo');
   revealEls.forEach((el) => el.setAttribute('data-reveal', ''));
   const revIO = new IntersectionObserver((entries) => {
     entries.forEach((en) => {
