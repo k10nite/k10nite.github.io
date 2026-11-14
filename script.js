@@ -216,49 +216,6 @@
       : 'Now: the team works through the MCP tool.';
   });
 
-  /* ---------- Toolbox ---------- */
-  const TOOLS = [
-    ['Claude Code', 'Agents', 'My daily driver since its release. I use it for debugging and scheduled pipeline checks, and I run coding agents in parallel on a server, 10 at once in one design brainstorm.'],
-    ['MCP', 'Agents', 'I built an MCP tool for an inventory system after working out an API workaround with that system\'s own developers. The team still uses it.'],
-    ['Python', 'Languages', 'My main language, from computer vision research to backend services and production tooling.'],
-    ['TypeScript', 'Languages', 'For front ends and for the systems I ship and run.'],
-    ['React', 'Full-stack', 'The front end of the Grace e-commerce platform, deployed on Vercel.'],
-    ['FastAPI', 'Full-stack', 'The backend for the Grace platform and its chatbot.'],
-    ['PostgreSQL', 'Data', 'Relational data modelling and queries, including through Supabase.'],
-    ['Supabase', 'Data', 'The database behind the order system. It is also what I pitched when Notion was being stretched into a database.'],
-    ['Notion', 'Data', 'The team\'s workspace. It was being used as a database, so I pitched Supabase and Airtable for better data management.'],
-    ['OpenCV', 'Machine learning', 'Computer vision pipelines for automated soil colour detection in my thesis.'],
-    ['Hugging Face', 'Machine learning', 'Where my thesis soil classification models are deployed for public access.'],
-    ['RASA NLU', 'Machine learning', 'Intent classification and entity extraction for the Grace chatbot.'],
-    ['FAISS', 'Machine learning', 'Semantic search over a product catalogue, used for retrieval in the Grace chatbot.'],
-    ['XGBoost / Random Forest', 'Machine learning', 'Classical machine learning models, with SHAP to explain their predictions.'],
-    ['Google Earth Engine', 'Machine learning', 'Geospatial work with Sentinel-2 and Landsat-8 imagery, alongside Rasterio and GDAL.'],
-    ['Railway', 'Deploy', 'Where I deploy. The order system runs here, and I moved to it from n8n.'],
-    ['Docker', 'Deploy', 'Self-hosted deployments behind a reverse proxy with SSL.'],
-    ['Microsoft 365 / Outlook', 'Integrate', 'The order system watches a Microsoft 365 inbox and sorts real orders from replies and noise.'],
-    ['n8n', 'Automate', 'I wrote and published n8n-nodes-unleashed, an open-source community node package.'],
-    ['Make.com', 'Automate', 'Visual workflow automation, for the jobs where a scenario is quicker than custom code.'],
-    ['Apify', 'Research', 'Web data collection for lead research.'],
-    ['Apollo', 'Research', 'Prospect data for lead research.']
-  ];
-  const toolList = $('#toolList');
-  const showTool = (i) => {
-    const [name, kind, text] = TOOLS[i];
-    $$('button', toolList).forEach((b, n) => b.setAttribute('aria-pressed', String(n === i)));
-    $('#toolKind').textContent = kind;
-    $('#toolName').textContent = name;
-    $('#toolText').textContent = text;
-    const p = $('#toolPanel');
-    p.classList.remove('is-swap'); void p.offsetWidth; p.classList.add('is-swap');
-  };
-  TOOLS.forEach(([name], i) => {
-    const b = document.createElement('button');
-    b.type = 'button'; b.className = 'pill pill--lg'; b.textContent = name;
-    b.addEventListener('click', () => showTool(i));
-    toolList.append(b);
-  });
-  showTool(0);
-
   /* ---------- Grace chat walk-through ---------- */
   const QS = [
     [['RASA NLU', 'Recognises the intent: order tracking'], ['Order lookup', 'Fetches the live order status'], ['Reply', 'Grace tells the customer where the order is']],
@@ -304,7 +261,7 @@
   });
 
   /* ---------- Reveal on scroll ---------- */
-  const revealEls = $$('.card, .xp__row, .display, .piece, .sim, .toolbox, .repo');
+  const revealEls = $$('.card, .xp__row, .display, .piece, .sim, .stack__group, .chat, .munsell, .repo');
   revealEls.forEach((el) => el.setAttribute('data-reveal', ''));
   const revIO = new IntersectionObserver((entries) => {
     entries.forEach((en) => {
