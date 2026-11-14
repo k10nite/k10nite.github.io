@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neil Cayton | Automation & AI Engineer</title>
-  <meta name="description" content="Neil Cayton builds automation and AI systems that run in production. Case study: a shared orders inbox to the ERP, with people only on the exceptions.">
-  <meta property="og:title" content="Neil Cayton | Automation & AI Engineer">
-  <meta property="og:description" content="Automation and AI systems that run in production. 10,563 emails sorted and 1,303 duplicate orders stopped in 9 weeks.">
+  <title>Neil Cayton | AI Automation Engineer</title>
+  <meta name="description" content="Neil Cayton is a developer who builds systems that run in production, ask a person when unsure, and stay running.">
+  <meta property="og:title" content="Neil Cayton | AI Automation Engineer">
+  <meta property="og:description" content="Selected work: an order system for a food and beverage supplier, an MCP tool for an inventory system, and a published n8n community node.">
   <meta property="og:image" content="https://k10nite.github.io/assets/img/portrait.jpg">
-  <meta name="theme-color" content="#421d24">
+  <meta name="theme-color" content="#f6b70f">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,22 +18,14 @@
 <body>
   <a class="skip" href="#main">Skip to content</a>
 
-  <!-- Announcement -->
-  <div class="announce">
-    <span class="announce__dot" aria-hidden="true"></span>
-    <span>New case study: 10,563 order emails sorted in 9 weeks</span>
-    <a class="announce__link" href="#case-study">Read it</a>
-  </div>
-
-  <!-- Header -->
   <header class="nav" id="nav">
     <div class="nav__inner">
       <a class="nav__logo" href="#top" aria-label="Neil Cayton, home">Neil Cayton</a>
       <nav class="nav__links" aria-label="Primary">
-        <a href="#case-study">Case study</a>
+        <a href="#work">Work</a>
+        <a href="#how">How I work</a>
         <a href="#about">About</a>
         <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
       </nav>
       <div class="nav__actions">
         <a class="btn-ghost nav__gh" href="https://github.com/k10nite" target="_blank" rel="noopener">GitHub</a>
@@ -47,11 +39,11 @@
     <section class="hero" id="top">
       <div class="hero__inner">
         <div class="hero__copy">
-          <p class="eyebrow">Automation &amp; AI engineer</p>
+          <p class="eyebrow">Neil Cayton · AI Automation Engineer</p>
           <h1>Your ideas.<br>My automation.<br>Real impact.</h1>
-          <p class="hero__sub">I'm Neil. I build systems that read the inbox, check their own work and leave people only the decisions that need a person.</p>
+          <p class="hero__sub">I build software that takes repetitive work off a team, and asks a person when it isn't sure.</p>
           <div class="hero__cta">
-            <a class="btn-wine" href="#case-study">See the case study <span aria-hidden="true">→</span></a>
+            <a class="btn-wine" href="#work">See my work <span aria-hidden="true">→</span></a>
             <a class="btn-plain" href="#contact">Let's talk</a>
           </div>
         </div>
@@ -69,163 +61,84 @@
               <span class="chip-ico" aria-hidden="true">
                 <svg viewBox="0 0 20 20"><rect x="2.5" y="4.5" width="15" height="11" rx="2"/><path d="M3 6l7 5 7-5"/></svg>
               </span>
-              <span class="float__meta">Orders inbox · just now</span>
+              <span class="float__meta">Order inbox · just now</span>
             </div>
             <p class="float__title">Purchase order attached</p>
-            <p class="float__body">PO-20418.pdf · 14 lines</p>
-            <span class="tag">Sorted: new order</span>
+            <p class="float__body">PO-20418.pdf</p>
+            <span class="tag">Sorted: real order</span>
           </div>
 
           <div class="float float--b" data-depth="-14">
-            <p class="float__meta">Check against the document</p>
+            <p class="float__meta">Checked against the ERP</p>
             <ul class="ticks">
               <li>Customer</li>
-              <li>Products</li>
-              <li>Quantities</li>
-              <li>Delivery date</li>
-              <li>Not a duplicate</li>
+              <li>SKU</li>
+              <li>Unit vs case</li>
+              <li>Price</li>
             </ul>
-            <p class="float__title float__title--sm">Created in the ERP</p>
+            <p class="float__title float__title--sm">Sales order created</p>
           </div>
 
           <div class="float float--c" data-depth="26" id="holdCard">
-            <p class="float__meta">Waiting on you</p>
-            <p class="float__body" id="holdText">Held: this looks like the same order we received on Tuesday.</p>
+            <p class="float__meta">Needs a person</p>
+            <p class="float__body" id="holdText">Flagged: "12" could mean units or cases.</p>
             <div class="float__actions">
-              <button class="btn-mini btn-mini--fill" type="button" data-hold="keep">Keep it stopped</button>
-              <button class="btn-mini" type="button" data-hold="approve">Approve</button>
+              <button class="btn-mini btn-mini--fill" type="button" data-hold="cases">It's cases</button>
+              <button class="btn-mini" type="button" data-hold="units">It's units</button>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Proof strip -->
-    <section class="proof" aria-label="Results from the live job log">
-      <div class="proof__grid">
-        <div class="proof__cell"><span class="proof__num" data-count="10563">10,563</span><span class="proof__label">emails sorted and logged in 9 weeks</span></div>
-        <div class="proof__cell"><span class="proof__num" data-count="1303">1,303</span><span class="proof__label">duplicate orders stopped before the ERP</span></div>
-        <div class="proof__cell"><span class="proof__num" data-count="174">174</span><span class="proof__label">customer accounts the system reads</span></div>
-        <div class="proof__cell"><span class="proof__num" data-count="629">629</span><span class="proof__label">commits shipped since 1 September</span></div>
+    <!-- Work intro -->
+    <section class="section section--intro" id="work">
+      <div class="wrap">
+        <p class="eyebrow">Selected work</p>
+        <h2 class="display">Three things I built that people still use</h2>
       </div>
     </section>
 
-    <!-- Case study intro -->
-    <section class="section" id="case-study">
+    <!-- Piece 1 -->
+    <section class="section section--piece" aria-labelledby="p1Title">
       <div class="wrap">
-        <p class="eyebrow">Case study · Order intake automation · 2026</p>
-        <h2 class="display">From a shared orders inbox to the ERP, with people only on the exceptions</h2>
-        <div class="lede">
-          <p>A UK food and drink brand received wholesale and retail orders by email in dozens of formats: PDFs, spreadsheets, EDI files, portal notices and plain-text replies. A small desk keyed each one into the ERP by hand.</p>
-          <p>I designed, built and run the system that now sorts, reads and checks every email in that inbox.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Scroll receipt -->
-    <section class="section section--tight" id="how" aria-labelledby="howTitle">
-      <div class="wrap">
-        <h2 class="heading" id="howTitle">How one email becomes one order</h2>
-        <p class="sub">Follow one email through the five stages as the run prints its receipt.</p>
-
-        <div class="run" id="run">
-          <div class="run__left">
-            <div class="printer">
-              <div class="printer__slot" aria-hidden="true"></div>
-              <div class="printer__window">
-                <div class="receipt" id="receipt">
-                  <div class="receipt__head">
-                    <span>Run receipt</span><span>Job 08417</span>
-                  </div>
-                  <div class="receipt__block" data-step="0">
-                    <p class="receipt__stage">01 Watch</p>
-                    <p class="receipt__line"><span>Email received</span><span>09:14:02</span></p>
-                    <p class="receipt__line"><span>Tracked as a job</span><span>✓</span></p>
-                  </div>
-                  <div class="receipt__block" data-step="1">
-                    <p class="receipt__stage">02 Sort</p>
-                    <p class="receipt__line"><span>Type</span><span>New order</span></p>
-                    <p class="receipt__line"><span>Attachment</span><span>PDF, 2 pages</span></p>
-                  </div>
-                  <div class="receipt__block" data-step="2">
-                    <p class="receipt__stage">03 Read</p>
-                    <p class="receipt__line"><span>Reader</span><span>Fixed layout</span></p>
-                    <p class="receipt__line"><span>Lines read</span><span>14</span></p>
-                  </div>
-                  <div class="receipt__block" data-step="3">
-                    <p class="receipt__stage">04 Check</p>
-                    <p class="receipt__line"><span>Customer</span><span>✓</span></p>
-                    <p class="receipt__line"><span>Products, quantities</span><span>✓</span></p>
-                    <p class="receipt__line"><span>Dates</span><span>✓</span></p>
-                    <p class="receipt__line"><span>Duplicate</span><span>None</span></p>
-                  </div>
-                  <div class="receipt__block" data-step="4">
-                    <p class="receipt__stage">05 Act</p>
-                    <p class="receipt__line"><span>Sales order</span><span>Created</span></p>
-                    <p class="receipt__total"><span>People needed</span><span>0</span></p>
-                  </div>
-                  <div class="receipt__foot">Illustrative run · no client data</div>
-                </div>
-              </div>
-            </div>
+        <div class="piece">
+          <div class="piece__copy">
+            <p class="piece__n">01 · Built and run by me · Live</p>
+            <h3 class="heading heading--lg" id="p1Title">An order system for a food and beverage supplier</h3>
+            <p>Orders arrive by email. The system reads them, checks them against the ERP and creates the sales order, so the team only steps in when something doesn't add up.</p>
+            <p class="stat"><span class="stat__num" data-count="10000" data-suffix="+">10,000+</span><span class="stat__label">order emails processed so far</span></p>
           </div>
-
-          <ol class="steps" id="steps">
-            <li class="step" data-step="0">
-              <span class="step__n">01</span>
-              <h3>Watch</h3>
-              <p>Subscribes to the Outlook inbox through Microsoft Graph. Every email becomes a tracked job, so nothing is lost or handled twice.</p>
-            </li>
-            <li class="step" data-step="1">
-              <span class="step__n">02</span>
-              <h3>Sort</h3>
-              <p>Separates new orders from customer replies, portal notices, invoices and newsletters. Replies go to a person, never auto-closed.</p>
-            </li>
-            <li class="step" data-step="2">
-              <span class="step__n">03</span>
-              <h3>Read</h3>
-              <p>Fixed readers for each customer's layout; Claude reads the formats that don't fit a template.</p>
-            </li>
-            <li class="step" data-step="3">
-              <span class="step__n">04</span>
-              <h3>Check</h3>
-              <p>A gate compares the order with the original document: customer, products, quantities, dates and duplicates.</p>
-            </li>
-            <li class="step" data-step="4">
-              <span class="step__n">05</span>
-              <h3>Act</h3>
-              <p>Creates the sales order in the ERP, or holds it on a dashboard with the reason in plain English.</p>
-            </li>
-          </ol>
+          <ul class="facts">
+            <li>Watches a Microsoft 365 order inbox and sorts real orders from replies and noise.</li>
+            <li>Reads order emails and their attachments.</li>
+            <li>Checks each order against live ERP data: customer, SKU, unit vs case, price.</li>
+            <li>Creates the sales order through the ERP's API.</li>
+            <li>Flags anything it can't trust for a person instead of guessing.</li>
+            <li>Checks new senders (SPF and DKIM) before trusting them. New features ship switched off.</li>
+          </ul>
         </div>
-      </div>
-    </section>
-
-    <!-- Simulator -->
-    <section class="section" id="try" aria-labelledby="tryTitle">
-      <div class="wrap">
-        <h2 class="heading" id="tryTitle">Send it an email</h2>
-        <p class="sub">Pick what lands in the inbox and watch where it stops. Examples are illustrative; no client data is shown.</p>
 
         <div class="sim">
+          <p class="sim__lead">Try it: pick what lands in the inbox.</p>
           <div class="tabs" role="tablist" aria-label="Sample emails" id="simTabs">
-            <button role="tab" class="tab" aria-selected="true" data-case="pdf">
+            <button role="tab" class="tab" aria-selected="true" data-case="clean">
               <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 2.5h7l3.5 3.5v11.5h-10.5z"/><path d="M12 2.5v3.5h3.5"/></svg>
-              PDF order
+              Clean order
             </button>
-            <button role="tab" class="tab" aria-selected="false" data-case="sheet">
-              <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M3 8h14M3 12.5h14M8 3v14"/></svg>
-              Odd spreadsheet
+            <button role="tab" class="tab" aria-selected="false" data-case="unit">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 6.5l7-3.5 7 3.5v7l-7 3.5-7-3.5z"/><path d="M3 6.5l7 3.5 7-3.5M10 10v7"/></svg>
+              Units or cases?
             </button>
-            <button role="tab" class="tab" aria-selected="false" data-case="dup">
-              <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="6.5" y="6.5" width="10" height="10" rx="2"/><path d="M13.5 6.5v-1a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h1"/></svg>
-              Sent twice
+            <button role="tab" class="tab" aria-selected="false" data-case="sender">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="7" r="3"/><path d="M4 16.5c.8-3 3-4.5 6-4.5s5.200 1.5 6 4.5"/></svg>
+              New sender
             </button>
             <button role="tab" class="tab" aria-selected="false" data-case="reply">
               <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8 5L3.5 9.5 8 14"/><path d="M3.5 9.5h8a5 5 0 0 1 5 5v1"/></svg>
               Customer reply
             </button>
-            <button role="tab" class="tab" aria-selected="false" data-case="news">
+            <button role="tab" class="tab" aria-selected="false" data-case="noise">
               <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="4" width="15" height="12" rx="2"/><path d="M6 8h8M6 11.5h5"/></svg>
               Newsletter
             </button>
@@ -239,11 +152,11 @@
             </div>
 
             <ol class="track" id="track">
-              <li class="node" data-i="0"><span class="node__dot"></span><span class="node__name">Watch</span><span class="node__note"></span></li>
-              <li class="node" data-i="1"><span class="node__dot"></span><span class="node__name">Sort</span><span class="node__note"></span></li>
-              <li class="node" data-i="2"><span class="node__dot"></span><span class="node__name">Read</span><span class="node__note"></span></li>
-              <li class="node" data-i="3"><span class="node__dot"></span><span class="node__name">Check</span><span class="node__note"></span></li>
-              <li class="node" data-i="4"><span class="node__dot"></span><span class="node__name">Act</span><span class="node__note"></span></li>
+              <li class="node"><span class="node__dot"></span><span class="node__name">Inbox</span><span class="node__note"></span></li>
+              <li class="node"><span class="node__dot"></span><span class="node__name">Sort</span><span class="node__note"></span></li>
+              <li class="node"><span class="node__dot"></span><span class="node__name">Read</span><span class="node__note"></span></li>
+              <li class="node"><span class="node__dot"></span><span class="node__name">ERP check</span><span class="node__note"></span></li>
+              <li class="node"><span class="node__dot"></span><span class="node__name">Order</span><span class="node__note"></span></li>
             </ol>
 
             <div class="outcome" id="outcome">
@@ -253,94 +166,81 @@
             </div>
             <button class="btn-plain sim__replay" type="button" id="simReplay">Run it again</button>
           </div>
-        </div>
-
-        <div class="pair">
-          <article class="card">
-            <h3>Clean orders</h3>
-            <p>Created in the ERP automatically. Auto-send is switched on one customer at a time, once their format has passed a replay on real past orders.</p>
-          </article>
-          <article class="card">
-            <h3>Exceptions</h3>
-            <p>Held on a "Waiting on you" dashboard with the document, what was read and why it stopped. The desk approves; the system never clears its own holds.</p>
-          </article>
+          <p class="fine">Examples are made up to show the flow. Runs on Railway and Supabase. Client and customer details withheld.</p>
         </div>
       </div>
     </section>
 
-    <!-- Principles -->
-    <section class="section section--tight" aria-labelledby="whyTitle">
-      <div class="wrap">
-        <h2 class="heading" id="whyTitle">What made it work</h2>
-        <div class="grid4">
-          <article class="card">
-            <h3>Criteria before code</h3>
-            <p>For every change I wrote what "correct" means first, then replayed it on the real email history before switching it on.</p>
-          </article>
-          <article class="card">
-            <h3>The desk's past work as the answer key</h3>
-            <p>Each reader was checked against how people had actually keyed that customer's orders, so mistakes showed up as numbers, not opinions.</p>
-          </article>
-          <article class="card">
-            <h3>Safety over speed</h3>
-            <p>Duplicate protection, a dispatch gate and a daily audit of the gate's decisions came before broader automation.</p>
-          </article>
-          <article class="card">
-            <h3>Monitoring built in</h3>
-            <p>Failures are logged and posted to Slack; a daily check reports holds, replies and anything drifting.</p>
-          </article>
-        </div>
-        <div class="tools">
-          <span>Microsoft Graph / Outlook</span><span>Claude API</span><span>n8n</span><span>Node.js</span><span>PostgreSQL / Supabase</span><span>Notion</span><span>Typeform</span><span>Slack</span><span>Railway</span><span>Unleashed ERP</span>
-        </div>
-        <p class="fine">Client name and all customer, product and pricing data withheld. Figures from the live job log, 1 Sep – 5 Nov 2026.
-          <a class="link" href="assets/order-intake-case-study.pdf" target="_blank" rel="noopener">Download the two-page case study (PDF)</a></p>
-      </div>
-    </section>
-
-    <!-- Dark band: email journeys -->
-    <section class="band" id="journeys" aria-labelledby="bandTitle">
+    <!-- Piece 2: dark band -->
+    <section class="band" aria-labelledby="p2Title">
       <div class="band__inner">
         <div class="band__art">
-          <ol class="journey" id="journey">
-            <li class="jstep" data-kind="always">
-              <span class="jstep__when">Instantly</span>
-              <span class="jstep__what">Application received</span>
-              <span class="jstep__note">Branded confirmation with a link to the culture survey</span>
+          <ol class="mflow" id="mflow">
+            <li class="mflow__box">
+              <span class="mflow__label">Who's asking</span>
+              <span class="mflow__name">The team and their agents</span>
             </li>
-            <li class="jstep" data-kind="chaser">
-              <span class="jstep__when">After 48 hours</span>
-              <span class="jstep__what">First chaser</span>
-              <span class="jstep__note">Sent only if the survey isn't done</span>
+            <li class="mflow__box mflow__box--tool" id="mcpBox">
+              <span class="mflow__label">What I built</span>
+              <span class="mflow__name">MCP tool</span>
             </li>
-            <li class="jstep" data-kind="chaser">
-              <span class="jstep__when">Later</span>
-              <span class="jstep__what">Second chaser</span>
-              <span class="jstep__note">At most 2 chasers, never twice in 7 days, stops at 7 days old</span>
-            </li>
-            <li class="jstep" data-kind="always">
-              <span class="jstep__when">On stage change</span>
-              <span class="jstep__what">Status update</span>
-              <span class="jstep__note">Sent when the hiring team moves the candidate</span>
-            </li>
-            <li class="jstep" data-kind="always">
-              <span class="jstep__when">9:30 daily</span>
-              <span class="jstep__what">Team summary</span>
-              <span class="jstep__note">A digest of the pipeline for the hiring team</span>
+            <li class="mflow__box">
+              <span class="mflow__label">Where the data lives</span>
+              <span class="mflow__name">Inventory system API</span>
             </li>
           </ol>
         </div>
         <div class="band__copy">
-          <p class="eyebrow eyebrow--light">Also built for the same client</p>
-          <h2 class="display display--light" id="bandTitle">Email journeys that stop when people act</h2>
-          <p>Triggered applicant sequences behind the hiring pipeline: branded HTML templates, fields pulled from the CRM, sent from the company's own Outlook domain, and every send recorded so follow-ups never collide.</p>
+          <p class="eyebrow eyebrow--light">02 · Still in use by the team</p>
+          <h2 class="display display--light" id="p2Title">An MCP tool for an inventory system</h2>
+          <p>The team kept hitting limits on an inventory system's API. I reached out to that system's developers myself, worked out a way around it with them, and built an MCP tool into the team's setup.</p>
           <label class="switch">
-            <input type="checkbox" id="surveyDone">
+            <input type="checkbox" id="beforeToggle">
             <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
-            <span>The applicant completes the survey</span>
+            <span>Show how it was before</span>
           </label>
-          <p class="band__state" id="journeyState" aria-live="polite">Survey not done yet: chasers are scheduled.</p>
-          <a class="btn-outline-light" href="assets/order-intake-case-study.pdf" target="_blank" rel="noopener">Read page two of the case study</a>
+          <p class="band__state" id="mcpState" aria-live="polite">Now: the team works through the MCP tool.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Piece 3 -->
+    <section class="section section--piece" aria-labelledby="p3Title">
+      <div class="wrap">
+        <div class="piece piece--single">
+          <div class="piece__copy">
+            <p class="piece__n">03 · Public · Published</p>
+            <h3 class="heading heading--lg" id="p3Title">n8n-nodes-unleashed</h3>
+            <p>A community node package for n8n that I wrote and published myself.</p>
+            <p><a class="link" href="https://github.com/k10nite/n8n-nodes-unleashed" target="_blank" rel="noopener">View it on GitHub</a></p>
+          </div>
+          <a class="repo" href="https://github.com/k10nite/n8n-nodes-unleashed" target="_blank" rel="noopener" aria-label="k10nite/n8n-nodes-unleashed on GitHub">
+            <span class="repo__path">k10nite /</span>
+            <span class="repo__name">n8n-nodes-unleashed</span>
+            <span class="repo__meta">Community node package · open source</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- How I work -->
+    <section class="section section--tight" id="how" aria-labelledby="howTitle">
+      <div class="wrap">
+        <p class="eyebrow">How I work</p>
+        <h2 class="display" id="howTitle">I don't wait to be asked</h2>
+        <div class="grid3">
+          <article class="card">
+            <h3>I go to the source</h3>
+            <p>When an API limit was blocking the team, I contacted the vendor's developers directly and solved it with them.</p>
+          </article>
+          <article class="card">
+            <h3>I pitch better foundations</h3>
+            <p>Notion was being used as a database. I pitched Supabase and Airtable for better data management.</p>
+          </article>
+          <article class="card">
+            <h3>I run agents in parallel</h3>
+            <p>I orchestrate coding agents on a server, up to 10 at once in one design brainstorm. I've used Claude Code since its release: first to ship university projects, now daily for debugging and scheduled pipeline checks.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -350,19 +250,19 @@
       <div class="wrap about">
         <div class="about__copy">
           <p class="eyebrow">About</p>
-          <h2 class="display" id="aboutTitle">I build automation and AI that people can trust with real work</h2>
-          <p>I currently build and run automation at PerfectTed: self-hosted n8n workflows, scrapers, and LLMs wired into production pipelines. Before that I shipped an AI e-commerce platform, and I research soil classification with computer vision on a DOST-funded thesis.</p>
-          <p>I like the unglamorous parts: writing down what correct means, replaying changes on real history, and making failures loud.</p>
+          <h2 class="display" id="aboutTitle">A developer who stays with what he ships</h2>
+          <p>I'm Neil. I build systems end to end and then keep running them, which is where you find out whether they were built well.</p>
+          <p>I care about the unglamorous parts: checking against real data, shipping new features switched off, and handing a person the decision when the software can't be sure.</p>
+          <p>BCompSc, Saint Louis University, 2022 to 2026.</p>
           <p><a class="link" href="https://linkedin.com/in/neil-cayton" target="_blank" rel="noopener">LinkedIn</a> · <a class="link" href="https://github.com/k10nite" target="_blank" rel="noopener">GitHub</a></p>
         </div>
 
         <div class="skills">
-          <div class="tabs tabs--skills" role="tablist" aria-label="Skills" id="skillTabs">
-            <button role="tab" class="tab" aria-selected="true" data-skill="automation">Automation</button>
-            <button role="tab" class="tab" aria-selected="false" data-skill="ai">AI / ML</button>
-            <button role="tab" class="tab" aria-selected="false" data-skill="backend">Backend</button>
-            <button role="tab" class="tab" aria-selected="false" data-skill="frontend">Frontend</button>
-            <button role="tab" class="tab" aria-selected="false" data-skill="geo">Geospatial</button>
+          <div class="tabs tabs--skills tabs--four" role="tablist" aria-label="Tools" id="skillTabs">
+            <button role="tab" class="tab" aria-selected="true" data-skill="build">Build</button>
+            <button role="tab" class="tab" aria-selected="false" data-skill="run">Run</button>
+            <button role="tab" class="tab" aria-selected="false" data-skill="agents">Agents</button>
+            <button role="tab" class="tab" aria-selected="false" data-skill="research">Research</button>
           </div>
           <div class="skills__panel" id="skillPanel" role="tabpanel" aria-live="polite"></div>
         </div>
@@ -379,31 +279,31 @@
           <details class="xp__row" open>
             <summary>
               <span class="xp__role">Operational Specialist</span>
-              <span class="xp__org">PerfectTed · Automation &amp; AI</span>
+              <span class="xp__org">Food and beverage supplier</span>
               <span class="xp__date">May 2025 – Present</span>
               <span class="xp__chev" aria-hidden="true"></span>
             </summary>
             <div class="xp__body">
-              <p>Building intelligent automation systems, deploying self-hosted workflows, and integrating AI into production pipelines for a UK-based company.</p>
-              <div class="tools"><span>n8n / Docker</span><span>GPT-4 API</span><span>PostgreSQL / Supabase</span><span>Web scraping</span></div>
+              <p>Built and run the order system that reads the order inbox, checks orders against the ERP and creates them. Built an MCP tool for the inventory system that the team still uses.</p>
+              <div class="tools"><span>TypeScript</span><span>Python</span><span>Claude Code</span><span>MCP</span><span>Supabase</span><span>Railway</span><span>Microsoft 365</span></div>
             </div>
           </details>
           <details class="xp__row">
             <summary>
               <span class="xp__role">AI Engineer</span>
-              <span class="xp__org">Gift of Grace Food Manufacturing · Full-stack &amp; AI</span>
+              <span class="xp__org">Gift of Grace Food Manufacturing</span>
               <span class="xp__date">Aug – Dec 2025</span>
               <span class="xp__chev" aria-hidden="true"></span>
             </summary>
             <div class="xp__body">
-              <p>Built an AI-powered e-commerce platform with the "Grace" chatbot using RASA NLU, RAG pipelines, and multi-provider LLM fallback.</p>
-              <div class="tools"><span>RASA NLU / FAISS</span><span>FastAPI</span><span>React / Vercel</span><span>LLM integration</span></div>
+              <p>Built an e-commerce platform with the "Grace" customer service chatbot, using RASA NLU, retrieval over the product catalogue, and fallback across several LLM providers.</p>
+              <div class="tools"><span>RASA NLU / FAISS</span><span>FastAPI</span><span>React / Vercel</span></div>
             </div>
           </details>
           <details class="xp__row">
             <summary>
               <span class="xp__role">ML Researcher</span>
-              <span class="xp__org">DOST-funded thesis · Research</span>
+              <span class="xp__org">DOST-funded thesis</span>
               <span class="xp__date">Aug 2025 – Present</span>
               <span class="xp__chev" aria-hidden="true"></span>
             </summary>
@@ -415,7 +315,7 @@
           <details class="xp__row">
             <summary>
               <span class="xp__role">Business App Developer</span>
-              <span class="xp__org">NOAH · Enterprise</span>
+              <span class="xp__org">NOAH · Internship</span>
               <span class="xp__date">Jun – Jul 2025</span>
               <span class="xp__chev" aria-hidden="true"></span>
             </summary>
@@ -427,65 +327,15 @@
           <details class="xp__row">
             <summary>
               <span class="xp__role">Marketing Officer</span>
-              <span class="xp__org">SLU AWS Learning Club · Community</span>
+              <span class="xp__org">SLU AWS Learning Club</span>
               <span class="xp__date">Aug 2025 – Present</span>
               <span class="xp__chev" aria-hidden="true"></span>
             </summary>
             <div class="xp__body">
-              <p>Managing public presence and content strategy, building engagement pipelines for community outreach and event promotion.</p>
+              <p>Managing public presence and content strategy, building engagement for community outreach and event promotion.</p>
               <div class="tools"><span>Content strategy</span><span>Canva</span><span>Community building</span><span>AWS</span></div>
             </div>
           </details>
-        </div>
-      </div>
-    </section>
-
-    <!-- Projects -->
-    <section class="section" id="projects" aria-labelledby="projTitle">
-      <div class="wrap">
-        <p class="eyebrow">Projects</p>
-        <h2 class="display" id="projTitle">Other things I've built</h2>
-
-        <div class="filters" id="filters" role="group" aria-label="Filter projects">
-          <button class="pill" type="button" aria-pressed="true" data-filter="all">All</button>
-          <button class="pill" type="button" aria-pressed="false" data-filter="n8n">n8n workflows</button>
-          <button class="pill" type="button" aria-pressed="false" data-filter="ai">AI</button>
-          <button class="pill" type="button" aria-pressed="false" data-filter="email">Email</button>
-        </div>
-
-        <div class="grid3" id="projectGrid">
-          <article class="card card--proj" data-tags="ai email">
-            <h3>Order intake automation</h3>
-            <p>Multi-format order reading from a shared inbox into the ERP, with a gate that checks every order against its document.</p>
-            <div class="tools"><span>Claude API</span><span>Node.js</span><span>Supabase</span></div>
-            <a class="link" href="#case-study">Read the case study</a>
-          </article>
-          <article class="card card--proj" data-tags="n8n">
-            <h3>YouTube pipeline</h3>
-            <p>Auto-transcription, metadata extraction and delivery into Airtable as one workflow.</p>
-            <div class="tools"><span>n8n</span><span>Airtable</span></div>
-          </article>
-          <article class="card card--proj" data-tags="n8n">
-            <h3>Social scrapers</h3>
-            <p>Reddit and Twitter scrapers with anti-detection, authenticated sessions and rate throttling.</p>
-            <div class="tools"><span>n8n</span><span>Anti-bot</span></div>
-          </article>
-          <article class="card card--proj" data-tags="n8n email">
-            <h3>Email outreach</h3>
-            <p>Automated sequences with tracking, conditional logic and response handling.</p>
-            <div class="tools"><span>n8n</span><span>Automation</span></div>
-          </article>
-          <article class="card card--proj" data-tags="ai">
-            <h3>Grace AI chatbot</h3>
-            <p>RAG-powered customer service bot with RASA NLU and multi-LLM fallback.</p>
-            <div class="tools"><span>RASA</span><span>FAISS</span><span>FastAPI</span></div>
-          </article>
-          <article class="card card--proj" data-tags="n8n email">
-            <h3>Hiring automation</h3>
-            <p>Applicant intake, tracking and notification pipelines.</p>
-            <div class="tools"><span>n8n</span><span>Airtable</span></div>
-            <a class="link" href="#journeys">See the email journey</a>
-          </article>
         </div>
       </div>
     </section>
@@ -495,7 +345,7 @@
       <div class="glow__inner">
         <div>
           <h2 class="display" id="contactTitle">Have a workflow that eats your team's week?</h2>
-          <p>Open to automation, AI engineering and full-stack work.</p>
+          <p>Tell me what it is. I'll tell you honestly whether software should be doing it.</p>
         </div>
         <div class="glow__actions">
           <a class="btn-white" href="mailto:neilcayton03@gmail.com">Email Neil</a>
@@ -509,20 +359,19 @@
     <div class="footer__inner">
       <div class="footer__brand">
         <p class="footer__name">Neil Cayton</p>
-        <p>Automation &amp; AI engineer</p>
+        <p>Developer</p>
       </div>
       <div class="footer__col">
         <h2>Work</h2>
-        <a href="#case-study">Case study</a>
-        <a href="#try">Try the pipeline</a>
-        <a href="#journeys">Email journeys</a>
-        <a href="#projects">Projects</a>
+        <a href="#p1Title">Order system</a>
+        <a href="#p2Title">MCP tool</a>
+        <a href="#p3Title">n8n-nodes-unleashed</a>
       </div>
       <div class="footer__col">
         <h2>About</h2>
-        <a href="#about">Skills</a>
+        <a href="#how">How I work</a>
+        <a href="#about">Tools</a>
         <a href="#experience">Experience</a>
-        <a href="assets/order-intake-case-study.pdf" target="_blank" rel="noopener">Case study PDF</a>
       </div>
       <div class="footer__col">
         <h2>Contact</h2>

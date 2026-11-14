@@ -33,23 +33,19 @@
   /* Hero hold card: the desk decides, not the system */
   const holdCard = $('#holdCard');
   if (holdCard) {
+    const initial = $('.float__actions', holdCard).innerHTML;
     holdCard.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-hold]');
+      const btn = e.target.closest('button');
       if (!btn) return;
-      const approve = btn.dataset.hold === 'approve';
-      $('#holdText').textContent = approve
-        ? 'Approved by the desk. The order goes to the ERP.'
-        : 'Kept stopped. The duplicate never reaches the ERP.';
-      $('.float__meta', holdCard).textContent = approve ? 'Approved by a person' : 'Stopped by a person';
-      $('.float__actions', holdCard).innerHTML = '<button class="btn-mini" type="button" data-hold-reset>Undo</button>';
-      $('[data-hold-reset]', holdCard).addEventListener('click', (ev) => {
-        ev.stopPropagation();
-        $('#holdText').textContent = 'Held: this looks like the same order we received on Tuesday.';
-        $('.float__meta', holdCard).textContent = 'Waiting on you';
-        $('.float__actions', holdCard).innerHTML =
-          '<button class="btn-mini btn-mini--fill" type="button" data-hold="keep">Keep it stopped</button>' +
-          '<button class="btn-mini" type="button" data-hold="approve">Approve</button>';
-      });
+      if (btn.dataset.hold) {
+        $('#holdText').textContent = `Thanks. Order created for 12 ${btn.dataset.hold}.`;
+        $('.float__meta', holdCard).textContent = 'Answered by a person';
+        $('.float__actions', holdCard).innerHTML = '<button class="btn-mini" type="button" data-reset>Undo</button>';
+      } else {
+        $('#holdText').textContent = 'Flagged: "12" could mean units or cases.';
+        $('.float__meta', holdCard).textContent = 'Needs a person';
+        $('.float__actions', holdCard).innerHTML = initial;
+      }
     });
   }
 
@@ -62,7 +58,7 @@
     const dur = 1400;
     const tick = (t) => {
       const p = clamp((t - t0) / dur);
-      el.textContent = fmt.format(Math.round(target * (1 - Math.pow(1 - p, 4))));
+      el.textContent = fmt.format(Math.round(target * (1 - Math.pow(1 - p, 4)))) + (el.dataset.suffix || '');
       if (p < 1) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
@@ -74,109 +70,75 @@
   }, { threshold: 0.6 });
   $$('[data-count]').forEach((el) => countIO.observe(el));
 
-  /* ---------- Scroll receipt ---------- */
-  const steps = $('#steps');
-  const receipt = $('#receipt');
-  const stepEls = $$('.step', steps);
-  const blocks = $$('.receipt__block', receipt);
-  const onReceipt = () => {
-    if (!desktop.matches || reduced) {
-      receipt.style.setProperty('--p', 1);
-      blocks.forEach((b) => b.classList.remove('is-future'));
-      stepEls.forEach((s) => s.classList.add('is-active'));
-      return;
-    }
-    const mid = innerHeight * 0.55;
-    let active = -1;
-    stepEls.forEach((s, i) => { if (s.getBoundingClientRect().top < mid) active = i; });
-    stepEls.forEach((s, i) => s.classList.toggle('is-active', i === active));
-    blocks.forEach((b, i) => b.classList.toggle('is-future', i > active));
-
-    // Paper feeds out far enough to show everything up to the active block,
-    // then eases toward the next one as that step approaches.
-    const h = receipt.offsetHeight;
-    const bottomOf = (i) => (i < 0 ? blocks[0].offsetTop : blocks[i].offsetTop + blocks[i].offsetHeight);
-    let shown = bottomOf(active);
-    const next = stepEls[active + 1];
-    if (next) {
-      const r = next.getBoundingClientRect();
-      const t = clamp(1 - (r.top - mid) / (innerHeight * 0.35));
-      shown += (bottomOf(active + 1) - shown) * t * 0.6;
-    } else {
-      shown = h;
-    }
-    receipt.style.setProperty('--p', clamp(shown / h).toFixed(4));
-  };
-
   /* ---------- Scroll loop ---------- */
   let ticking = false;
   const onScroll = () => {
     if (ticking) return;
     ticking = true;
-    requestAnimationFrame(() => { onNav(); onReceipt(); ticking = false; });
+    requestAnimationFrame(() => { onNav(); ticking = false; });
   };
   addEventListener('scroll', onScroll, { passive: true });
   addEventListener('resize', onScroll);
-  onNav(); onReceipt();
+  onNav();
 
   /* ---------- Simulator ---------- */
   const CASES = {
-    pdf: {
-      from: 'Wholesale customer · orders inbox',
+    clean: {
+      from: 'Known customer · order inbox',
       subject: 'Purchase order PO-20418',
-      snippet: 'Please find our order attached. PO-20418.pdf (2 pages)',
-      notes: ['Tracked as a job', 'New order', 'Fixed reader for this layout, 14 lines', 'Matches the document, no duplicate', 'Sales order created'],
+      snippet: 'Please find our order attached. PO-20418.pdf',
+      notes: ['Picked up from the inbox', 'A real order', 'Email and attachment read', 'Customer, SKU, unit and price all match', 'Sales order created through the ERP API'],
       stop: null,
-      tone: 'created', badge: 'Created in the ERP',
-      title: 'Clean order, no one had to touch it.',
-      body: 'This customer\'s format already passed a replay on real past orders, so auto-send is on for them.'
+      tone: 'created', badge: 'Order created',
+      title: 'Everything matched, so nobody had to touch it.',
+      body: 'The order agreed with live ERP data on customer, SKU, unit vs case and price, so the sales order was created.'
     },
-    sheet: {
-      from: 'New stockist · orders inbox',
+    unit: {
+      from: 'Known customer · order inbox',
       subject: 'Order for next week',
-      snippet: 'Hi, our order is in the attached sheet. order_wk47.xlsx',
-      notes: ['Tracked as a job', 'New order', 'No template fits, Claude reads it', 'Matches the document, no duplicate', 'Held for approval'],
-      stop: 4,
-      tone: 'held', badge: 'Waiting on you',
-      title: 'Read correctly, but a person approves it.',
-      body: 'Auto-send is switched on one customer at a time. Until this format has passed a replay, the desk sees the document, what was read, and approves.'
-    },
-    dup: {
-      from: 'Wholesale customer · orders inbox',
-      subject: 'RE: Purchase order PO-20418 (resending)',
-      snippet: 'Resending in case the first one didn\'t arrive. PO-20418.pdf',
-      notes: ['Tracked as a job', 'New order', 'Fixed reader for this layout, 14 lines', 'Same order as one already received', ''],
+      snippet: 'Hi, 12 of the usual please. Thanks!',
+      notes: ['Picked up from the inbox', 'A real order', 'Email read', '"12" could mean units or cases', ''],
       stop: 3,
-      tone: 'held', badge: 'Duplicate stopped',
-      title: 'Stopped at the gate before the ERP.',
-      body: 'One of 1,303 duplicates caught in 9 weeks. It is held with the reason in plain English, and the system never clears its own holds.'
+      tone: 'held', badge: 'Flagged for a person',
+      title: 'It asks instead of guessing.',
+      body: 'The email does not say whether 12 means units or cases. A wrong guess ships the wrong amount, so a person decides.'
+    },
+    sender: {
+      from: 'First-time sender · order inbox',
+      subject: 'New order',
+      snippet: 'Hello, we would like to place an order. See attached.',
+      notes: ['Picked up from the inbox', 'Sender not seen before', '', '', ''],
+      stop: 1,
+      tone: 'held', badge: 'Not trusted yet',
+      title: 'New senders are checked before they are trusted.',
+      body: 'An address the system has not seen has its SPF and DKIM checked first. Nothing is created from a sender it cannot trust.'
     },
     reply: {
-      from: 'Existing customer · orders inbox',
+      from: 'Known customer · order inbox',
       subject: 'RE: Your order confirmation',
-      snippet: 'Thanks. Could we move delivery to Thursday instead?',
-      notes: ['Tracked as a job', 'Customer reply, not a new order', '', '', ''],
+      snippet: 'Thanks, received. Speak soon.',
+      notes: ['Picked up from the inbox', 'A reply, not a new order', '', '', ''],
       stop: 1,
-      tone: 'routed', badge: 'Routed to a person',
-      title: 'A reply goes to someone who can answer it.',
-      body: 'Replies are separated from new orders and handed to the desk. They are never auto-closed.'
+      tone: 'routed', badge: 'Not an order',
+      title: 'Replies are kept apart from orders.',
+      body: 'A reply about an existing order is not a new one, so no order is created from it.'
     },
-    news: {
-      from: 'Supplier marketing · orders inbox',
+    noise: {
+      from: 'Marketing sender · order inbox',
       subject: 'Our autumn range is here',
       snippet: 'New season, new flavours. View in browser.',
-      notes: ['Tracked as a job', 'Newsletter, not an order', '', '', ''],
+      notes: ['Picked up from the inbox', 'Noise', '', '', ''],
       stop: 1,
-      tone: 'routed', badge: 'Logged, no action',
+      tone: 'routed', badge: 'Noise',
       title: 'Sorted out of the way.',
-      body: 'Newsletters, invoices and portal notices are logged and kept off the order desk\'s plate.'
+      body: 'Newsletters and other noise are separated from real orders before anything else happens.'
     }
   };
 
   const nodes = $$('.node', $('#track'));
   const outcome = $('#outcome');
   let runId = 0;
-  let current = 'pdf';
+  let current = 'clean';
 
   const runCase = (key) => {
     current = key;
@@ -245,22 +207,21 @@
   }, { threshold: 0.35 });
   simIO.observe($('.sim__body'));
 
-  /* ---------- Email journey switch ---------- */
-  const survey = $('#surveyDone');
-  survey.addEventListener('change', () => {
-    $$('.jstep[data-kind="chaser"]').forEach((j) => j.classList.toggle('is-stopped', survey.checked));
-    $('#journeyState').textContent = survey.checked
-      ? 'Survey done: both chasers are cancelled. Nobody gets chased after they act.'
-      : 'Survey not done yet: chasers are scheduled.';
+  /* ---------- MCP before / after ---------- */
+  const before = $('#beforeToggle');
+  before.addEventListener('change', () => {
+    $('#mcpBox').classList.toggle('is-off', before.checked);
+    $('#mcpState').textContent = before.checked
+      ? 'Before: the team kept hitting the limits on the inventory system\'s API.'
+      : 'Now: the team works through the MCP tool.';
   });
 
   /* ---------- Skills ---------- */
   const SKILLS = {
-    automation: ['n8n (self-hosted)', 'Zapier', 'Docker', 'Reverse proxy', 'SSL', 'Microsoft Graph', 'Slack alerts'],
-    ai: ['Claude API', 'GPT-4 API', 'RAG pipelines', 'FAISS', 'RASA NLU', 'XGBoost', 'Random Forest', 'SHAP'],
-    backend: ['Python', 'Node.js', 'FastAPI', 'PostgreSQL', 'Supabase', 'MongoDB'],
-    frontend: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
-    geo: ['Google Earth Engine', 'Sentinel-2', 'Landsat-8', 'Rasterio', 'GDAL']
+    build: ['Python', 'TypeScript', 'MCP tools', 'n8n community nodes', 'FastAPI', 'React'],
+    run: ['Supabase', 'Railway', 'Microsoft 365 / Outlook', 'Make.com', 'Notion', 'Apify', 'Apollo'],
+    agents: ['Claude Code', 'MCP', 'Parallel coding agents', 'Scheduled pipeline checks'],
+    research: ['Computer vision', 'Hugging Face', 'RASA NLU', 'FAISS', 'XGBoost', 'Google Earth Engine']
   };
   const panel = $('#skillPanel');
   const showSkills = (key) => {
@@ -272,16 +233,7 @@
     }));
   };
   wireTabs($('#skillTabs'), (t) => showSkills(t.dataset.skill));
-  showSkills('automation');
-
-  /* ---------- Project filter ---------- */
-  const pills = $$('.pill', $('#filters'));
-  const cards = $$('.card--proj');
-  pills.forEach((p) => p.addEventListener('click', () => {
-    pills.forEach((x) => x.setAttribute('aria-pressed', String(x === p)));
-    const f = p.dataset.filter;
-    cards.forEach((c) => c.classList.toggle('is-out', f !== 'all' && !c.dataset.tags.split(' ').includes(f)));
-  }));
+  showSkills('build');
 
   /* ---------- Copy email ---------- */
   const copy = $('#copyEmail');
@@ -296,7 +248,7 @@
   });
 
   /* ---------- Reveal on scroll ---------- */
-  const revealEls = $$('.card, .xp__row, .display, .heading, .lede, .sim, .skills');
+  const revealEls = $$('.card, .xp__row, .display, .piece, .sim, .skills, .repo');
   revealEls.forEach((el) => el.setAttribute('data-reveal', ''));
   const revIO = new IntersectionObserver((entries) => {
     entries.forEach((en) => {

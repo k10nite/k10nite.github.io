@@ -17,19 +17,18 @@ I build automation systems and AI-powered applications that solve real business 
 
 ## Experience
 
-### Operational Specialist | PerfectTed (UK)
-**May 2025 - Present** | *Automation & AI*
+### Operational Specialist | Food and beverage supplier
+**May 2025 - Present**
 
-Building intelligent automation systems for a UK-based company, deploying self-hosted workflows and integrating AI into production pipelines.
+Built and run an order system that reads the order inbox, checks each order against the ERP and creates it, flagging anything it can't trust for a person.
 
 **Key Contributions:**
-- Deployed self-hosted **n8n** automation platform with Docker, reverse proxy, and SSL
-- Built intelligent web scrapers with anti-detection, auth sessions, and rate throttling
-- Integrated **GPT-4 API** for automated content processing and data normalization
-- Designed multi-format PO parsing workflows for varied customer order formats
-- Created automated email outreach sequences with tracking and conditional logic
+- Order system that has processed over 10,000 order emails
+- Checks every order against live ERP data: customer, SKU, unit vs case, price
+- Built an MCP tool for the inventory system that the team still uses
+- Published [n8n-nodes-unleashed](https://github.com/k10nite/n8n-nodes-unleashed), a community node package
 
-**Tech Stack:** `n8n` `Docker` `GPT-4 API` `PostgreSQL` `Supabase` `Web Scraping`
+**Tech Stack:** `TypeScript` `Python` `Claude Code` `MCP` `Supabase` `Railway` `Microsoft 365`
 
 ---
 
@@ -102,7 +101,7 @@ Managing public presence and content strategy for the university's AWS cloud com
 | Category | Technologies |
 |----------|-------------|
 | **Automation** | n8n (self-hosted), Zapier, Docker, Reverse Proxy, SSL |
-| **AI/ML** | XGBoost, Random Forest, GPT-4 API, RAG Pipelines, FAISS, RASA NLU, SHAP |
+| **AI/ML** | XGBoost, Random Forest, RAG Pipelines, FAISS, RASA NLU, SHAP |
 | **Geospatial** | Google Earth Engine, Sentinel-2, Landsat-8, Rasterio, GDAL |
 | **Backend** | Python, FastAPI, PostgreSQL, Supabase, MongoDB |
 | **Frontend** | React, TypeScript, Tailwind CSS, Framer Motion |
@@ -118,7 +117,7 @@ Automated transcription to metadata extraction to Airtable delivery workflow for
 Reddit/Twitter data collection with anti-detection measures, authenticated sessions, and intelligent rate throttling.
 
 ### Order Extraction System
-Multi-format purchase order parsing with GPT-4 normalization for handling varied customer document formats.
+Reads order emails and attachments, checks them against live ERP data and creates the sales order, flagging anything uncertain for a person.
 
 ### Grace AI Chatbot
 RAG-powered customer service bot with RASA NLU intent classification and multi-LLM provider fallback.
