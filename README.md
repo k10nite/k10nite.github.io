@@ -1,6 +1,6 @@
 # Neil Cayton
 
-**Automation & AI Engineer** | Building intelligent systems that transform workflows into results
+**Software Engineer** | Computer science graduate building production systems, full-stack products and machine learning research
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-k10nite.github.io-6366f1?style=for-the-badge)](https://k10nite.github.io)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-neil--cayton-0077B5?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/neil-cayton)
@@ -40,7 +40,7 @@ Built an AI-powered e-commerce platform featuring "Grace," an intelligent custom
 **Key Contributions:**
 - Developed **RAG pipeline** using FAISS for semantic search over product catalog
 - Implemented **RASA NLU** for intent classification and entity extraction
-- Built multi-provider LLM fallback system for 99.9% uptime
+- Built multi-provider LLM fallback system
 - Created FastAPI backend with React frontend deployed on Vercel
 - Integrated real-time inventory and order tracking
 

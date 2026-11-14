@@ -220,12 +220,22 @@
   const TOOLS = [
     ['Claude Code', 'Agents', 'My daily driver since its release. I use it for debugging and scheduled pipeline checks, and I run coding agents in parallel on a server, 10 at once in one design brainstorm.'],
     ['MCP', 'Agents', 'I built an MCP tool for an inventory system after working out an API workaround with that system\'s own developers. The team still uses it.'],
-    ['Python', 'Build', 'One of the two languages I build in, from university research work to production tooling.'],
-    ['TypeScript', 'Build', 'The other language I build in, for the systems I ship and run.'],
+    ['Python', 'Languages', 'My main language, from computer vision research to backend services and production tooling.'],
+    ['TypeScript', 'Languages', 'For front ends and for the systems I ship and run.'],
+    ['React', 'Full-stack', 'The front end of the Grace e-commerce platform, deployed on Vercel.'],
+    ['FastAPI', 'Full-stack', 'The backend for the Grace platform and its chatbot.'],
+    ['PostgreSQL', 'Data', 'Relational data modelling and queries, including through Supabase.'],
     ['Supabase', 'Data', 'The database behind the order system. It is also what I pitched when Notion was being stretched into a database.'],
-    ['Railway', 'Deploy', 'Where I deploy. The order system runs here, and I moved to it from n8n.'],
-    ['Microsoft 365 / Outlook', 'Integrate', 'The order system watches a Microsoft 365 inbox and sorts real orders from replies and noise.'],
     ['Notion', 'Data', 'The team\'s workspace. It was being used as a database, so I pitched Supabase and Airtable for better data management.'],
+    ['OpenCV', 'Machine learning', 'Computer vision pipelines for automated soil colour detection in my thesis.'],
+    ['Hugging Face', 'Machine learning', 'Where my thesis soil classification models are deployed for public access.'],
+    ['RASA NLU', 'Machine learning', 'Intent classification and entity extraction for the Grace chatbot.'],
+    ['FAISS', 'Machine learning', 'Semantic search over a product catalogue, used for retrieval in the Grace chatbot.'],
+    ['XGBoost / Random Forest', 'Machine learning', 'Classical machine learning models, with SHAP to explain their predictions.'],
+    ['Google Earth Engine', 'Machine learning', 'Geospatial work with Sentinel-2 and Landsat-8 imagery, alongside Rasterio and GDAL.'],
+    ['Railway', 'Deploy', 'Where I deploy. The order system runs here, and I moved to it from n8n.'],
+    ['Docker', 'Deploy', 'Self-hosted deployments behind a reverse proxy with SSL.'],
+    ['Microsoft 365 / Outlook', 'Integrate', 'The order system watches a Microsoft 365 inbox and sorts real orders from replies and noise.'],
     ['n8n', 'Automate', 'I wrote and published n8n-nodes-unleashed, an open-source community node package.'],
     ['Make.com', 'Automate', 'Visual workflow automation, for the jobs where a scenario is quicker than custom code.'],
     ['Apify', 'Research', 'Web data collection for lead research.'],
@@ -248,6 +258,38 @@
     toolList.append(b);
   });
   showTool(0);
+
+  /* ---------- Grace chat walk-through ---------- */
+  const QS = [
+    [['RASA NLU', 'Recognises the intent: order tracking'], ['Order lookup', 'Fetches the live order status'], ['Reply', 'Grace tells the customer where the order is']],
+    [['RASA NLU', 'Recognises the intent: product question'], ['FAISS search', 'Finds the closest matches in the product catalogue'], ['LLM', 'Writes the answer from those matches']],
+    [['First LLM provider', 'No response'], ['Fallback', 'Switches to the next provider'], ['Reply', 'The customer still gets an answer']]
+  ];
+  const trace = $('#trace');
+  const qBtns = $$('[data-q]');
+  const ask = (i) => {
+    qBtns.forEach((b, n) => b.setAttribute('aria-pressed', String(n === i)));
+    trace.replaceChildren(...QS[i].map(([name, note], n) => {
+      const li = document.createElement('li');
+      const a = document.createElement('span'); a.className = 'trace__name'; a.textContent = name;
+      const b = document.createElement('span'); b.className = 'trace__note'; b.textContent = note;
+      li.append(a, b); li.style.animationDelay = `${n * (reduced ? 0 : 260)}ms`;
+      return li;
+    }));
+  };
+  qBtns.forEach((b, i) => b.addEventListener('click', () => ask(i)));
+  ask(0);
+
+  /* ---------- Munsell swatches ---------- */
+  const chips = $$('.chip');
+  const pickChip = (c) => {
+    chips.forEach((x) => x.setAttribute('aria-pressed', String(x === c)));
+    $('#mSwatch').style.background = c.style.getPropertyValue('--c');
+    $('#mNote').textContent = c.dataset.n;
+    $('#mDesc').textContent = c.dataset.d;
+  };
+  chips.forEach((c) => c.addEventListener('click', () => pickChip(c)));
+  pickChip(chips[0]);
 
   /* ---------- Copy email ---------- */
   const copy = $('#copyEmail');

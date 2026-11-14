@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neil Cayton | AI Automation Engineer</title>
-  <meta name="description" content="Neil Cayton is a developer who builds systems that run in production, ask a person when unsure, and stay running.">
-  <meta property="og:title" content="Neil Cayton | AI Automation Engineer">
-  <meta property="og:description" content="Selected work: an order system for a food and beverage supplier, an MCP tool for an inventory system, and a published n8n community node.">
+  <title>Neil Cayton | Software Engineer</title>
+  <meta name="description" content="Neil Cayton is a computer science graduate and software engineer: production systems, full-stack products and machine learning research.">
+  <meta property="og:title" content="Neil Cayton | Software Engineer">
+  <meta property="og:description" content="Production systems, a full-stack e-commerce platform with an AI chatbot, computer vision research, and open source.">
   <meta property="og:image" content="https://k10nite.github.io/assets/img/portrait.jpg">
   <meta name="theme-color" content="#f6b70f">
 
@@ -40,9 +40,9 @@
     <section class="hero" id="top">
       <div class="hero__inner">
         <div class="hero__copy">
-          <p class="eyebrow">Neil Cayton · AI Automation Engineer</p>
-          <h1>Automation that runs in production, not in demos.</h1>
-          <p class="hero__sub">I design, build and run the systems myself. One of them has processed over 10,000 order emails, and it asks a person whenever it isn't sure.</p>
+          <p class="eyebrow">Neil Cayton · Software Engineer</p>
+          <h1>I build software that holds up in production.</h1>
+          <p class="hero__sub">Computer science graduate. I've shipped a live order system, a full-stack e-commerce platform with an AI chatbot, and computer vision research for soil classification.</p>
           <div class="hero__cta">
             <a class="btn-wine" href="#work">See my work <span aria-hidden="true">→</span></a>
             <a class="btn-plain" href="#contact">Let's talk</a>
@@ -70,14 +70,14 @@
           </div>
 
           <div class="float float--b" data-depth="-14">
-            <p class="float__meta">Checked against the ERP</p>
+            <p class="float__meta">Thesis research</p>
             <ul class="ticks">
-              <li>Customer</li>
-              <li>SKU</li>
-              <li>Unit vs case</li>
-              <li>Price</li>
+              <li>Chart detected</li>
+              <li>Colour extracted</li>
+              <li>Dataset built</li>
+              <li>Model deployed</li>
             </ul>
-            <p class="float__title float__title--sm">Sales order created</p>
+            <p class="float__title float__title--sm">Soil classification</p>
           </div>
 
           <div class="float float--c" data-depth="26" id="holdCard">
@@ -94,10 +94,11 @@
 
     <!-- Proof -->
     <section class="proof" aria-label="At a glance">
-      <div class="proof__grid proof__grid--three">
+      <div class="proof__grid proof__grid--text">
+        <div class="proof__cell"><span class="proof__num">BCompSc</span><span class="proof__label">Computer science, Saint Louis University, 2022 to 2026</span></div>
         <div class="proof__cell"><span class="proof__num" data-count="10000" data-suffix="+">10,000+</span><span class="proof__label">order emails processed by a system I built and run</span></div>
-        <div class="proof__cell"><span class="proof__num">Still in use</span><span class="proof__label">the MCP tool I built for a team's inventory system</span></div>
-        <div class="proof__cell"><span class="proof__num">Published</span><span class="proof__label">n8n-nodes-unleashed, my open-source community node</span></div>
+        <div class="proof__cell"><span class="proof__num">Full-stack</span><span class="proof__label">an e-commerce platform with its own AI chatbot</span></div>
+        <div class="proof__cell"><span class="proof__num">ML research</span><span class="proof__label">DOST-funded thesis on soil classification</span></div>
       </div>
     </section>
 
@@ -105,7 +106,7 @@
     <section class="section section--intro" id="work">
       <div class="wrap">
         <p class="eyebrow">Selected work</p>
-        <h2 class="display">Three things I built that people still use</h2>
+        <h2 class="display">Systems, full-stack products and machine learning research</h2>
       </div>
     </section>
 
@@ -114,7 +115,7 @@
       <div class="wrap">
         <div class="piece">
           <div class="piece__copy">
-            <p class="piece__n">01 · Built and run by me · Live</p>
+            <p class="piece__n">01 · Production system · Built and run by me</p>
             <h3 class="heading heading--lg" id="p1Title">An order system for a food and beverage supplier</h3>
             <p>Orders arrive by email. The system reads them, checks them against the ERP and creates the sales order, so the team only steps in when something doesn't add up.</p>
           </div>
@@ -180,6 +181,72 @@
       </div>
     </section>
 
+    <!-- Full-stack -->
+    <section class="section section--piece section--paper" aria-labelledby="fsTitle">
+      <div class="wrap">
+        <div class="piece">
+          <div class="piece__copy">
+            <p class="piece__n">02 · Full-stack and AI · Gift of Grace Food Manufacturing</p>
+            <h3 class="heading heading--lg" id="fsTitle">An e-commerce platform with "Grace", its own customer service chatbot</h3>
+            <p>I built the whole product: a React front end deployed on Vercel, a FastAPI backend, and a chatbot that understands what the customer is asking before it answers.</p>
+            <ul class="facts facts--tight">
+              <li>RASA NLU for intent classification and entity extraction.</li>
+              <li>Semantic search over the product catalogue with FAISS.</li>
+              <li>Fallback across several LLM providers, so one outage doesn't silence the bot.</li>
+              <li>Real-time inventory and order tracking.</li>
+            </ul>
+          </div>
+          <div class="chat" id="chat">
+            <p class="chat__lead">Ask Grace something:</p>
+            <div class="chat__qs" role="group" aria-label="Sample questions">
+              <button class="pill" type="button" aria-pressed="true" data-q="0">Where is my order?</button>
+              <button class="pill" type="button" aria-pressed="false" data-q="1">Anything gluten-free?</button>
+              <button class="pill" type="button" aria-pressed="false" data-q="2">What if a provider is down?</button>
+            </div>
+            <ol class="trace" id="trace" aria-live="polite"></ol>
+            <p class="fine">Illustrative walk-through of how a question is handled.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Research -->
+    <section class="section section--piece" aria-labelledby="mlTitle">
+      <div class="wrap">
+        <div class="piece">
+          <div class="piece__copy">
+            <p class="piece__n">03 · Machine learning research · DOST-funded thesis</p>
+            <h3 class="heading heading--lg" id="mlTitle">Computer vision for soil classification</h3>
+            <p>Soil scientists classify soil by matching its colour against a Munsell chart by eye. My thesis builds the tools to do that from an image.</p>
+            <ul class="facts facts--tight">
+              <li>Munsell Chart extraction tools for standardised soil colour analysis.</li>
+              <li>Computer vision pipelines for automated colour detection.</li>
+              <li>Structured datasets for training soil classification models.</li>
+              <li>Models deployed on Hugging Face for public access and reproducibility.</li>
+            </ul>
+          </div>
+          <div class="munsell" id="munsell">
+            <p class="chat__lead">Pick a soil colour:</p>
+            <div class="munsell__chips" role="group" aria-label="Soil colours">
+              <button type="button" class="chip" aria-pressed="true" style="--c:#4a3c2c" data-n="10YR 3/2" data-d="Very dark greyish brown" aria-label="Very dark greyish brown"></button>
+              <button type="button" class="chip" aria-pressed="false" style="--c:#8f7248" data-n="10YR 5/4" data-d="Yellowish brown" aria-label="Yellowish brown"></button>
+              <button type="button" class="chip" aria-pressed="false" style="--c:#8a5a26" data-n="7.5YR 4/6" data-d="Strong brown" aria-label="Strong brown"></button>
+              <button type="button" class="chip" aria-pressed="false" style="--c:#7d5136" data-n="5YR 4/4" data-d="Reddish brown" aria-label="Reddish brown"></button>
+              <button type="button" class="chip" aria-pressed="false" style="--c:#9c947d" data-n="2.5Y 6/2" data-d="Light brownish grey" aria-label="Light brownish grey"></button>
+            </div>
+            <div class="munsell__out" aria-live="polite">
+              <span class="munsell__swatch" id="mSwatch"></span>
+              <div>
+                <p class="munsell__n" id="mNote"></p>
+                <p class="munsell__d" id="mDesc"></p>
+              </div>
+            </div>
+            <p class="fine">Munsell notation reads hue, value / chroma. Swatches are approximate.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Piece 2: dark band -->
     <section class="band" aria-labelledby="p2Title">
       <div class="band__inner">
@@ -200,7 +267,7 @@
           </ol>
         </div>
         <div class="band__copy">
-          <p class="eyebrow eyebrow--light">02 · Still in use by the team</p>
+          <p class="eyebrow eyebrow--light">04 · Tooling · Still in use by the team</p>
           <h2 class="display display--light" id="p2Title">An MCP tool for an inventory system</h2>
           <p>The team kept hitting limits on an inventory system's API. I reached out to that system's developers myself, worked out a way around it with them, and built an MCP tool into the team's setup.</p>
           <label class="switch">
@@ -218,7 +285,7 @@
       <div class="wrap">
         <div class="piece piece--single">
           <div class="piece__copy">
-            <p class="piece__n">03 · Public · Published</p>
+            <p class="piece__n">05 · Open source · Published</p>
             <h3 class="heading heading--lg" id="p3Title">n8n-nodes-unleashed</h3>
             <p>A community node package for n8n that I wrote and published myself.</p>
             <p><a class="link" href="https://github.com/k10nite/n8n-nodes-unleashed" target="_blank" rel="noopener">View it on GitHub</a></p>
@@ -258,7 +325,7 @@
     <section class="section" id="tools" aria-labelledby="toolsTitle">
       <div class="wrap">
         <p class="eyebrow">Tools</p>
-        <h2 class="display" id="toolsTitle">Every tool here is one I've used on real work</h2>
+        <h2 class="display" id="toolsTitle">The full stack, and what I did with each part</h2>
         <p class="sub">Pick one to see what I used it for.</p>
         <div class="toolbox">
           <div class="toolbox__list" id="toolList" role="group" aria-label="Tools"></div>
@@ -268,7 +335,6 @@
             <p class="toolbox__text" id="toolText"></p>
           </div>
         </div>
-        <p class="fine">Also from research and earlier builds: computer vision, Hugging Face, RASA NLU, FAISS, FastAPI, React.</p>
       </div>
     </section>
 
@@ -277,18 +343,18 @@
       <div class="wrap about">
         <div class="about__copy">
           <p class="eyebrow">About</p>
-          <h2 class="display" id="aboutTitle">A developer who stays with what he ships</h2>
-          <p>I'm Neil. I build systems end to end and then keep running them, which is where you find out whether they were built well.</p>
-          <p>I care about the unglamorous parts: checking against real data, shipping new features switched off, and handing a person the decision when the software can't be sure.</p>
-          <p>BCompSc, Saint Louis University, 2022 to 2026.</p>
+          <h2 class="display" id="aboutTitle">A computer science graduate who ships</h2>
+          <p>I'm Neil. I studied computer science at Saint Louis University and spent that time building real things alongside it: a production system, a full-stack product, and funded machine learning research.</p>
+          <p>I'm not tied to one kind of work. Front end, backend, data, models, deployment: I pick up what the problem needs and stay with it after launch.</p>
           <p><a class="link" href="https://linkedin.com/in/neil-cayton" target="_blank" rel="noopener">LinkedIn</a> · <a class="link" href="https://github.com/k10nite" target="_blank" rel="noopener">GitHub</a></p>
         </div>
 
         <ul class="facts">
-          <li>I build it end to end, then I'm the one who keeps it running.</li>
-          <li>I check against real data before anything goes live.</li>
-          <li>New features ship switched off and get turned on deliberately.</li>
-          <li>When the software can't be sure, a person makes the call.</li>
+          <li>BCompSc, Saint Louis University, 2022 to 2026.</li>
+          <li>Full-stack: React, FastAPI, PostgreSQL, deployment.</li>
+          <li>Machine learning: computer vision, NLU, retrieval, classical models.</li>
+          <li>Production systems: built, shipped and run by me.</li>
+          <li>Open source: a published community package.</li>
         </ul>
       </div>
     </section>
@@ -368,8 +434,8 @@
     <section class="glow" id="contact" aria-labelledby="contactTitle">
       <div class="glow__inner">
         <div>
-          <h2 class="display" id="contactTitle">Have a workflow that eats your team's week?</h2>
-          <p>Tell me what it is. I'll tell you honestly whether software should be doing it.</p>
+          <h2 class="display" id="contactTitle">Have something that needs building properly?</h2>
+          <p>Open to software engineering, machine learning and automation work.</p>
         </div>
         <div class="glow__actions">
           <a class="btn-white" href="mailto:neilcayton03@gmail.com">Email Neil</a>
@@ -383,11 +449,13 @@
     <div class="footer__inner">
       <div class="footer__brand">
         <p class="footer__name">Neil Cayton</p>
-        <p>Developer</p>
+        <p>Software Engineer</p>
       </div>
       <div class="footer__col">
         <h2>Work</h2>
         <a href="#p1Title">Order system</a>
+        <a href="#fsTitle">E-commerce platform</a>
+        <a href="#mlTitle">Soil classification</a>
         <a href="#p2Title">MCP tool</a>
         <a href="#p3Title">n8n-nodes-unleashed</a>
       </div>

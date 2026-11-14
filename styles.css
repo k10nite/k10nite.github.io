@@ -440,3 +440,32 @@ h1 { text-wrap: balance; }
   .toolbox__text { font-size: 16px; }
   .about .facts { margin-top: 0; }
 }
+
+/* ---------- Broader work: full-stack + research ---------- */
+.proof__grid--text .proof__num { font-size: clamp(26px, 2.8vw, 36px); letter-spacing: -.025em; }
+.section--paper { background: var(--paper); border-top: 1px solid var(--mist); border-bottom: 1px solid var(--mist); padding-top: 96px; }
+.section--paper .facts li, .section--paper .facts { border-color: var(--mist); }
+.facts--tight { margin-top: 24px; }
+.facts--tight li { padding: 12px 0 12px 28px; }
+.facts--tight li::before { top: 21px; }
+.chat, .munsell { background: var(--parchment); border: 1px solid var(--mist); border-radius: var(--r-card); padding: 24px; }
+.munsell { background: var(--paper); }
+.chat__lead { font-size: 19px; margin-bottom: 12px; }
+.chat__qs { display: flex; flex-wrap: wrap; gap: 8px; }
+.trace { display: grid; gap: 8px; margin-top: 24px; min-height: 216px; align-content: start; }
+.trace li { display: grid; gap: 2px; background: var(--paper); border: 1px solid var(--mist); border-radius: var(--r-sm); padding: 12px 16px; animation: pop .4s var(--ease) both; }
+.trace__name { font-weight: 600; }
+.trace__note { color: var(--stone); font-size: 14px; }
+.munsell__chips { display: flex; gap: 12px; flex-wrap: wrap; }
+.chip { width: 52px; height: 52px; border-radius: 50%; background: var(--c); border: 3px solid var(--paper); outline: 1px solid var(--mist); transition: transform .2s var(--ease), outline-color .2s ease; }
+.chip:hover { transform: scale(1.08); }
+.chip[aria-pressed="true"] { outline: 2px solid var(--ink); }
+.munsell__out { display: flex; align-items: center; gap: 20px; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--mist); }
+.munsell__swatch { width: 96px; height: 96px; border-radius: var(--r-card); flex: none; transition: background .3s ease; }
+.munsell__n { font-size: clamp(28px, 3vw, 40px); letter-spacing: -.025em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.munsell__d { color: var(--stone); }
+@media (max-width: 900px) {
+  .section--paper { padding-top: 64px; }
+  .trace { min-height: 0; }
+  .proof__grid--text .proof__num { font-size: 24px; }
+}
