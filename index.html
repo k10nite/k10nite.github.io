@@ -24,6 +24,7 @@
       <nav class="nav__links" aria-label="Primary">
         <a href="#work">Work</a>
         <a href="#how">How I work</a>
+        <a href="#tools">Tools</a>
         <a href="#about">About</a>
         <a href="#experience">Experience</a>
       </nav>
@@ -40,8 +41,8 @@
       <div class="hero__inner">
         <div class="hero__copy">
           <p class="eyebrow">Neil Cayton · AI Automation Engineer</p>
-          <h1>Your ideas.<br>My automation.<br>Real impact.</h1>
-          <p class="hero__sub">I build software that takes repetitive work off a team, and asks a person when it isn't sure.</p>
+          <h1>Automation that runs in production, not in demos.</h1>
+          <p class="hero__sub">I design, build and run the systems myself. One of them has processed over 10,000 order emails, and it asks a person whenever it isn't sure.</p>
           <div class="hero__cta">
             <a class="btn-wine" href="#work">See my work <span aria-hidden="true">→</span></a>
             <a class="btn-plain" href="#contact">Let's talk</a>
@@ -91,6 +92,15 @@
       </div>
     </section>
 
+    <!-- Proof -->
+    <section class="proof" aria-label="At a glance">
+      <div class="proof__grid proof__grid--three">
+        <div class="proof__cell"><span class="proof__num" data-count="10000" data-suffix="+">10,000+</span><span class="proof__label">order emails processed by a system I built and run</span></div>
+        <div class="proof__cell"><span class="proof__num">Still in use</span><span class="proof__label">the MCP tool I built for a team's inventory system</span></div>
+        <div class="proof__cell"><span class="proof__num">Published</span><span class="proof__label">n8n-nodes-unleashed, my open-source community node</span></div>
+      </div>
+    </section>
+
     <!-- Work intro -->
     <section class="section section--intro" id="work">
       <div class="wrap">
@@ -107,7 +117,6 @@
             <p class="piece__n">01 · Built and run by me · Live</p>
             <h3 class="heading heading--lg" id="p1Title">An order system for a food and beverage supplier</h3>
             <p>Orders arrive by email. The system reads them, checks them against the ERP and creates the sales order, so the team only steps in when something doesn't add up.</p>
-            <p class="stat"><span class="stat__num" data-count="10000" data-suffix="+">10,000+</span><span class="stat__label">order emails processed so far</span></p>
           </div>
           <ul class="facts">
             <li>Watches a Microsoft 365 order inbox and sorts real orders from replies and noise.</li>
@@ -245,6 +254,24 @@
       </div>
     </section>
 
+    <!-- Tools -->
+    <section class="section" id="tools" aria-labelledby="toolsTitle">
+      <div class="wrap">
+        <p class="eyebrow">Tools</p>
+        <h2 class="display" id="toolsTitle">Every tool here is one I've used on real work</h2>
+        <p class="sub">Pick one to see what I used it for.</p>
+        <div class="toolbox">
+          <div class="toolbox__list" id="toolList" role="group" aria-label="Tools"></div>
+          <div class="toolbox__panel" id="toolPanel" aria-live="polite">
+            <p class="toolbox__kind" id="toolKind"></p>
+            <h3 class="toolbox__name" id="toolName"></h3>
+            <p class="toolbox__text" id="toolText"></p>
+          </div>
+        </div>
+        <p class="fine">Also from research and earlier builds: computer vision, Hugging Face, RASA NLU, FAISS, FastAPI, React.</p>
+      </div>
+    </section>
+
     <!-- About -->
     <section class="section" id="about" aria-labelledby="aboutTitle">
       <div class="wrap about">
@@ -257,15 +284,12 @@
           <p><a class="link" href="https://linkedin.com/in/neil-cayton" target="_blank" rel="noopener">LinkedIn</a> · <a class="link" href="https://github.com/k10nite" target="_blank" rel="noopener">GitHub</a></p>
         </div>
 
-        <div class="skills">
-          <div class="tabs tabs--skills tabs--four" role="tablist" aria-label="Tools" id="skillTabs">
-            <button role="tab" class="tab" aria-selected="true" data-skill="build">Build</button>
-            <button role="tab" class="tab" aria-selected="false" data-skill="run">Run</button>
-            <button role="tab" class="tab" aria-selected="false" data-skill="agents">Agents</button>
-            <button role="tab" class="tab" aria-selected="false" data-skill="research">Research</button>
-          </div>
-          <div class="skills__panel" id="skillPanel" role="tabpanel" aria-live="polite"></div>
-        </div>
+        <ul class="facts">
+          <li>I build it end to end, then I'm the one who keeps it running.</li>
+          <li>I check against real data before anything goes live.</li>
+          <li>New features ship switched off and get turned on deliberately.</li>
+          <li>When the software can't be sure, a person makes the call.</li>
+        </ul>
       </div>
     </section>
 
@@ -370,7 +394,7 @@
       <div class="footer__col">
         <h2>About</h2>
         <a href="#how">How I work</a>
-        <a href="#about">Tools</a>
+        <a href="#tools">Tools</a>
         <a href="#experience">Experience</a>
       </div>
       <div class="footer__col">
